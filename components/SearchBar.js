@@ -58,7 +58,7 @@ export default function SearchBar() {
               <li
                 key={city}
                 onClick={() => handleSelect(city)}
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-black"
               >
                 {city}
               </li>
