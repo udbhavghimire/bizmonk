@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { cities } from "@/data/gta-cities.json";
+import citiesData from "@/data/gta-cities.json";
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");
@@ -11,7 +11,7 @@ export default function SearchBar() {
   const handleSearch = (value) => {
     setQuery(value);
     if (value.length > 0) {
-      const filtered = cities.filter((city) =>
+      const filtered = citiesData.cities.filter((city) =>
         city.toLowerCase().includes(value.toLowerCase())
       );
       setSuggestions(filtered);
