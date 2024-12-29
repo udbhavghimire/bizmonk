@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import SearchBar from "@/components/SearchBar";
 
 export default function Home() {
   return (
@@ -19,21 +20,8 @@ export default function Home() {
               Discover premium business opportunities across the Greater Toronto
               Area
             </p>
-
-            {/* CTA Buttons */}
-            <div className="mt-12 flex justify-center gap-4">
-              <Link
-                href="/restaurant-for-sale"
-                className="px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
-              >
-                Browse Listings
-              </Link>
-              <Link
-                href="#categories"
-                className="px-8 py-4 bg-white text-blue-600 text-lg font-semibold rounded-lg hover:bg-gray-50 transition-colors duration-200 shadow-lg hover:shadow-xl border border-blue-100"
-              >
-                View Categories
-              </Link>
+            <div className="mt-10 max-w-2xl mx-auto">
+              <SearchBar />
             </div>
           </div>
         </div>
@@ -42,6 +30,51 @@ export default function Home() {
         <div className="absolute top-0 left-0 w-40 h-40 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
         <div className="absolute top-0 right-0 w-40 h-40 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
         <div className="absolute -bottom-8 left-20 w-40 h-40 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
+      </div>
+
+      {/* Cities Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Business Properties for sale in{" "}
+            <span className="text-bold text-transparent bg-clip-text  bg-gradient-to-r from-blue-600 to-pink-500">
+              your city
+            </span>
+          </h2>
+          <p className="text-lg text-gray-600">
+            Explore top cities across Canada
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { name: "Toronto", image: "/toronto.jpg" },
+            { name: "Ottawa", image: "/ottawa.jpg" },
+            { name: "Mississauga", image: "/mississauga.jpg" },
+            { name: "Ajax", image: "/ajax.jpg" },
+            { name: "Barrie", image: "/barrie.jpg" },
+            { name: "Brampton", image: "/brampton.jpg" },
+            { name: "Pickering", image: "/pickering.jpg" },
+            { name: "Hamilton", image: "/hamilton.jpg" },
+          ].map((city) => (
+            <Link
+              key={city.name}
+              href={`/${city.name.toLowerCase()}`}
+              className="group relative rounded-lg overflow-hidden aspect-[4/3]"
+            >
+              <Image
+                src={city.image}
+                alt={`${city.name} cityscape`}
+                fill
+                className="object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+              <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">
+                {city.name}
+              </h3>
+            </Link>
+          ))}
+        </div>
       </div>
 
       {/* Category Section */}

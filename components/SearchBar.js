@@ -23,7 +23,7 @@ export default function SearchBar() {
   const handleSelect = (city) => {
     setQuery("");
     setSuggestions([]);
-    router.push(`/restaurant-for-sale/${city.toLowerCase()}`);
+    router.push(`/${city.toLowerCase()}`);
   };
 
   return (
@@ -34,7 +34,7 @@ export default function SearchBar() {
           value={query}
           onChange={(e) => handleSearch(e.target.value)}
           placeholder="Search by city..."
-          className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
         />
         <svg
           className="absolute right-3 top-2.5 h-5 w-5 text-gray-400"
