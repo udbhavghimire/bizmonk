@@ -1,6 +1,8 @@
 import Breadcrumb from "@/components/Breadcrumb";
-import { cities } from "@/data/gta-cities.json";
+import citiesData from "@/data/gta-cities.json";
 import { notFound } from "next/navigation";
+
+const { cities } = citiesData;
 
 export async function generateStaticParams() {
   return cities.map((city) => ({
@@ -9,20 +11,22 @@ export async function generateStaticParams() {
 }
 
 export default async function CityOffices({ params }) {
-  const cityExists = cities.find(
-    (c) => c.toLowerCase() === params.city.toLowerCase()
-  );
+  const { city } = await params;
+
+  if (!city) {
+    notFound();
+  }
+
+  const cityExists = cities.find((c) => c.toLowerCase() === city.toLowerCase());
 
   if (!cityExists) {
     notFound();
   }
 
-  const cityName = cityExists;
-
   const breadcrumbItems = [
     {
-      label: cityName,
-      href: `/${params.city}`,
+      label: cityExists,
+      href: `/${city.toLowerCase()}`,
     },
     {
       label: "Offices for Lease",
@@ -35,7 +39,7 @@ export default async function CityOffices({ params }) {
         <Breadcrumb items={breadcrumbItems} />
 
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          Offices for Lease in {cityName}
+          Offices for Lease in {cityExists}
         </h1>
 
         {/* Office Listings */}

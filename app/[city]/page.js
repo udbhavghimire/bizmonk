@@ -1,26 +1,40 @@
-import { cities } from "@/data/gta-cities.json";
+import citiesData from "@/data/gta-cities.json";
 import Link from "next/link";
-import Breadcrumb from "@/components/Breadcrumb";
 import { notFound } from "next/navigation";
+import Breadcrumb from "@/components/Breadcrumb";
 
-export async function generateStaticParams() {
-  return cities.map((city) => ({
-    city: city.toLowerCase(),
-  }));
-}
+const cities = citiesData.cities;
+
+// Helper function to convert city names to URL-friendly format
+const toUrlFormat = (cityName) => cityName.toLowerCase().replace(/\s+/g, "-");
+
+// Helper function to find city by URL format
+const findCityByUrlFormat = (urlFormat) => {
+  return cities.find((city) => toUrlFormat(city) === urlFormat.toLowerCase());
+};
 
 export default async function CityPage({ params }) {
-  const cityExists = cities.find(
-    (c) => c.toLowerCase() === params.city.toLowerCase()
-  );
+  const { city } = await params;
+
+  if (!city) {
+    notFound();
+  }
+
+  // Find the city using the URL-friendly format
+  const cityExists = findCityByUrlFormat(city);
 
   if (!cityExists) {
     notFound();
   }
 
   const cityName = cityExists;
+  const cityUrl = toUrlFormat(cityName); // Use this for links
 
   const breadcrumbItems = [
+    {
+      label: "Home",
+      href: "/",
+    },
     {
       label: cityName,
     },
@@ -38,7 +52,7 @@ export default async function CityPage({ params }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Restaurant Section */}
           <Link
-            href={`/${params.city}/restaurant-for-sale`}
+            href={`/${cityUrl}/restaurant-for-sale`}
             className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
           >
             <div className="p-8">
@@ -47,14 +61,14 @@ export default async function CityPage({ params }) {
               </h2>
               <p className="mt-4 text-gray-600">
                 Browse available restaurant spaces and turnkey operations in{" "}
-                {cityName}
+                {cityName}.
               </p>
             </div>
           </Link>
 
           {/* Convenience Store Section */}
           <Link
-            href={`/${params.city}/convenience-store-for-sale`}
+            href={`/${cityUrl}/convenience-store-for-sale`}
             className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
           >
             <div className="p-8">
@@ -62,14 +76,14 @@ export default async function CityPage({ params }) {
                 Convenience Stores for Sale
               </h2>
               <p className="mt-4 text-gray-600">
-                Explore convenience store opportunities in {cityName}
+                Explore convenience store opportunities in {cityName}.
               </p>
             </div>
           </Link>
 
           {/* Offices Section */}
           <Link
-            href={`/${params.city}/offices-for-lease`}
+            href={`/${cityUrl}/offices-for-lease`}
             className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
           >
             <div className="p-8">
@@ -77,7 +91,7 @@ export default async function CityPage({ params }) {
                 Offices for Lease
               </h2>
               <p className="mt-4 text-gray-600">
-                Find the perfect office space in {cityName}
+                Find the perfect office space in {cityName}.
               </p>
             </div>
           </Link>

@@ -1,32 +1,35 @@
-import Breadcrumb from "@/components/Breadcrumb";
-import { cities } from "@/data/gta-cities.json";
 import { notFound } from "next/navigation";
+import Breadcrumb from "@/components/Breadcrumb";
+import citiesData from "@/data/gta-cities.json";
+
+const { cities } = citiesData;
 
 export async function generateStaticParams() {
+  // Generate the static parameters for dynamic routes
   return cities.map((city) => ({
     city: city.toLowerCase(),
   }));
 }
 
 export default async function CityRestaurants({ params }) {
-  const cityExists = cities.find(
-    (c) => c.toLowerCase() === params.city.toLowerCase()
-  );
+  // Safely await the params
+  const { city } = await params;
 
-  if (!cityExists) {
-    notFound();
+  if (!city) {
+    notFound(); // If no city parameter, show 404
   }
 
-  const cityName = cityExists;
+  // Ensure city exists in the cities data
+  const cityExists = cities.find((c) => c.toLowerCase() === city.toLowerCase());
 
+  if (!cityExists) {
+    notFound(); // If city doesn't exist, show 404
+  }
+
+  // Prepare breadcrumb items for navigation
   const breadcrumbItems = [
-    {
-      label: cityName,
-      href: `/${params.city}`,
-    },
-    {
-      label: "Restaurants for Sale",
-    },
+    { label: cityExists, href: `/${cityExists.toLowerCase()}` },
+    { label: "Restaurants for Sale" },
   ];
 
   return (
@@ -35,12 +38,11 @@ export default async function CityRestaurants({ params }) {
         <Breadcrumb items={breadcrumbItems} />
 
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          Restaurants for Sale in {cityName}
+          Restaurants for Sale in {cityExists}
         </h1>
 
-        {/* Restaurant Listings */}
+        {/* Example of listing cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Example listing card - repeat or map through actual listings */}
           <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
             <div className="p-6">
               <h3 className="text-xl font-semibold text-gray-900">

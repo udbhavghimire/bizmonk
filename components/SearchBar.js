@@ -3,6 +3,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import citiesData from "@/data/gta-cities.json";
 
+// Helper function to convert city names to URL-friendly format
+const toUrlFormat = (cityName) => cityName.toLowerCase().replace(/\s+/g, "-");
+
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -23,7 +26,8 @@ export default function SearchBar() {
   const handleSelect = (city) => {
     setQuery("");
     setSuggestions([]);
-    router.push(`/${city.toLowerCase()}`);
+    const cityUrl = toUrlFormat(city);
+    router.push(`/${cityUrl}`);
   };
 
   return (

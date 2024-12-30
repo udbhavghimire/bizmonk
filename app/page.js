@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "@/components/SearchBar";
+import Newsletter from "@/components/Newsletter";
 
 export default function Home() {
   return (
@@ -154,6 +155,8 @@ export default function Home() {
           </Link>
         </div>
       </div>
+
+      <Newsletter />
     </div>
   );
 }
