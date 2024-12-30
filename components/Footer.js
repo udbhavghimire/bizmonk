@@ -10,13 +10,13 @@ export default function Footer() {
           <h2 className="md:text-5xl text-3xl font-extrabold text-900 mb-6 text-center text-black">
             Explore Restaurant for sale in Canada
           </h2>
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-1 justify-items-center pt-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-2 justify-items-center pt-4">
               {cities.cities.map((city) => (
                 <div key={city} className="text-center w-full">
                   <Link
                     href={`/${city.toLowerCase()}/restaurant-for-sale`}
-                    className="text-black hover:text-blue-600 text-center md:text-[11px] text-[9px]"
+                    className="text-black hover:text-blue-600 text-center md:text-[13px] text-[9px]"
                   >
                     Restaurant for sale in {city}
                   </Link>
