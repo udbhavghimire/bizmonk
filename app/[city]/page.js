@@ -32,10 +32,6 @@ export default async function CityPage({ params }) {
 
   const breadcrumbItems = [
     {
-      label: "Home",
-      href: "/",
-    },
-    {
       label: cityName,
     },
   ];
