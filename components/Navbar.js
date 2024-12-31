@@ -12,7 +12,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          <div className="hidden sm:block flex-1 max-w-2xl mx-8">
+          <div className="flex-1 max-w-2xl mx-8">
             <SearchBar />
           </div>
 
@@ -37,11 +37,6 @@ export default function Navbar() {
             </Link>
           </div>
         </div>
-      </div>
-
-      {/* Mobile Search */}
-      <div className="sm:hidden p-4">
-        <SearchBar />
       </div>
     </nav>
   );

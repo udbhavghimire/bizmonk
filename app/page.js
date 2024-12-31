@@ -47,7 +47,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { name: "Toronto", image: "/toronto.jpg" },
             { name: "Ottawa", image: "/ottawa.jpg" },
@@ -67,6 +67,7 @@ export default function Home() {
                 src={city.image}
                 alt={`${city.name} cityscape`}
                 fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 className="object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />

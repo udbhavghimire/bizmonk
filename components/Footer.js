@@ -1,5 +1,7 @@
 import Link from "next/link";
 import cities from "@/data/gta-cities.json";
+import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaTiktok } from "react-icons/fa6";
 
 export default function Footer() {
   return (
@@ -121,9 +123,47 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-200 mt-12 pt-8">
-          <p className="text-center text-gray-600">
-            © {new Date().getFullYear()} Bizmonk. All rights reserved.
-          </p>
+          <div className="flex flex-col items-center gap-4">
+            {/* Social Media Icons */}
+            <div className="flex space-x-6">
+              <a
+                href="https://www.facebook.com/profile.php?id=61571463021782"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-blue-600 transition-colors"
+              >
+                <FaFacebook size={24} />
+              </a>
+              <a
+                href="https://www.instagram.com/bizmonkcanada/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-pink-600 transition-colors"
+              >
+                <FaInstagram size={24} />
+              </a>
+              <a
+                href="https://youtube.com/@bizmonkcanada?si=FjlFJOmTM_b2SjfF"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-red-600 transition-colors"
+              >
+                <FaYoutube size={24} />
+              </a>
+              <a
+                href="https://www.tiktok.com/@bizmonkcanada"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-black transition-colors"
+              >
+                <FaTiktok size={24} />
+              </a>
+            </div>
+
+            <p className="text-center text-gray-600">
+              © {new Date().getFullYear()} Bizmonk. All rights reserved.
+            </p>
+          </div>
         </div>
       </div>
     </footer>
