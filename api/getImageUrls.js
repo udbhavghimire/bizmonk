@@ -13,7 +13,6 @@ export const getImageUrls = async ({ MLS, thumbnailOnly = false }) => {
 
     if (thumbnailOnly) imageLink += " and ImageSizeDescription eq 'Large'";
     else imageLink += " and ImageSizeDescription eq 'Largest'";
-    console.log(imageLink.replace("MLS", MLS));
     const response = await fetch(imageLink.replace("MLS", MLS), options);
     const jsonResponse = await response.json();
     const urls = jsonResponse.value.map((data) => data.MediaURL);
