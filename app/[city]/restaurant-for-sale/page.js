@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumb";
 import citiesData from "@/data/gta-cities.json";
+import ResaleCard from "@/components/ResaleCard";
+import capitalizeFirstLetter from "@/helpers/capitalizeFirstLetter";
 
 const { cities } = citiesData;
 
@@ -32,6 +34,24 @@ export default async function CityRestaurants({ params }) {
     { label: "Restaurants for Sale" },
   ];
 
+  const options = {
+    method: "GET",
+    headers: {
+      Authorization: process.env.BEARER_TOKEN_FOR_API,
+    },
+  };
+
+  const SALEOFBUSINESSLISTINGS = await fetch(
+    `https://query.ampre.ca/odata/Property?$filter=contains(City,'${capitalizeFirstLetter(
+      city
+    )}') and PropertySubType eq 'Sale Of Business'&$top=500&$orderby=OriginalEntryTimestamp desc`,
+    options
+  ).then((response) => response.json());
+
+  const RESTAURANTLISTINGS = SALEOFBUSINESSLISTINGS.value.filter((listing) =>
+    listing.BusinessType.includes("Restaurant")
+  );
+
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -43,19 +63,9 @@ export default async function CityRestaurants({ params }) {
 
         {/* Example of listing cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
-            <div className="p-6">
-              <h3 className="text-xl font-semibold text-gray-900">
-                Premium Restaurant Space
-              </h3>
-              <p className="mt-2 text-gray-600">
-                Well-established location with modern kitchen
-              </p>
-              <div className="mt-4 text-blue-600 font-medium">
-                View Details →
-              </div>
-            </div>
-          </div>
+          {RESTAURANTLISTINGS.map((listing) => (
+            <ResaleCard curElem={listing} key={listing.ListingKey} />
+          ))}
         </div>
       </div>
     </div>

@@ -1,5 +1,7 @@
 import Breadcrumb from "@/components/Breadcrumb";
+import ResaleCard from "@/components/ResaleCard";
 import citiesData from "@/data/gta-cities.json";
+import capitalizeFirstLetter from "@/helpers/capitalizeFirstLetter";
 import { notFound } from "next/navigation";
 
 const { cities } = citiesData;
@@ -33,6 +35,24 @@ export default async function CityConvenienceStores({ params }) {
     },
   ];
 
+  const options = {
+    method: "GET",
+    headers: {
+      Authorization: process.env.BEARER_TOKEN_FOR_API,
+    },
+  };
+
+  const SALEOFBUSINESSLISTINGS = await fetch(
+    `https://query.ampre.ca/odata/Property?$filter=contains(City,'${capitalizeFirstLetter(
+      city
+    )}') and PropertySubType eq 'Sale Of Business'&$top=500&$orderby=OriginalEntryTimestamp desc`,
+    options
+  ).then((response) => response.json());
+
+  const CONVENIENCESTORELISTINGS = SALEOFBUSINESSLISTINGS.value.filter(
+    (listing) => listing.BusinessType.includes("Convenience/Variety")
+  );
+
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -44,20 +64,9 @@ export default async function CityConvenienceStores({ params }) {
 
         {/* Store Listings */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Example listing card - repeat or map through actual listings */}
-          <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
-            <div className="p-6">
-              <h3 className="text-xl font-semibold text-gray-900">
-                Corner Store Opportunity
-              </h3>
-              <p className="mt-2 text-gray-600">
-                High-traffic location with established customer base
-              </p>
-              <div className="mt-4 text-blue-600 font-medium">
-                View Details →
-              </div>
-            </div>
-          </div>
+          {CONVENIENCESTORELISTINGS.map((listing) => (
+            <ResaleCard curElem={listing} key={listing.ListingKey} />
+          ))}
         </div>
       </div>
     </div>
