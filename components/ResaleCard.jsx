@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import TimeAgo from "@/helpers/TimeAgo";
+import TimeAgo from "./TimeAgo";
 import { getImageUrls } from "@/api/getImageUrls";
 
 const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
@@ -55,7 +55,6 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
                     height="800"
                     alt="property image"
                     onError={(e) => {
-                      console.log("Trigerring error");
                       handleImageError(e);
                     }}
                   />

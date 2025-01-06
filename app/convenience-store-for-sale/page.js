@@ -1,3 +1,7 @@
+import {
+  getConvenienceStoreListings,
+  getSaleOfBusinessListings,
+} from "@/api/getBusinessListings";
 import Breadcrumb from "@/components/Breadcrumb";
 import ResaleCard from "@/components/ResaleCard";
 import citiesData from "@/data/gta-cities.json";
@@ -18,21 +22,7 @@ export default async function page({ params }) {
     },
   ];
 
-  const options = {
-    method: "GET",
-    headers: {
-      Authorization: process.env.BEARER_TOKEN_FOR_API,
-    },
-  };
-
-  const SALEOFBUSINESSLISTINGS = await fetch(
-    `https://query.ampre.ca/odata/Property?$filter=PropertySubType eq 'Sale Of Business'&$top=500&$orderby=OriginalEntryTimestamp desc`,
-    options
-  ).then((response) => response.json());
-
-  const CONVENIENCESTORELISTINGS = SALEOFBUSINESSLISTINGS.value.filter(
-    (listing) => listing.BusinessType.includes("Convenience/Variety")
-  );
+  const CONVENIENCESTORELISTINGS = await getConvenienceStoreListings();
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">

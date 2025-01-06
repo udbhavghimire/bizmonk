@@ -2,6 +2,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import citiesData from "@/data/gta-cities.json";
 import { notFound } from "next/navigation";
 import ResaleCard from "@/components/ResaleCard";
+import { getOfficeListings } from "@/api/getBusinessListings";
 
 const { cities } = citiesData;
 
@@ -18,17 +19,7 @@ export default async function CityOffices({ params }) {
     },
   ];
 
-  const options = {
-    method: "GET",
-    headers: {
-      Authorization: process.env.BEARER_TOKEN_FOR_API,
-    },
-  };
-
-  const OFFICELEASELISTINGS = await fetch(
-    `https://query.ampre.ca/odata/Property?$filter=PropertySubType eq 'Office'&$top=200&$orderby=OriginalEntryTimestamp desc`,
-    options
-  ).then((response) => response.json());
+  const OFFICELEASELISTINGS = await getOfficeListings({});
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -41,7 +32,7 @@ export default async function CityOffices({ params }) {
 
         {/* Office Listings */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {OFFICELEASELISTINGS.value.map((listing) => (
+          {OFFICELEASELISTINGS.map((listing) => (
             <ResaleCard curElem={listing} key={listing.ListingKey} />
           ))}
         </div>

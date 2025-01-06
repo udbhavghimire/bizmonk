@@ -1,7 +1,7 @@
+import { getConvenienceStoreListings } from "@/api/getBusinessListings";
 import Breadcrumb from "@/components/Breadcrumb";
 import ResaleCard from "@/components/ResaleCard";
 import citiesData from "@/data/gta-cities.json";
-import capitalizeFirstLetter from "@/helpers/capitalizeFirstLetter";
 import { notFound } from "next/navigation";
 
 const { cities } = citiesData;
@@ -35,24 +35,9 @@ export default async function CityConvenienceStores({ params }) {
     },
   ];
 
-  const options = {
-    method: "GET",
-    headers: {
-      Authorization: process.env.BEARER_TOKEN_FOR_API,
-    },
-  };
-
-  const SALEOFBUSINESSLISTINGS = await fetch(
-    `https://query.ampre.ca/odata/Property?$filter=contains(City,'${capitalizeFirstLetter(
-      city
-    )}') and PropertySubType eq 'Sale Of Business'&$top=500&$orderby=OriginalEntryTimestamp desc`,
-    options
-  ).then((response) => response.json());
-
-  const CONVENIENCESTORELISTINGS = SALEOFBUSINESSLISTINGS.value.filter(
-    (listing) => listing.BusinessType.includes("Convenience/Variety")
-  );
-
+  const CONVENIENCESTORELISTINGS = await getConvenienceStoreListings({
+    city: city,
+  });
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">

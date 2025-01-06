@@ -2,6 +2,10 @@ import { notFound } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumb";
 import citiesData from "@/data/gta-cities.json";
 import ResaleCard from "@/components/ResaleCard";
+import {
+  getRestaurantListings,
+  getSaleOfBusinessListings,
+} from "@/api/getBusinessListings";
 
 const { cities } = citiesData;
 
@@ -16,21 +20,7 @@ export default async function CityRestaurants({ params }) {
   // Prepare breadcrumb items for navigation
   const breadcrumbItems = [{ label: "Restaurants for Sale" }];
 
-  const options = {
-    method: "GET",
-    headers: {
-      Authorization: process.env.BEARER_TOKEN_FOR_API,
-    },
-  };
-
-  const SALEOFBUSINESSLISTINGS = await fetch(
-    `https://query.ampre.ca/odata/Property?$filter=PropertySubType eq 'Sale Of Business'&$top=500&$orderby=OriginalEntryTimestamp desc`,
-    options
-  ).then((response) => response.json());
-
-  const RESTAURANTLISTINGS = SALEOFBUSINESSLISTINGS.value.filter((listing) =>
-    listing.BusinessType.includes("Restaurant")
-  );
+  const RESTAURANTLISTINGS = await getRestaurantListings();
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">

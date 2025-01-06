@@ -2,6 +2,12 @@ import citiesData from "@/data/gta-cities.json";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumb";
+import {
+  getConvenienceStoreListings,
+  getOfficeListings,
+  getRestaurantListings,
+} from "@/api/getBusinessListings";
+import ResaleCard from "@/components/ResaleCard";
 
 const cities = citiesData.cities;
 
@@ -36,6 +42,19 @@ export default async function CityPage({ params }) {
     },
   ];
 
+  const restaurantListings = await getRestaurantListings({
+    city: cityName,
+    numberOfListings: 4,
+  });
+  const convenienceStoreListings = await getConvenienceStoreListings({
+    city: cityName,
+    numberOfListings: 4,
+  });
+  const officeListings = await getOfficeListings({
+    city: cityName,
+    numberOfListings: 4,
+  });
+
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -45,52 +64,72 @@ export default async function CityPage({ params }) {
           Business Opportunities in {cityName}
         </h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="flex flex-col">
           {/* Restaurant Section */}
-          <Link
-            href={`/${cityUrl}/restaurant-for-sale`}
-            className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
-          >
+          <div>
             <div className="p-8">
-              <h2 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                Restaurants for Sale
-              </h2>
-              <p className="mt-4 text-gray-600">
-                Browse available restaurant spaces and turnkey operations in{" "}
-                {cityName}.
-              </p>
+              <div className="flex justify-between mb-2">
+                <h2 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                  Restaurants for Sale
+                </h2>
+                <Link
+                  href={`/${cityUrl}/restaurant-for-sale`}
+                  className="bg-black rounded-md px-2 py-2 hover:scale-105"
+                >
+                  View More
+                </Link>
+              </div>
+              <div className="grid grid-cols-4 gap-x-3">
+                {restaurantListings.map((data) => (
+                  <ResaleCard curElem={data} />
+                ))}
+              </div>
             </div>
-          </Link>
+          </div>
 
           {/* Convenience Store Section */}
-          <Link
-            href={`/${cityUrl}/convenience-store-for-sale`}
-            className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
-          >
+          <div>
             <div className="p-8">
-              <h2 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                Convenience Stores for Sale
-              </h2>
-              <p className="mt-4 text-gray-600">
-                Explore convenience store opportunities in {cityName}.
-              </p>
+              <div className="flex justify-between mb-2">
+                <h2 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                  Convenience Stores for Sale
+                </h2>
+                <Link
+                  href={`/${cityUrl}/convenience-store-for-sale`}
+                  className="bg-black rounded-md px-2 py-2 hover:scale-105"
+                >
+                  View More
+                </Link>
+              </div>
+              <div className="grid grid-cols-4 gap-x-3">
+                {convenienceStoreListings.map((data) => (
+                  <ResaleCard curElem={data} />
+                ))}
+              </div>
             </div>
-          </Link>
+          </div>
 
           {/* Offices Section */}
-          <Link
-            href={`/${cityUrl}/offices-for-lease`}
-            className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
-          >
+          <div>
             <div className="p-8">
-              <h2 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                Offices for Lease
-              </h2>
-              <p className="mt-4 text-gray-600">
-                Find the perfect office space in {cityName}.
-              </p>
+              <div className="flex justify-between mb-2">
+                <h2 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                  Offices for Lease
+                </h2>
+                <Link
+                  href={`/${cityUrl}/offices-for-lease`}
+                  className="bg-black rounded-md px-2 py-2 hover:scale-105"
+                >
+                  View More
+                </Link>
+              </div>
+              <div className="grid grid-cols-4 gap-x-3">
+                {officeListings.map((data) => (
+                  <ResaleCard curElem={data} />
+                ))}
+              </div>
             </div>
-          </Link>
+          </div>
         </div>
       </div>
     </div>
