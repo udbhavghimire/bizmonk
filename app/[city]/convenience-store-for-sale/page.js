@@ -1,25 +1,29 @@
+"use client";
+import { useState, use, useEffect } from "react";
 import { getConvenienceStoreListings } from "@/api/getBusinessListings";
 import Breadcrumb from "@/components/Breadcrumb";
 import ResaleCard from "@/components/ResaleCard";
 import citiesData from "@/data/gta-cities.json";
+import Filter from "@/components/Filter";
+import LoadingBar from "@/components/LoadingBar";
 import { notFound } from "next/navigation";
 
 const { cities } = citiesData;
 
-export async function generateStaticParams() {
-  return cities.map((city) => ({
-    city: city.toLowerCase(),
-  }));
-}
+export default function CityConvenienceStores({ params }) {
+  const [filteredListings, setFilteredListings] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-export default async function CityConvenienceStores({ params }) {
-  const { city } = await params;
+  // Unwrap params using React.use()
+  const unwrappedParams = use(params);
+  const { city } = unwrappedParams;
 
   if (!city) {
     notFound();
   }
 
   const cityExists = cities.find((c) => c.toLowerCase() === city.toLowerCase());
+  const cityUrl = city.toLowerCase();
 
   if (!cityExists) {
     notFound();
@@ -28,18 +32,50 @@ export default async function CityConvenienceStores({ params }) {
   const breadcrumbItems = [
     {
       label: cityExists,
-      href: `/${city.toLowerCase()}`,
+      href: `/${cityUrl}`,
     },
     {
       label: "Convenience Stores for Sale",
     },
   ];
 
-  const CONVENIENCESTORELISTINGS = await getConvenienceStoreListings({
-    city: city,
-  });
+  // Fetch initial data when component mounts
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      setIsLoading(true);
+      try {
+        const listings = await getConvenienceStoreListings({
+          city: city,
+        });
+        setFilteredListings(listings);
+      } catch (error) {
+        console.error("Error fetching initial listings:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchInitialData();
+  }, [city]);
+
+  const handleFilterChange = async (filters) => {
+    setIsLoading(true);
+    try {
+      const listings = await getConvenienceStoreListings({
+        city: city,
+        priceRange: filters.priceRange,
+      });
+      setFilteredListings(listings);
+    } catch (error) {
+      console.error("Error fetching filtered listings:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      {isLoading && <LoadingBar />}
       <div className="max-w-7xl mx-auto">
         <Breadcrumb items={breadcrumbItems} />
 
@@ -47,9 +83,10 @@ export default async function CityConvenienceStores({ params }) {
           Convenience Stores for Sale in {cityExists}
         </h1>
 
-        {/* Store Listings */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {CONVENIENCESTORELISTINGS.map((listing) => (
+        <Filter onFilterChange={handleFilterChange} cityUrl={cityUrl} />
+
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredListings.map((listing) => (
             <ResaleCard curElem={listing} key={listing.ListingKey} />
           ))}
         </div>

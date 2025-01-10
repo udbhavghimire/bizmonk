@@ -23,11 +23,21 @@ export const getSaleOfBusinessListings = async ({ city } = {}) => {
 export const getRestaurantListings = async ({
   city = null,
   numberOfListings = null,
+  priceRange = null,
 } = {}) => {
   const SALEOFBUSINESSLISTINGS = await getSaleOfBusinessListings({ city });
-  const filteredValues = SALEOFBUSINESSLISTINGS.value.filter((listing) =>
+  let filteredValues = SALEOFBUSINESSLISTINGS.value.filter((listing) =>
     listing.BusinessType.includes("Restaurant")
   );
+
+  // Apply price filter if provided
+  if (priceRange) {
+    filteredValues = filteredValues.filter((listing) => {
+      const price = Number(listing.ListPrice);
+      return price >= priceRange.min && price <= priceRange.max;
+    });
+  }
+
   return !numberOfListings
     ? filteredValues
     : filteredValues.slice(0, numberOfListings);
@@ -36,11 +46,21 @@ export const getRestaurantListings = async ({
 export const getConvenienceStoreListings = async ({
   city = null,
   numberOfListings = null,
+  priceRange = null,
 } = {}) => {
   const SALEOFBUSINESSLISTINGS = await getSaleOfBusinessListings({ city });
-  const filteredValues = SALEOFBUSINESSLISTINGS.value.filter((listing) =>
+  let filteredValues = SALEOFBUSINESSLISTINGS.value.filter((listing) =>
     listing.BusinessType.includes("Convenience/Variety")
   );
+
+  // Apply price filter if provided
+  if (priceRange) {
+    filteredValues = filteredValues.filter((listing) => {
+      const price = Number(listing.ListPrice);
+      return price >= priceRange.min && price <= priceRange.max;
+    });
+  }
+
   return !numberOfListings
     ? filteredValues
     : filteredValues.slice(0, numberOfListings);
@@ -49,12 +69,24 @@ export const getConvenienceStoreListings = async ({
 export const getOfficeListings = async ({
   city = null,
   numberOfListings = 200,
+  priceRange = null,
 }) => {
   const data = await fetch(
     `https://query.ampre.ca/odata/Property?$filter=PropertySubType eq 'Office'${
       city ? ` and contains(City,'${capitalizeFirstLetter(city)}')` : ""
-    }&$top=${numberOfListings || 200}&$orderby=OriginalEntryTimestamp desc`,
+    }&$top=${numberOfListings || 300}&$orderby=OriginalEntryTimestamp desc`,
     options
   ).then((response) => response.json());
-  return data.value;
+
+  let filteredValues = data.value;
+
+  // Apply price filter if provided
+  if (priceRange) {
+    filteredValues = filteredValues.filter((listing) => {
+      const price = Number(listing.ListPrice);
+      return price >= priceRange.min && price <= priceRange.max;
+    });
+  }
+
+  return filteredValues;
 };

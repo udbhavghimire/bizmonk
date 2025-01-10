@@ -5,6 +5,11 @@ function TimeAgo({ modificationTimestamp }) {
   const [timeAgo, setTimeAgo] = useState("");
 
   useEffect(() => {
+    if (!modificationTimestamp) {
+      setTimeAgo("No timestamp available");
+      return;
+    }
+
     // Parse the modification timestamp string into a Date object
     const modificationTime = new Date(modificationTimestamp);
 
@@ -45,7 +50,12 @@ function TimeAgo({ modificationTimestamp }) {
     // Update the state with the calculated time ago string
     setTimeAgo(timeAgoString);
   }, [modificationTimestamp]);
-  console.log(modificationTimestamp.toLocaleString("en-US"));
+
+  // Only log if modificationTimestamp exists
+  if (modificationTimestamp) {
+    console.log(new Date(modificationTimestamp).toLocaleString("en-US"));
+  }
+
   return <>{timeAgo}</>;
 }
 

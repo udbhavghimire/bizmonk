@@ -1,49 +1,74 @@
+"use client";
+import { useState, use, useEffect } from "react";
 import { notFound } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumb";
 import citiesData from "@/data/gta-cities.json";
 import ResaleCard from "@/components/ResaleCard";
-import capitalizeFirstLetter from "@/helpers/capitalizeFirstLetter";
-import {
-  getRestaurantListings,
-  getSaleOfBusinessListings,
-} from "@/api/getBusinessListings";
+import Filter from "@/components/Filter";
+import LoadingBar from "@/components/LoadingBar";
+import { getRestaurantListings } from "@/api/getBusinessListings";
 
 const { cities } = citiesData;
 
-export async function generateStaticParams() {
-  // Generate the static parameters for dynamic routes
-  return cities.map((city) => ({
-    city: city.toLowerCase(),
-  }));
-}
+export default function CityRestaurants({ params }) {
+  const [filteredListings, setFilteredListings] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-export default async function CityRestaurants({ params }) {
-  // Safely await the params
-  const { city } = await params;
+  // Unwrap params using React.use()
+  const unwrappedParams = use(params);
+  const { city } = unwrappedParams;
 
   if (!city) {
-    notFound(); // If no city parameter, show 404
+    notFound();
   }
 
-  // Ensure city exists in the cities data
   const cityExists = cities.find((c) => c.toLowerCase() === city.toLowerCase());
+  const cityUrl = city.toLowerCase();
 
   if (!cityExists) {
-    notFound(); // If city doesn't exist, show 404
+    notFound();
   }
 
-  // Prepare breadcrumb items for navigation
   const breadcrumbItems = [
-    { label: cityExists, href: `/${cityExists.toLowerCase()}` },
+    { label: cityExists, href: `/${cityUrl}` },
     { label: "Restaurants for Sale" },
   ];
 
-  const RESTAURANTLISTINGS = await getRestaurantListings({
-    city: city,
-  });
+  // Fetch initial data when component mounts
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      setIsLoading(true);
+      try {
+        const listings = await getRestaurantListings({
+          city: city,
+        });
+        setFilteredListings(listings);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchInitialData();
+  }, [city]);
+
+  const handleFilterChange = async (filters) => {
+    setIsLoading(true);
+    try {
+      const listings = await getRestaurantListings({
+        city: city,
+        priceRange: filters.priceRange,
+      });
+      setFilteredListings(listings);
+    } catch (error) {
+      console.error("Error fetching filtered listings:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      {isLoading && <LoadingBar />}
       <div className="max-w-7xl mx-auto">
         <Breadcrumb items={breadcrumbItems} />
 
@@ -51,9 +76,10 @@ export default async function CityRestaurants({ params }) {
           Restaurants for Sale in {cityExists}
         </h1>
 
-        {/* Example of listing cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {RESTAURANTLISTINGS.map((listing) => (
+        <Filter onFilterChange={handleFilterChange} cityUrl={cityUrl} />
+
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredListings.map((listing) => (
             <ResaleCard curElem={listing} key={listing.ListingKey} />
           ))}
         </div>
