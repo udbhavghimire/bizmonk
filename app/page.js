@@ -3,8 +3,14 @@ import Link from "next/link";
 import SearchBar from "@/components/SearchBar";
 import Newsletter from "@/components/Newsletter";
 import TextWithContactButton from "@/components/TextWithContactButton";
+import PropertyDisplaySection from "@/components/PropertyDisplaySection";
+import Slider from "@/components/Slider";
+import { getConvenienceStoreListings } from "@/api/getBusinessListings";
 
-export default function Home() {
+export default async function Home() {
+  const convenienceStoreListings = await getConvenienceStoreListings({
+    numberOfListings: 4,
+  });
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
@@ -96,6 +102,12 @@ export default function Home() {
         subtitle="Are you looking for a Franchise?"
       />
       {/* Category Section */}
+      <PropertyDisplaySection
+        title="Check out these latest convenience store listings"
+        exploreAllLink="/convenience-store-for-sale"
+      >
+        <Slider data={convenienceStoreListings} />
+      </PropertyDisplaySection>
       <div
         id="categories"
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24"
