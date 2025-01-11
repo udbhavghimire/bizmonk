@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "@/components/SearchBar";
 import Newsletter from "@/components/Newsletter";
+import TextWithContactButton from "@/components/TextWithContactButton";
 
 export default function Home() {
   return (
@@ -32,7 +33,12 @@ export default function Home() {
         <div className="absolute top-0 right-0 w-40 h-40 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
         <div className="absolute -bottom-8 left-20 w-40 h-40 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
       </div>
-
+      <TextWithContactButton
+        title="Are you looking to start a business?"
+        subtitle="Not sure where to start?"
+        textContent="Looking for the perfect space to launch or grow your business? BizMonk specializes in providing premium real estate solutions tailored to meet your unique needs. Whether you're starting fresh or expanding your operations, we have the ideal commercial spaces to set your business up for success. Contact us today to find the right space and take the first step towards your business goals!"
+        imgSrc="/contact-img/person.png"
+      />
       {/* Cities Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="text-center mb-12">
@@ -78,7 +84,17 @@ export default function Home() {
           ))}
         </div>
       </div>
-
+      <TextWithContactButton
+        textContent="Looking to invest in a franchise and become your own boss? Our
+          platform connects you with the best franchise opportunities across
+          various industries, from food and retail to services and beyond.
+          Whether you're a seasoned entrepreneur or just starting your journey,
+          we provide detailed insights and expert guidance to help you make the
+          right choice. Start building your future today!"
+        imgSrc={"/contact-img/franchise.png"}
+        title="FRANCHISE OPPORTUNITIES"
+        subtitle="Are you looking for a Franchise?"
+      />
       {/* Category Section */}
       <div
         id="categories"

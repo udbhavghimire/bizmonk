@@ -159,7 +159,17 @@ export default function Footer() {
                 <FaTiktok size={24} />
               </a>
             </div>
-
+            <div className="text-xs text-[#ACAAAA] mt-10 sm:mt-0">
+              The REALTOR® trademark is controlled by The Canadian Real Estate
+              Association (CREA) and identifies real estate professionals who
+              are members of CREA. The trademarks MLS®, Multiple Listing
+              Service® and the associated logos identify professional services
+              rendered by REALTOR® members of CREA to effect the purchase, sale
+              and lease of real estate as part of a cooperative selling system.
+            </div>
+            <div className="flex flex-row w-16 mx-auto">
+              <img src="/crea.svg"></img>
+            </div>
             <p className="text-center text-gray-600">
               © {new Date().getFullYear()} Bizmonk. All rights reserved.
             </p>

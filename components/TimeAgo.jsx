@@ -52,9 +52,9 @@ function TimeAgo({ modificationTimestamp }) {
   }, [modificationTimestamp]);
 
   // Only log if modificationTimestamp exists
-  if (modificationTimestamp) {
-    console.log(new Date(modificationTimestamp).toLocaleString("en-US"));
-  }
+  // if (modificationTimestamp) {
+  //   console.log(new Date(modificationTimestamp).toLocaleString("en-US"));
+  // }
 
   return <>{timeAgo}</>;
 }
