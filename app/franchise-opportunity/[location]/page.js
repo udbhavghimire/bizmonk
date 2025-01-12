@@ -1,27 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getLocationContent } from "@/data/franchise-data";
+import { getLocationContent, franchiseLocations } from "@/data/franchise-data";
 import Newsletter from "@/components/Newsletter";
 
-const cities = [
-  "Ontario",
-  "Toronto",
-  "Mississauga",
-  "Brampton",
-  "Vaughan",
-  "Markham",
-  "Richmond Hill",
-  "Oakville",
-  "Ajax",
-  "Pickering",
-  "Milton",
-  "Burlington",
-  "Oshawa",
-  "Newmarket",
-  "Aurora",
-  "Whitby",
-];
+const cities = Object.keys(franchiseLocations).map((key) => {
+  return key
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+});
 
 export default function FranchiseOpportunityPage({ params }) {
   const { location } = params;
