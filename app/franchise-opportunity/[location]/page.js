@@ -212,7 +212,22 @@ export default function FranchiseOpportunityPage({ params }) {
 
 // Update static paths
 export async function generateStaticParams() {
-  return cities.map((city) => ({
-    location: city.toLowerCase().replace(" ", "-"),
-  }));
+  return [
+    { location: "ontario" },
+    { location: "toronto" },
+    { location: "mississauga" },
+    { location: "brampton" },
+    { location: "vaughan" },
+    { location: "markham" },
+    { location: "richmond-hill" },
+    { location: "oakville" },
+    { location: "ajax" },
+    { location: "pickering" },
+    { location: "milton" },
+    { location: "burlington" },
+    { location: "oshawa" },
+    { location: "newmarket" },
+    { location: "aurora" },
+    { location: "whitby" },
+  ];
 }

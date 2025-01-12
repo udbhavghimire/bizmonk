@@ -224,7 +224,7 @@ export default function FranchiseDetailPage({ params }) {
 
 export async function generateStaticParams() {
   const cities = [
-    "all",
+    "ontario",
     "toronto",
     "mississauga",
     "brampton",
