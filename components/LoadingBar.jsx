@@ -29,7 +29,7 @@ const LoadingBar = () => {
     <div className="fixed top-0 left-0 right-0 z-50">
       <div className="h-1 bg-gray-200">
         <div
-          className="h-1 bg-blue-600 transition-all duration-200 ease-out"
+          className="h-1 bg-primary transition-all duration-200 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -37,4 +37,4 @@ const LoadingBar = () => {
   );
 };
 
-export default LoadingBar; 
+export default LoadingBar;

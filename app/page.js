@@ -22,33 +22,90 @@ export default async function Home() {
     numberOfListings: 4,
   });
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-pink-50 opacity-70" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40">
+    <div className="min-h-screen bg-white">
+      {/* Enhanced Hero Section */}
+      <div className="relative overflow-hidden min-h-[90vh]">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="text-center">
-            <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-pink-500 sm:text-7xl md:text-8xl tracking-tight mb-6">
-              Bizmonk
+            <h1 className="text-5xl md:text-7xl font-black text-gray-900 tracking-tight max-w-5xl mx-auto leading-[1.1] mb-6">
+              Your Gateway to Business
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                Ownership in GTA
+              </span>
             </h1>
-            <p className="text-7xl font-black text-gray-900 tracking-tight mb-8">
-              Find your business space
+            <p className="text-sm text-black max-w-xl mx-auto mb-10">
+              Discover premium business opportunities, from turnkey operations
+              to prime commercial spaces across Greater Toronto Area
             </p>
-            <p className="mt-8 text-2xl text-gray-600 max-w-3xl mx-auto font-medium leading-relaxed">
-              Discover premium business opportunities across the Greater Toronto
-              Area
-            </p>
-            <div className="mt-10 max-w-2xl mx-auto">
-              <SearchBar />
+
+            <div className="mt-8 max-w-3xl mx-auto">
+              <SearchBar variant="hero" />
+            </div>
+
+            {/* Business Categories Quick Links */}
+            <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+              {[
+                {
+                  icon: "🏢",
+                  title: "Offices",
+                  link: "/offices-for-lease",
+                  count: "250+",
+                },
+                {
+                  icon: "🍽️",
+                  title: "Restaurants",
+                  link: "/restaurant-for-sale",
+                  count: "180+",
+                },
+                {
+                  icon: "🏪",
+                  title: "Stores",
+                  link: "/convenience-store-for-sale",
+                  count: "120+",
+                },
+                {
+                  icon: "🤝",
+                  title: "Franchises",
+                  link: "/franchises",
+                  count: "90+",
+                },
+              ].map((category) => (
+                <Link
+                  key={category.title}
+                  href={category.link}
+                  className="group p-4 bg-white/80 backdrop-blur-sm rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300"
+                >
+                  <div className="text-3xl mb-2">{category.icon}</div>
+                  <h3 className="font-semibold text-gray-900">
+                    {category.title}
+                  </h3>
+                  <p className="text-primary font-bold">{category.count}</p>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
-
-        {/* Decorative Elements */}
-        <div className="absolute top-0 left-0 w-40 h-40 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
-        <div className="absolute top-0 right-0 w-40 h-40 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-8 left-20 w-40 h-40 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
       </div>
+
+      {/* Business Stats Section */}
+      <div className="bg-white py-12 border-y border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { number: "1,500+", label: "Active Listings" },
+              { number: "500+", label: "Successful Sales" },
+              { number: "15+", label: "Years Experience" },
+              { number: "98%", label: "Client Satisfaction" },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <p className="text-4xl font-bold text-primary">{stat.number}</p>
+                <p className="text-gray-600 mt-1">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <TextWithContactButton
         title="Are you looking to start a business?"
         subtitle="Not sure where to start?"
@@ -60,7 +117,7 @@ export default async function Home() {
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             Business Properties for sale in{" "}
-            <span className="text-bold text-transparent bg-clip-text  bg-gradient-to-r from-blue-600 to-pink-500">
+            <span className="text-bold text-transparent bg-clip-text  bg-gradient-to-r from-primary to-secondary">
               your city
             </span>
           </h2>
@@ -101,26 +158,23 @@ export default async function Home() {
         </div>
       </div>
       <PropertyDisplaySection
-        title="Check out latest Convenience Store listings for sale!"
+        title="Latest Convenience Store Listings"
+        subtitle="Discover turnkey convenience store opportunities in prime locations"
         exploreAllLink="/convenience-store-for-sale"
       >
         <Slider data={convenienceStoreListings} />
       </PropertyDisplaySection>
       <TextWithContactButton
-        textContent="Looking to invest in a franchise and become your own boss? Our
-          platform connects you with the best franchise opportunities across
-          various industries, from food and retail to services and beyond.
-          Whether you're a seasoned entrepreneur or just starting your journey,
-          we provide detailed insights and expert guidance to help you make the
-          right choice. Start building your future today!"
-        imgSrc={"/contact-img/franchise.png"}
-        title="FRANCHISE OPPORTUNITIES"
-        subtitle="Are you looking for a Franchise?"
+        title="Franchise Opportunities Await"
+        subtitle="Turn Your Entrepreneurial Dreams into Reality"
+        textContent="Looking for the perfect franchise opportunity? BizMonk connects you with premium franchise opportunities across various industries. Whether you're an experienced entrepreneur or just starting your journey, we provide comprehensive support and guidance to help you find the ideal franchise that aligns with your goals and investment capacity. From established brands to emerging concepts, discover your path to business ownership today!"
+        imgSrc="/kfc-restau.jpg"
       />
       {/* Category Section */}
 
       <PropertyDisplaySection
-        title="Check out latest Restaurant listings for sale!"
+        title="Featured Restaurant Listings"
+        subtitle="Explore profitable restaurant businesses ready for new ownership"
         exploreAllLink="/restaurant-for-sale"
       >
         <Slider data={restaurantListings} />
@@ -204,7 +258,8 @@ export default async function Home() {
       </div>
 
       <PropertyDisplaySection
-        title="Check out latest Office Spaces for lease!"
+        title="Premium Office Spaces"
+        subtitle="Find the perfect office space for your business growth"
         exploreAllLink="/offices-for-lease"
       >
         <Slider data={officeListings} />

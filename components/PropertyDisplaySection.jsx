@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 const PropertyDisplaySection = ({
   title,
@@ -8,29 +9,56 @@ const PropertyDisplaySection = ({
   children,
 }) => {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:rounded-md bg-gradient-to-r from-blue-600/15 to-pink-500/15 my-24">
-      <div className="my-2 ">
-        <div className="flex flex-row items-center justify-between">
-          <h3 className="text-xl sm:text-2xl font-semibold w-[100%] sm:w-auto text-black">
-            {title}
-          </h3>
-          <Link href={exploreAllLink || "#"} className="hidden sm:inline">
-            <button className="border-black font-bold border-2 inline px-1 sm:px-3 py-2 rounded-md text-sm sm:text-md text-black hover:scale-105">
+    <div className="relative py-24">
+      {/* Background with gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header Section */}
+        <div className="mb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div className="space-y-2">
+              <h2 className="text-3xl sm:text-4xl font-bold">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                  {title}
+                </span>
+              </h2>
+              {subtitle && <p className="text-gray-600 text-lg">{subtitle}</p>}
+            </div>
+
+            {/* Desktop Explore Button */}
+            <Link
+              href={exploreAllLink || "#"}
+              className="hidden sm:inline-flex items-center justify-center px-6 py-3 
+                       text-base font-medium text-primary bg-white border-2 
+                       border-primary rounded-full hover:bg-primary/5 
+                       transition-all duration-300 group"
+            >
               Explore All
-            </button>
+              <ArrowRightIcon className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Content Section */}
+        <div className="relative">
+          {/* Main Content */}
+          <div className="bg-white">{children}</div>
+        </div>
+
+        {/* Mobile Explore Button */}
+        <div className="mt-8 text-center sm:hidden">
+          <Link
+            href={exploreAllLink || "#"}
+            className="inline-flex items-center justify-center px-6 py-3 
+                     text-base font-medium text-primary bg-white border-2 
+                     border-primary rounded-full hover:bg-primary/5 
+                     transition-all duration-300 group"
+          >
+            Explore All
+            <ArrowRightIcon className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
-        {subtitle && (
-          <h5 className="font-md text-xs sm:text-md sm:mt-1">{subtitle}</h5>
-        )}
-      </div>
-      {children}
-      <div className="flex justify-center">
-        <Link href={exploreAllLink || "#"} className="sm:hidden">
-          <button className="font-semibold border-2 inline px-3 sm:px-3 py-2 rounded-full text-sm mt-1 sm:text-md hover:scale-105 bg-white text-black">
-            Explore All
-          </button>
-        </Link>
       </div>
     </div>
   );
