@@ -5,10 +5,20 @@ import Newsletter from "@/components/Newsletter";
 import TextWithContactButton from "@/components/TextWithContactButton";
 import PropertyDisplaySection from "@/components/PropertyDisplaySection";
 import Slider from "@/components/Slider";
-import { getConvenienceStoreListings } from "@/api/getBusinessListings";
+import {
+  getConvenienceStoreListings,
+  getOfficeListings,
+  getRestaurantListings,
+} from "@/api/getBusinessListings";
 
 export default async function Home() {
   const convenienceStoreListings = await getConvenienceStoreListings({
+    numberOfListings: 4,
+  });
+  const restaurantListings = await getRestaurantListings({
+    numberOfListings: 4,
+  });
+  const officeListings = await getOfficeListings({
     numberOfListings: 4,
   });
   return (
@@ -90,6 +100,12 @@ export default async function Home() {
           ))}
         </div>
       </div>
+      <PropertyDisplaySection
+        title="Check out latest Convenience Store listings for sale!"
+        exploreAllLink="/convenience-store-for-sale"
+      >
+        <Slider data={convenienceStoreListings} />
+      </PropertyDisplaySection>
       <TextWithContactButton
         textContent="Looking to invest in a franchise and become your own boss? Our
           platform connects you with the best franchise opportunities across
@@ -102,12 +118,14 @@ export default async function Home() {
         subtitle="Are you looking for a Franchise?"
       />
       {/* Category Section */}
+
       <PropertyDisplaySection
-        title="Check out these latest convenience store listings"
-        exploreAllLink="/convenience-store-for-sale"
+        title="Check out latest Restaurant listings for sale!"
+        exploreAllLink="/restaurant-for-sale"
       >
-        <Slider data={convenienceStoreListings} />
+        <Slider data={restaurantListings} />
       </PropertyDisplaySection>
+
       <div
         id="categories"
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24"
@@ -184,6 +202,13 @@ export default async function Home() {
           </Link>
         </div>
       </div>
+
+      <PropertyDisplaySection
+        title="Check out latest Office Spaces for lease!"
+        exploreAllLink="/offices-for-lease"
+      >
+        <Slider data={officeListings} />
+      </PropertyDisplaySection>
 
       <Newsletter />
     </div>
