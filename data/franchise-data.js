@@ -26,10 +26,6 @@ const createLocationData = (cityName) => ({
   franchises: baseFranchises.map((franchise) => ({
     ...franchise,
     locations: franchise.locations + ` in ${cityName}`,
-    investment:
-      cityName === "Toronto"
-        ? franchise.investment.replace("K", "0K")
-        : franchise.investment,
   })),
   stats: {
     availableFranchises: "100+",
@@ -39,6 +35,7 @@ const createLocationData = (cityName) => ({
   },
 });
 
+// Create a mapping of all valid locations
 export const franchiseLocations = {
   ontario: {
     title: "Franchise Opportunities in Ontario",
@@ -59,7 +56,7 @@ export const franchiseLocations = {
   brampton: createLocationData("Brampton"),
   vaughan: createLocationData("Vaughan"),
   markham: createLocationData("Markham"),
-  richmond: createLocationData("Richmond Hill"),
+  "richmond-hill": createLocationData("Richmond Hill"),
   oakville: createLocationData("Oakville"),
   ajax: createLocationData("Ajax"),
   pickering: createLocationData("Pickering"),
@@ -71,17 +68,14 @@ export const franchiseLocations = {
   whitby: createLocationData("Whitby"),
 };
 
-// Helper function to get location-specific content
+// Helper function to get location-specific content with error handling
 export const getLocationContent = (location) => {
-  const defaultStats = {
-    availableFranchises: "200+",
-    successRate: "95%",
-    supportAndTraining: "Included",
-    financingOptions: "Available",
-  };
+  const locationKey = location.toLowerCase();
+  const locationData = franchiseLocations[locationKey];
 
-  return {
-    ...franchiseLocations[location.toLowerCase()],
-    stats: franchiseLocations[location.toLowerCase()]?.stats || defaultStats,
-  };
+  if (!locationData) {
+    throw new Error(`Location not found: ${location}`);
+  }
+
+  return locationData;
 };
