@@ -22,10 +22,10 @@ export default function Navbar() {
 
           <div className="hidden sm:flex items-center space-x-4">
             <Link
-              href="/"
+              href="/franchise-opportunity/ontario"
               className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm"
             >
-              Exclusive Listings
+              Franchise Opportunities
             </Link>
             <Link
               href="/restaurant-for-sale"

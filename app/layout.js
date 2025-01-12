@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
       <body className={bricolage.className}>
         <LoadingBar />
         <Navbar />
-        {children}
+        <main>{children}</main>
         <Footer />
       </body>
     </html>

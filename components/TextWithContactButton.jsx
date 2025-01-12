@@ -8,9 +8,7 @@ const TextWithContactButton = ({ title, subtitle, textContent, imgSrc }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-              {title}
-            </span>
+            <span className="text-primary">{title}</span>
           </h2>
           <p className="text-xl text-gray-600">{subtitle}</p>
         </div>
@@ -25,10 +23,10 @@ const TextWithContactButton = ({ title, subtitle, textContent, imgSrc }) => {
             {/* Franchise Categories */}
             <div className="grid grid-cols-2 gap-4 mt-8">
               {[
-                { name: "Food & Beverage", count: "50+" },
-                { name: "Retail Stores", count: "30+" },
-                { name: "Service Business", count: "40+" },
-                { name: "Health & Fitness", count: "25+" },
+                { name: "Office Spaces", count: "500+" },
+                { name: "Convenience Stores", count: "300+" },
+                { name: "Restaurants", count: "400+" },
+                { name: "Franchises", count: "25+" },
               ].map((category) => (
                 <div
                   key={category.name}
@@ -42,26 +40,15 @@ const TextWithContactButton = ({ title, subtitle, textContent, imgSrc }) => {
               ))}
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 mt-8">
-              <Link
-                href="tel:(647) 123-4567"
-                className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-primary rounded-full hover:bg-primary/90 transition-colors duration-300"
-              >
-                Contact us
-              </Link>
-              <Link
-                href="/franchises"
-                className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-primary bg-white border-2 border-primary rounded-full hover:bg-primary/5 transition-colors duration-300"
-              >
-                Explore Franchises
-                <ArrowRightIcon className="ml-2 h-5 w-5" />
-              </Link>
-            </div>
-
             {/* Contact Info */}
             <div className="mt-8 p-4 bg-gray-50 rounded-lg">
               <div className="flex items-center space-x-4">
+                <Link
+                  href="tel:(647) 123-4567"
+                  className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-primary rounded-full hover:bg-primary/90 transition-colors duration-300"
+                >
+                  Contact us
+                </Link>
                 <div className="flex-shrink-0">
                   <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
                     <svg

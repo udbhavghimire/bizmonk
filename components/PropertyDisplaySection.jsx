@@ -19,9 +19,7 @@ const PropertyDisplaySection = ({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div className="space-y-2">
               <h2 className="text-3xl sm:text-4xl font-bold">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                  {title}
-                </span>
+                <span className="text-primary">{title}</span>
               </h2>
               {subtitle && <p className="text-gray-600 text-lg">{subtitle}</p>}
             </div>

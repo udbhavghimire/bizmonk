@@ -29,9 +29,7 @@ export default async function Home() {
           <div className="text-center">
             <h1 className="text-5xl md:text-7xl font-black text-gray-900 tracking-tight max-w-5xl mx-auto leading-[1.1] mb-6">
               Your Gateway to Business
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                Ownership in GTA
-              </span>
+              <span className="block text-primary">Ownership in GTA</span>
             </h1>
             <p className="text-sm text-black max-w-xl mx-auto mb-10">
               Discover premium business opportunities, from turnkey operations
@@ -157,6 +155,134 @@ export default async function Home() {
           ))}
         </div>
       </div>
+
+      {/* Franchise Opportunities Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 bg-gray-50">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Looking for{" "}
+            <span className="text-primary">Franchise Opportunities?</span>
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Explore premium franchise opportunities across Ontario and find the
+            perfect business venture
+          </p>
+        </div>
+
+        {/* Featured Franchises */}
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <Link
+            href="/franchise-opportunity/ontario/mary-browns-chicken"
+            className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            <div className="relative h-64">
+              <Image
+                src="/mary.jpg"
+                alt="Mary Brown's Chicken"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6">
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  Mary Brown's Chicken
+                </h3>
+                <p className="text-sm text-gray-200">
+                  Investment: $450K - $700K
+                </p>
+              </div>
+            </div>
+          </Link>
+
+          <Link
+            href="/franchise-opportunity/ontario/fat-bastard-burrito"
+            className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            <div className="relative h-64">
+              <Image
+                src="/fatb.jpg"
+                alt="Fat Bastard Burrito"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6">
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  Fat Bastard Burrito
+                </h3>
+                <p className="text-sm text-gray-200">
+                  Investment: $350K - $500K
+                </p>
+              </div>
+            </div>
+          </Link>
+        </div>
+
+        {/* Explore by Location */}
+        <div className="bg-white rounded-2xl p-8 shadow-sm">
+          <h3 className="text-2xl font-bold text-center mb-8">
+            Explore Franchises by Location
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {[
+              "Ontario",
+              "Toronto",
+              "Mississauga",
+              "Brampton",
+              "Vaughan",
+              "Markham",
+              "Richmond Hill",
+              "Oakville",
+              "Ajax",
+              "Pickering",
+              "Milton",
+              "Burlington",
+            ].map((city) => (
+              <Link
+                key={city}
+                href={`/franchise-opportunity/${city
+                  .toLowerCase()
+                  .replace(" ", "-")}`}
+                className="px-4 py-3 text-center rounded-lg bg-gray-50 hover:bg-primary/5 transition-colors group"
+              >
+                <span className="text-sm font-medium text-gray-900 group-hover:text-primary">
+                  {city}
+                </span>
+              </Link>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Link
+              href="/franchise-opportunity/ontario"
+              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium"
+            >
+              View All Locations
+              <span className="text-lg">→</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Quick Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+          {[
+            { number: "2+", label: "Premium Franchises" },
+            { number: "15+", label: "Available Locations" },
+            { number: "95%", label: "Success Rate" },
+            { number: "24/7", label: "Support & Training" },
+          ].map((stat) => (
+            <div
+              key={stat.label}
+              className="bg-white rounded-xl p-6 text-center shadow-sm"
+            >
+              <p className="text-3xl font-bold text-primary mb-1">
+                {stat.number}
+              </p>
+              <p className="text-sm text-gray-600">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <PropertyDisplaySection
         title="Latest Convenience Store Listings"
         subtitle="Discover turnkey convenience store opportunities in prime locations"
@@ -164,12 +290,6 @@ export default async function Home() {
       >
         <Slider data={convenienceStoreListings} />
       </PropertyDisplaySection>
-      <TextWithContactButton
-        title="Franchise Opportunities Await"
-        subtitle="Turn Your Entrepreneurial Dreams into Reality"
-        textContent="Looking for the perfect franchise opportunity? BizMonk connects you with premium franchise opportunities across various industries. Whether you're an experienced entrepreneur or just starting your journey, we provide comprehensive support and guidance to help you find the ideal franchise that aligns with your goals and investment capacity. From established brands to emerging concepts, discover your path to business ownership today!"
-        imgSrc="/kfc-restau.jpg"
-      />
       {/* Category Section */}
 
       <PropertyDisplaySection
