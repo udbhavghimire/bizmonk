@@ -25,10 +25,10 @@ export default function Navbar() {
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center">
               <Image
-                src="/logo.png"
+                src="/bizmonk-logo.svg"
                 alt="BizMonk Logo"
                 width={120}
-                height={40}
+                height={80}
                 className="h-8 w-auto"
               />
             </Link>
@@ -89,7 +89,7 @@ export default function Navbar() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Image
-                  src="/logo.png"
+                  src="/bizmonk-logo.svg"
                   alt="BizMonk Logo"
                   width={120}
                   height={40}
