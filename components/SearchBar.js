@@ -41,11 +41,11 @@ export default function SearchBar({ variant = "default" }) {
               type="text"
               value={query}
               onChange={(e) => handleSearch(e.target.value)}
-              placeholder="Search business opportunities by city..."
+              placeholder="Search business opportunities"
               className="w-full pl-12 pr-4 py-4 text-lg border-2 border-gray-200 rounded-full 
                          shadow-lg focus:outline-none focus:border-primary 
                          transition-all duration-300 bg-white/90 backdrop-blur-sm
-                         text-gray-900 placeholder-gray-400"
+                         text-gray-900 placeholder-gray-400 placeholder:text-xs placeholder:font-light"
             />
           </div>
           <div className="absolute right-4 top-1/2 -translate-y-1/2 flex space-x-2">
