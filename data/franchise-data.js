@@ -7,7 +7,66 @@ const baseFranchises = [
     image: "/mary.jpg",
     description:
       "Be part of Canada's fastest-growing chicken restaurant chain known for its Made Fresh from Scratch™ preparation. With over 50 years of success, Mary Brown's offers a proven business model and comprehensive support system.",
+    brochure: "/brochures/marybrowns.pdf",
+    financing: {
+      "Restaurant Model": "Full Store: 1,800-3,000 sq. ft.",
+      "startUp Costs": "$875,000+",
+      "liquid Capital": "$300,000",
+      "franchisee Fee": "$30,000",
+      royalties: "5%",
+      marketing: "4%",
+    },
+    stats: [
+      { value: "270+", label: "STORES" },
+      { value: "55+", label: "YEARS IN BUSINESS" },
+      { value: "18", label: "CONSECUTIVE YEARS SAME STORE SALES GROWTH" },
+      {
+        value: "14",
+        label: "YEARS CONSECUTIVE FRANCHISEES’ CHOICE AWARD WINNER",
+      },
+    ],
+    contactImage: "/contact-marybrown.png",
+    specialities: [
+      "Individual or multi-unit operators are welcome",
+      "Best-in-class training at our training centre",
+      "3 week comprehensive Training Course teaches you how to produce and serve consistently perfect product – profitably",
+      "Our purchasing team ensures the highest quality products are available chain-wide for all Mary Brown’s menu items",
+      "An expert group of Banking and Business Advisors is available to assist with financial planning and any questions you may have.",
+    ],
+    storeModels: [
+      {
+        type: "Stand Alone with Drive Thru",
+        description:
+          "Our stand alone model with Drive Thru offers a spacious 2,200 to 3,200 square foot floor plan as well as additional sales opportunities in the drive-thru.",
+        image: "/marybrown-drivethru.webp",
+      },
+      {
+        type: "Stand Alone",
+        description:
+          "Mary Brown's stand alone locations are typically 1,800 to 2,500 square feet, providing ample dine-in seating as well as convenient take-out ordering.",
+        image: "/marybrown-standalone.webp",
+      },
+      {
+        type: "End Cap",
+        description:
+          "End cap offers unique design and enhanced visibility. Square footage is 1,700 to 2,200 square feet for dine-in guest seating and take-out.",
+        image: "/marybrown-endcap.webp",
+      },
+      {
+        type: "In Line",
+        description:
+          "Mary Brown’s in line models are 1,700 – 2,200 square feet.",
+        image: "/marybrown-inline.webp",
+      },
+      {
+        type: "Non-Traditional",
+        description:
+          "A smaller footprint at 600-1,000 square feet including Walmart locations, mall locations and express locations that are ideal for universities, airports, sport arenas and other options.",
+        image: "/marybrown-notraditional.webp",
+      },
+    ],
   },
+
   {
     name: "Fat Bastard Burrito",
     type: "Fast Casual Restaurant",
@@ -16,6 +75,13 @@ const baseFranchises = [
     image: "/fatb.jpg",
     description:
       "Join Canada's fastest-growing burrito franchise with a unique menu and strong brand presence. Fat Bastard Burrito offers an innovative concept with exceptional profit potential and comprehensive franchise support.",
+    specialities: [
+      "Proven business model with strong track record",
+      "Comprehensive training and ongoing support",
+      "Strong brand recognition and marketing support",
+      "Prime location opportunities",
+      "Established supply chain and operations systems",
+    ],
   },
 ];
 

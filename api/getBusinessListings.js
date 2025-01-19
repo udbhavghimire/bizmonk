@@ -68,13 +68,13 @@ export const getConvenienceStoreListings = async ({
 
 export const getOfficeListings = async ({
   city = null,
-  numberOfListings = 200,
+  numberOfListings,
   priceRange = null,
 }) => {
   const data = await fetch(
     `https://query.ampre.ca/odata/Property?$filter=PropertySubType eq 'Office'${
       city ? ` and contains(City,'${capitalizeFirstLetter(city)}')` : ""
-    }&$top=${numberOfListings || 300}&$orderby=OriginalEntryTimestamp desc`,
+    }&$top=${numberOfListings || 200}&$orderby=OriginalEntryTimestamp desc`,
     options
   ).then((response) => response.json());
 

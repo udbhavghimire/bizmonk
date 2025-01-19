@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
+// import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 const TextWithContactButton = ({ title, subtitle, textContent, imgSrc }) => {
   return (
