@@ -7,13 +7,14 @@ import citiesData from "@/data/gta-cities.json";
 import Filter from "@/components/Filter";
 import LoadingBar from "@/components/LoadingBar";
 import { notFound } from "next/navigation";
+import { useWidePage } from "@/hooks/useWidePage";
 
 const { cities } = citiesData;
 
 export default function CityConvenienceStores({ params }) {
   const [filteredListings, setFilteredListings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [isWidePage] = useWidePage();
   // Unwrap params using React.use()
   const unwrappedParams = use(params);
   const { city } = unwrappedParams;
@@ -74,23 +75,27 @@ export default function CityConvenienceStores({ params }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <>
       {isLoading && <LoadingBar />}
-      <div className="max-w-7xl mx-auto">
+      <div className={`${isWidePage ? "sm:mx-20" : "max-w-7xl mx-auto"}`}>
         <Breadcrumb items={breadcrumbItems} />
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">
+        <h1 className="text-3xl font-bold text-gray-900">
           Convenience Stores for Sale in {cityExists}
         </h1>
-
+        <p className="text-sm mb-4">
+          500+ {cityExists} businesses for sale. Book a showing for gas
+          stations, restaurants, motels, convenience stores and lands. Prices
+          from $1 to $5,000,000. Open houses available.
+        </p>
         <Filter onFilterChange={handleFilterChange} cityUrl={cityUrl} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
           {filteredListings.map((listing) => (
             <ResaleCard curElem={listing} key={listing.ListingKey} />
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,26 +1,13 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { businessTypes } from "@/constant/businessTypes";
 
 const Filter = ({ onFilterChange, cityUrl }) => {
   const router = useRouter();
   const [businessType, setBusinessType] = useState("");
   const [priceRange, setPriceRange] = useState("");
   const [isFiltering, setIsFiltering] = useState(false);
-
-  const businessTypes = [
-    {
-      label: "Restaurant for Sale",
-      value: "restaurant",
-      path: "restaurant-for-sale",
-    },
-    {
-      label: "Convenience Store for Sale",
-      value: "convenience-store",
-      path: "convenience-store-for-sale",
-    },
-    { label: "Office for Lease", value: "office", path: "offices-for-lease" },
-  ];
 
   const priceRanges = [
     { label: "$0 - 500k", value: "0-500000", min: 0, max: 500000 },
@@ -71,7 +58,7 @@ const Filter = ({ onFilterChange, cityUrl }) => {
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-4 mb-2">
+    <div className="flex flex-wrap items-center gap-4 mb-4">
       <div className="relative w-48">
         <select
           className="text-black w-full appearance-none bg-white border-2 border-gray-300 rounded-full px-3 py-1.5 text-sm cursor-pointer hover:border-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"

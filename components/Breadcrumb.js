@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Breadcrumb({ items }) {
   return (
-    <nav className="mb-8">
+    <nav className="mb-2">
       <ol className="flex items-center space-x-2 text-gray-500">
         <li>
           <Link href="/" className="hover:text-blue-600 transition-colors">

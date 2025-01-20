@@ -130,7 +130,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
 
               <div className="flex flex-row justify-between pb-1">
                 <div className="text-black truncate text-ellipsis">
-                  <div className="text-dark bva">
+                  <div className="text-dark text-sm text-wrap">
                     {curElem.StreetName ? (
                       `${curElem.StreetNumber} ${curElem.StreetName}${" "}
                     ${curElem.StreetSuffix || ""} ${curElem.City}, Ontario`

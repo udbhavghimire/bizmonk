@@ -4,10 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useWidePage } from "@/hooks/useWidePage";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const [isWidePage] = useWidePage();
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Franchises", href: "/franchise-opportunity/ontario" },
@@ -19,7 +20,11 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div
+        className={`${
+          isWidePage ? "sm:mx-20" : "max-w-7xl mx-auto"
+        } px-4 sm:px-6 lg:px-8`}
+      >
         <div className="flex justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
