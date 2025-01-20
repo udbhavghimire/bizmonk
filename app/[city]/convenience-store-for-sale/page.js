@@ -84,9 +84,8 @@ export default function CityConvenienceStores({ params }) {
           Convenience Stores for Sale in {cityExists}
         </h1>
         <p className="text-sm mb-4">
-          500+ {cityExists} businesses for sale. Book a showing for gas
-          stations, restaurants, motels, convenience stores and lands. Prices
-          from $1 to $5,000,000. Open houses available.
+          500+ {cityExists} businesses for sale. Book a showing for convenience
+          stores. Prices from $1 to $5,000,000. Open houses available.
         </p>
         <Filter onFilterChange={handleFilterChange} cityUrl={cityUrl} />
 
