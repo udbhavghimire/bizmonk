@@ -11,6 +11,7 @@ import {
   getRestaurantListings,
 } from "@/api/getBusinessListings";
 import { cities } from "@/constant/cities";
+import FranchisesList from "@/components/FranchisesList";
 
 export default async function Home() {
   const convenienceStoreListings = await getConvenienceStoreListings({
@@ -209,6 +210,9 @@ export default async function Home() {
             </div>
           </Link>
         </div>
+
+        {/* FranchisesList component here */}
+        <FranchisesList />
 
         {/* Explore by Location */}
         <div className="bg-white rounded-2xl p-4 sm:p-8 shadow-sm mx-2 sm:mx-0">

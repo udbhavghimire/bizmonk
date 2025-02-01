@@ -3,15 +3,29 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  XMarkIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/24/outline";
 import { useWidePage } from "@/hooks/useWidePage";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSellingOpen, setIsSellingOpen] = useState(false);
   const [isWidePage] = useWidePage();
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Franchises", href: "/franchise-opportunity/ontario" },
+    {
+      name: "Selling",
+      items: [
+        { name: "Sell Your Business", href: "/sell-your-business" },
+        { name: "Find a Broker", href: "/find-broker" },
+        { name: "Sign Up as a Broker", href: "/broker-signup" },
+        { name: "Advertise a Franchise", href: "/advertise-franchise" },
+      ],
+    },
     { name: "Restaurants", href: "/restaurant-for-sale" },
     { name: "Convenience Stores", href: "/convenience-store-for-sale" },
     { name: "Offices", href: "/offices-for-lease" },
@@ -41,15 +55,42 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-gray-600 hover:text-primary transition-colors duration-200"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navigation.map((item) =>
+              item.items ? (
+                <div key={item.name} className="relative">
+                  <button
+                    className="text-gray-600 hover:text-primary transition-colors duration-200 flex items-center gap-1"
+                    onClick={() => setIsSellingOpen(!isSellingOpen)}
+                  >
+                    {item.name}
+                    <ChevronDownIcon className="h-4 w-4" />
+                  </button>
+
+                  {isSellingOpen && (
+                    <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-md shadow-lg py-1">
+                      {item.items.map((subItem) => (
+                        <Link
+                          key={subItem.name}
+                          href={subItem.href}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() => setIsSellingOpen(false)}
+                        >
+                          {subItem.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-gray-600 hover:text-primary transition-colors duration-200"
+                >
+                  {item.name}
+                </Link>
+              )
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -110,16 +151,45 @@ export default function Navbar() {
               </button>
             </div>
             <div className="flex flex-col space-y-1">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="px-3 py-4 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50 rounded-md"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navigation.map((item) =>
+                item.items ? (
+                  <div key={item.name}>
+                    <button
+                      className="w-full px-3 py-4 text-left text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50 rounded-md flex items-center justify-between"
+                      onClick={() => setIsSellingOpen(!isSellingOpen)}
+                    >
+                      {item.name}
+                      <ChevronDownIcon className="h-4 w-4" />
+                    </button>
+                    {isSellingOpen && (
+                      <div className="pl-4">
+                        {item.items.map((subItem) => (
+                          <Link
+                            key={subItem.name}
+                            href={subItem.href}
+                            className="block px-3 py-3 text-sm text-gray-600 hover:text-primary hover:bg-gray-50"
+                            onClick={() => {
+                              setIsSellingOpen(false);
+                              setIsMenuOpen(false);
+                            }}
+                          >
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="px-3 py-4 text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50 rounded-md"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              )}
             </div>
           </div>
 

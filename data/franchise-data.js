@@ -22,7 +22,7 @@ const baseFranchises = [
       { value: "18", label: "CONSECUTIVE YEARS SAME STORE SALES GROWTH" },
       {
         value: "14",
-        label: "YEARS CONSECUTIVE FRANCHISEES’ CHOICE AWARD WINNER",
+        label: "YEARS CONSECUTIVE FRANCHISEES' CHOICE AWARD WINNER",
       },
     ],
     contactImage: "/contact-marybrown.png",
@@ -30,7 +30,7 @@ const baseFranchises = [
       "Individual or multi-unit operators are welcome",
       "Best-in-class training at our training centre",
       "3 week comprehensive Training Course teaches you how to produce and serve consistently perfect product – profitably",
-      "Our purchasing team ensures the highest quality products are available chain-wide for all Mary Brown’s menu items",
+      "Our purchasing team ensures the highest quality products are available chain-wide for all Mary Brown's menu items",
       "An expert group of Banking and Business Advisors is available to assist with financial planning and any questions you may have.",
     ],
     storeModels: [
@@ -55,7 +55,7 @@ const baseFranchises = [
       {
         type: "In Line",
         description:
-          "Mary Brown’s in line models are 1,700 – 2,200 square feet.",
+          "Mary Brown's in line models are 1,700 – 2,200 square feet.",
         image: "/marybrown-inline.webp",
       },
       {
@@ -145,3 +145,82 @@ export const getLocationContent = (location) => {
 
   return locationData;
 };
+
+// Add this new data structure for franchise partners
+export const franchiseList = [
+  {
+    name: "A&W Restaurant",
+    logo: "/franchises/a_&_w_restaurant.jpeg",
+    displayName: "A&W Restaurant",
+  },
+  {
+    name: "Charleys Philly Steak",
+    logo: "/franchises/charleys_philly_steak.png",
+    displayName: "Charleys Philly Steak",
+  },
+  {
+    name: "Potikki's",
+    logo: "/franchises/potikkis.png",
+    displayName: "Potikki's",
+  },
+  {
+    name: "241 Pizza",
+    logo: "/franchises/241_pizza.png",
+    displayName: "241 Pizza",
+  },
+  {
+    name: "Boston Pizza",
+    logo: "/franchises/boston_pizza.jpeg",
+    displayName: "Boston Pizza",
+  },
+  {
+    name: "Burger King",
+    logo: "/franchises/burger_king.png",
+    displayName: "Burger King",
+  },
+  {
+    name: "Burrito Jax",
+    logo: "/franchises/burrito_jax.png",
+    displayName: "Burrito Jax",
+  },
+  {
+    name: "Eggsmart",
+    logo: "/franchises/eggsmart.png",
+    displayName: "Eggsmart",
+  },
+  {
+    name: "Imperfect Eats",
+    logo: "/franchises/imperfect_eats.jpeg",
+    displayName: "Imperfect Eats",
+  },
+  {
+    name: "Kajun Chicken & Seafood",
+    logo: "/franchises/kajun_chicken_&_seafood.png",
+    displayName: "Kajun Chicken & Seafood",
+  },
+  {
+    name: "Lice Squad & Superherokids",
+    logo: "/franchises/lice_squad_&_superherokids.png",
+    displayName: "Lice Squad & Superherokids",
+  },
+  {
+    name: "Modern Cleaning",
+    logo: "/franchises/modern_cleaning.png",
+    displayName: "Modern Cleaning",
+  },
+  {
+    name: "Naturals2Go",
+    logo: "/franchises/naturals2go.png",
+    displayName: "Naturals2Go",
+  },
+  {
+    name: "Qwench Juice Bar",
+    logo: "/franchises/qwench_juice_bar.png",
+    displayName: "Qwench Juice Bar",
+  },
+  {
+    name: "The Toasted Yolk Cafe",
+    logo: "/franchises/the_toasted_yolk_cafe.png",
+    displayName: "The Toasted Yolk Cafe",
+  },
+];
