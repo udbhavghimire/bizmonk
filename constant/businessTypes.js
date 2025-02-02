@@ -11,3 +11,27 @@ export const businessTypes = [
   },
   { label: "Office for Lease", value: "office", path: "offices-for-lease" },
 ];
+
+export const houseType = {
+  restaurant: {
+    name: "Restaurant",
+    value: "Restaurant",
+    slug: "restaurant",
+  },
+  convenienceStore: {
+    name: "Convenience Store",
+    value: "Convenience/Variety",
+    slug: "convenience-store",
+  },
+  gasStation: {
+    name: "Gas Station",
+    value: "Gas Station",
+    slug: "gas-station",
+  },
+  motel: {
+    name: "Motel",
+    value: "Motel",
+    slug: "motel",
+  },
+  // Add other business types as needed
+};

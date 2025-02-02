@@ -10,6 +10,7 @@ import ResaleCard from "@/components/ResaleCard";
 import LoadingBar from "@/components/LoadingBar";
 import { useWidePage } from "@/hooks/useWidePage";
 import { businessTypes } from "@/constant/businessTypes";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 
 const cities = citiesData.cities;
 
@@ -29,9 +30,9 @@ export default function CityPage({ params }) {
     priceRange: "",
   });
   const [isWidePage] = useWidePage();
-  // Unwrap params using React.use()
-  const unwrappedParams = use(params);
-  const { city } = unwrappedParams;
+
+  // Get city from params
+  const { city } = params;
 
   if (!city) {
     notFound();
@@ -56,15 +57,33 @@ export default function CityPage({ params }) {
     const fetchListings = async () => {
       setIsLoading(true);
       try {
-        let listings;
-        listings = await getSaleOfBusinessListings({ city: cityName });
-        // if (filters.businessType == "") {
-        // }
-        // else if(filters.businessType){
+        const response = await getSaleOfBusinessListings(cityName);
+        if (response && response.value) {
+          let filteredListings = response.value;
 
-        // }
-        console.log(filters);
-        setListings(listings.value);
+          // Apply business type filter if selected
+          if (filters.businessType) {
+            filteredListings = filteredListings.filter((listing) =>
+              listing.BusinessType.includes(filters.businessType)
+            );
+          }
+
+          // Apply price range filter if selected
+          if (filters.priceRange) {
+            filteredListings = filteredListings.filter((listing) => {
+              const price = Number(listing.ListPrice);
+              return (
+                price >= filters.priceRange.min &&
+                price <= filters.priceRange.max
+              );
+            });
+          }
+
+          setListings(filteredListings);
+        }
+      } catch (error) {
+        console.error("Error fetching listings:", error);
+        setListings([]);
       } finally {
         setIsLoading(false);
       }
@@ -75,16 +94,6 @@ export default function CityPage({ params }) {
 
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
-  };
-
-  const renderListings = () => {
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2">
-        {listings.map((data, index) => (
-          <ResaleCard key={data._id || index} curElem={data} />
-        ))}
-      </div>
-    );
   };
 
   return (
@@ -102,7 +111,17 @@ export default function CityPage({ params }) {
         </p>
         <Filter onFilterChange={handleFilterChange} cityUrl={cityUrl} />
 
-        <div className="flex flex-col">{renderListings()}</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2">
+          {listings.map((data) => (
+            <ResaleCard key={data.ListingKey} curElem={data} />
+          ))}
+        </div>
+
+        {listings.length === 0 && !isLoading && (
+          <div className="text-center py-8 text-gray-500">
+            No listings found matching your criteria
+          </div>
+        )}
       </div>
     </>
   );

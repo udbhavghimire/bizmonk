@@ -5,7 +5,7 @@ const FranchisesList = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Trusted By</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-4">Franchise oppurtunities on Bizmonk</h2>
       </div>
       
       <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-5 gap-4">

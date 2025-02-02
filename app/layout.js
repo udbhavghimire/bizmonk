@@ -1,8 +1,7 @@
 import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import LoadingBar from "@/components/LoadingBar";
+import ClientLayout from "./ClientLayout";
+import "leaflet/dist/leaflet.css";
 
 const bricolage = Bricolage_Grotesque({ subsets: ["latin"] });
 
@@ -16,10 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={bricolage.className}>
-        <LoadingBar />
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

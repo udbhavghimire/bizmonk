@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import TimeAgo from "./TimeAgo";
 import { getImageUrls } from "@/api/getImageUrls";
 import { LandPlot, Timer } from "lucide-react";
+import { slugGenerator } from "@/helpers/slugGenerator";
 
 const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
   const [loadingImage, setLoadingImage] = useState(false);
@@ -49,9 +50,18 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
     );
   }, []);
 
+  // Generate the listing URL using the listing data and city
+  const listingUrl = `/${curElem.City.toLowerCase().replace(/\s+/g, "-")}/${slugGenerator({
+    Street: curElem.StreetNumber || "",
+    StreetName: curElem.StreetName || "",
+    StreetAbbreviation: curElem.StreetSuffix || "",
+    Municipality: curElem.City || "",
+    ListingKey: curElem.ListingKey || curElem.MLS,
+  })}`;
+
   return (
     <section className="">
-      <Link href={"#"} className="text-black">
+      <Link href={listingUrl} className="text-black">
         <div className="lg:px-0 h-full w-full">
           <div
             className={`flex flex-col overflow-hidden transition-all duration-200 transform bg-white shadow group rounded-xl p-0 hover:shadow-lg hover:-translate-y-1 relative`}

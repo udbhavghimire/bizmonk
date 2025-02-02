@@ -1,6 +1,6 @@
 "use server";
 
-import capitalizeFirstLetter from "@/helpers/capitalizeFirstLetter";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 const options = {
   method: "GET",
   headers: {
@@ -11,13 +11,24 @@ const options = {
   },
 };
 
-export const getSaleOfBusinessListings = async ({ city } = {}) => {
-  return await fetch(
-    `https://query.ampre.ca/odata/Property?$filter=PropertySubType eq 'Sale Of Business'${
-      city ? ` and contains(City,'${capitalizeFirstLetter(city)}')` : ""
-    }&$top=500&$orderby=OriginalEntryTimestamp desc`,
-    options
-  ).then((response) => response.json());
+export const getSaleOfBusinessListings = async (city = null) => {
+  try {
+    const response = await fetch(
+      `https://query.ampre.ca/odata/Property?$filter=PropertySubType eq 'Sale Of Business'${
+        city ? ` and contains(City,'${capitalizeFirstLetter(city)}')` : ""
+      }&$top=500&$orderby=OriginalEntryTimestamp desc`,
+      options
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching business listings:", error);
+    return { value: [] };
+  }
 };
 
 export const getRestaurantListings = async ({
@@ -25,7 +36,7 @@ export const getRestaurantListings = async ({
   numberOfListings = null,
   priceRange = null,
 } = {}) => {
-  const SALEOFBUSINESSLISTINGS = await getSaleOfBusinessListings({ city });
+  const SALEOFBUSINESSLISTINGS = await getSaleOfBusinessListings(city);
   let filteredValues = SALEOFBUSINESSLISTINGS.value.filter((listing) =>
     listing.BusinessType.includes("Restaurant")
   );
@@ -48,7 +59,7 @@ export const getConvenienceStoreListings = async ({
   numberOfListings = null,
   priceRange = null,
 } = {}) => {
-  const SALEOFBUSINESSLISTINGS = await getSaleOfBusinessListings({ city });
+  const SALEOFBUSINESSLISTINGS = await getSaleOfBusinessListings(city);
   let filteredValues = SALEOFBUSINESSLISTINGS.value.filter((listing) =>
     listing.BusinessType.includes("Convenience/Variety")
   );

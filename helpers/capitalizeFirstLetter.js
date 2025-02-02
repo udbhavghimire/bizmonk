@@ -1,8 +1,7 @@
-const capitalizeFirstLetter = (str) => {
-  let sss = str?.replace(/-/g, " ");
-  return sss
-    ?.toLowerCase()
-    ?.replace(/\b(\w)/g, (_, initial) => initial.toUpperCase());
+export const capitalizeFirstLetter = (string) => {
+  if (!string) return "";
+  return string
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
 };
-
-export default capitalizeFirstLetter;
