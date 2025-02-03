@@ -6,6 +6,7 @@ import HeroSection from "./_components/HeroSection";
 import RelatedFranchises from "./_components/RelatedFranchises";
 import ExploreMoreCities from "./_components/ExploreMoreCities";
 import ContactForm from "./_components/ContactForm";
+import { Suspense } from "react";
 
 export default async function FranchiseDetailPage({ params }) {
   const { location, franchise } = await params;
@@ -25,22 +26,35 @@ export default async function FranchiseDetailPage({ params }) {
     return (
       <div className="min-h-screen">
         {/* Hero Section */}
-        <HeroSection franchiseData={franchiseData} location={location} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <HeroSection franchiseData={franchiseData} location={location} />
+        </Suspense>
+
+        {/* Contact Form Section */}
+        <Suspense fallback={<div>Loading contact form...</div>}>
+          <ContactForm contactImage={franchiseData.contactImage} />
+        </Suspense>
 
         {/* Related Franchises Section */}
-        <ContactForm contactImage={franchiseData.contactImage} />
-        <RelatedFranchises
-          franchiseData={franchiseData}
-          locationData={locationData}
-          location={location}
-        />
-        {/* Explore More Cities Section */}
-        <ExploreMoreCities
-          franchise={franchise}
-          franchiseData={franchiseData}
-        />
+        <Suspense fallback={<div>Loading related franchises...</div>}>
+          <RelatedFranchises
+            franchiseData={franchiseData}
+            locationData={locationData}
+            location={location}
+          />
+        </Suspense>
 
-        <Newsletter />
+        {/* Explore More Cities Section */}
+        <Suspense fallback={<div>Loading cities...</div>}>
+          <ExploreMoreCities
+            franchise={franchise}
+            franchiseData={franchiseData}
+          />
+        </Suspense>
+
+        <Suspense fallback={<div>Loading newsletter...</div>}>
+          <Newsletter />
+        </Suspense>
       </div>
     );
   } catch (error) {
