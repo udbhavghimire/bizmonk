@@ -6,7 +6,10 @@ import BookingDateOption from "./BookingDateOption";
 import TimingList from "./TimingList";
 import BookingType from "./BookingType";
 import DateSelector from "./DateSelector";
-const BookingDate = ({ bannerImage }) => {
+import Image from "next/image";
+import { getImageUrls } from "@/api/getImageUrls";
+
+const BookingDate = ({ listingId }) => {
   // const [scrollPosition, setScrollPosition] = useState(0);
   // const [maxScroll, setMaxScroll] = useState(0);
   const cardRef = useRef(null);
@@ -16,12 +19,51 @@ const BookingDate = ({ bannerImage }) => {
   const scrollRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [phone, setPhone] = useState("");
+  const [loadingImage, setLoadingImage] = useState(true);
+  const [imgUrl, setImgUrl] = useState(null);
   const [timing, setTiming] = useState({
     type: "",
     date: "",
     time: "",
     phone: "",
   });
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      console.log('Starting fetchImage with ListingKey:', listingId); // Debug log
+      if (!listingId) {
+        console.log('No ListingKey provided, setting loading to false'); // Debug log
+        setLoadingImage(false);
+        return;
+      }
+
+      try {
+        setLoadingImage(true);
+        console.log('Fetching image URLs...'); // Debug log
+        const urls = await getImageUrls({ 
+          ResourceRecordKey: listingId,  // Using listingId as ResourceRecordKey
+          thumbnailOnly: false 
+        });
+        console.log('Received URLs:', urls); // Debug log
+        
+        if (urls?.length > 0) {
+          console.log('Setting first image URL:', urls[0]); // Debug log
+          setImgUrl(urls[0]);
+        } else {
+          console.log('No URLs received or empty array'); // Debug log
+          setImgUrl(null);
+        }
+      } catch (error) {
+        console.error('Error fetching image:', error);
+        setImgUrl(null);
+      } finally {
+        setLoadingImage(false);
+      }
+    };
+
+    fetchImage();
+  }, [listingId]);
+
   const slideLeft = (e) => {
     e.preventDefault();
     const scrollContainer = scrollRef.current;
@@ -116,12 +158,28 @@ const BookingDate = ({ bannerImage }) => {
       id="bookdate"
     >
       <div className="flex sm:flex-row flex-col w-full overflow-hidden">
-        <div className="w-full sm:w-1/2">
-          <img
-            src={bannerImage}
-            alt="property-img"
-            className="object-cover w-full h-full"
-          />
+        <div className="w-full sm:w-1/2 relative h-[300px] sm:h-auto">
+          {loadingImage ? (
+            <div className="w-full h-full flex items-center justify-center bg-gray-100 animate-pulse">
+              <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : imgUrl ? (
+            <div className="relative w-full h-full">
+              <Image
+                src={imgUrl}
+                alt="Schedule viewing"
+                fill
+                className="object-cover rounded-t-md sm:rounded-l-md sm:rounded-t-none"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                priority={true}
+              />
+            </div>
+          ) : (
+            <div className="w-full h-full flex flex-col justify-center items-center bg-gray-50">
+              <img src="/icons/no-photo.png" className="w-10 h-10" alt="No photo" />
+              <p className="text-gray-500 mt-2">No Image Available</p>
+            </div>
+          )}
         </div>
         <div className="w-full sm:w-1/2 sm:mx-2 p-4 flex flex-col justify-center items-center">
           {/**Schedule a viewing form */}

@@ -100,7 +100,7 @@ export default function CityPage({ params }) {
     <>
       {isLoading && <LoadingBar />}
       <div className={`${isWidePage ? "sm:mx-20" : "max-w-7xl mx-auto"}`}>
-        <Breadcrumb items={breadcrumbItems} />
+        {/* <Breadcrumb items={breadcrumbItems} /> */}
         <h1 className="text-4xl font-bold text-gray-900">
           100+ Business Opportunities in {cityName}
         </h1>

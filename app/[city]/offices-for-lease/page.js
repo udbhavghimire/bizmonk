@@ -78,7 +78,7 @@ export default function CityOffices({ params }) {
     <>
       {isLoading && <LoadingBar />}
       <div className={`${isWidePage ? "sm:mx-20" : "max-w-7xl mx-auto"}`}>
-        <Breadcrumb items={breadcrumbItems} />
+        {/* <Breadcrumb items={breadcrumbItems} /> */}
 
         <h1 className="text-3xl font-bold text-gray-900">
           Offices for Lease in {cityExists}

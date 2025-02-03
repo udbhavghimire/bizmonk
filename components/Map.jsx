@@ -7,9 +7,12 @@ import { useEffect, useState } from "react";
 
 // Fix for the default marker icon
 const icon = L.icon({
-  iconUrl: "/marker-icon.png", // You'll need to add this image to your public folder
+  iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
   iconSize: [25, 41],
   iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
 });
 
 const Map = ({ main_data }) => {

@@ -7,6 +7,6 @@ export const residential = {
 
 export const commercial = {
   properties: "https://query.ampre.ca/odata/Property",
-  photos: "https://query.ampre.ca/odata/PropertyPhotos",
+  photos: "https://query.ampre.ca/odata/Media",
   statistics: "https://query.ampre.ca/odata/PropertyStats",
 };

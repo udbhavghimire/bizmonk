@@ -1,6 +1,8 @@
 "use client";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useState, useEffect } from "react";
+import { getImageUrls } from "@/api/getImageUrls";
 
 const LightGallery = dynamic(() => import("lightgallery/react"), {
   ssr: false,
@@ -13,12 +15,35 @@ import "lightgallery/css/lg-thumbnail.css";
 // import plugins if you need
 import lgThumbnail from "lightgallery/plugins/thumbnail";
 import lgZoom from "lightgallery/plugins/zoom";
-import Link from "next/link";
 
-const Gallery = ({ data }) => {
+const Gallery = ({ ResourceRecordKey }) => {
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const urls = await getImageUrls({ ResourceRecordKey });
+        setImages(urls);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (ResourceRecordKey) {
+      fetchImages();
+    }
+  }, [ResourceRecordKey]);
+
   const onInit = () => {
     console.log("lightGallery has been initialized");
   };
+
+  if (loading) {
+    return <div className="animate-pulse bg-gray-200 h-[520px] rounded-[10px]" />;
+  }
 
   return (
     <>
@@ -30,36 +55,36 @@ const Gallery = ({ data }) => {
           elementClassNames="grid grid-rows-3 sm:grid-rows-2 grid-cols-4 gap-2"
         >
           <>
-            {data?.length > 0 ? (
-              data.map((url, index) => (
-                <Link
-                  href={`${url}`}
+            {images?.length > 0 ? (
+              images.map((url, index) => (
+                <a
                   key={index}
+                  data-src={url}
                   className={`gallery-item overflow-hidden rounded-[10px] ${
                     index === 0
                       ? "row-span-2 col-span-4 sm:col-span-2 h-[240px] sm:h-[520px]"
                       : "h-[100px] sm:h-[255px]"
                   } ${index >= 5 ? "hidden" : ""}`}
                 >
-                  <Image
-                    loader={() => url}
+                  <img
                     src={url}
-                    width={500}
-                    height={index === 0 ? 800 : 207}
-                    className={`w-full h-full ${
-                      index === 0 ? "" : ""
-                    } object-cover object-center transform duration-200 hover:scale-110`}
-                    alt={`Image ${index + 1}`}
+                    alt={`Property Image ${index + 1}`}
+                    className={`w-full h-full object-cover object-center transform duration-200 hover:scale-110`}
                   />
-                </Link>
+                </a>
               ))
             ) : (
-              <p>NO Image</p>
+              <div className="row-span-2 col-span-4 sm:col-span-2 h-[240px] sm:h-[520px] flex items-center justify-center bg-gray-100 rounded-[10px]">
+                <div className="flex flex-col items-center">
+                  <img src="/icons/no-photo.png" className="w-10 h-10" alt="No photos" />
+                  <p className="text-gray-500">No images available</p>
+                </div>
+              </div>
             )}
           </>
         </LightGallery>
       ) : (
-        <p>Loading...</p>
+        <div className="animate-pulse bg-gray-200 h-[520px] rounded-[10px]" />
       )}
     </>
   );

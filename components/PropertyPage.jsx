@@ -42,7 +42,10 @@ const PropertyPage = ({ main_data }) => {
     }
   };
 
-  const dashedStreetName = `${main_data.Street}-${main_data.StreetName}-${main_data.StreetAbbreviation}`;
+  // Construct complete address for walkscore
+  const walkscoreAddress = encodeURIComponent(
+    `${main_data.StreetNumber} ${main_data.StreetName} ${main_data.StreetSuffix || ''}, ${main_data.City}, ${main_data.StateOrProvince}`
+  );
 
   const priceDecreased = useMemo(() => {
     if (
@@ -113,9 +116,7 @@ const PropertyPage = ({ main_data }) => {
             <div className="">
               <h3 className="text-2xl font-bold">Price: {price}</h3>
               <h1 className="fs-6 mt-0 mb-1 text-lg">
-                {main_data.Street} {main_data.StreetName}{" "}
-                {main_data.StreetAbbreviation}, {main_data.Municipality},{" "}
-                {main_data.Province}, {main_data.PostalCode}
+                {main_data.UnparsedAddress}
               </h1>
             </div>
             <div className="">
@@ -147,7 +148,7 @@ const PropertyPage = ({ main_data }) => {
               textOverflow: "ellipsis",
             }}
           >
-            {main_data.RemarksForClients}
+            {main_data.PublicRemarks}
           </p>
           {isOverflowing && (
             <button
@@ -166,7 +167,7 @@ const PropertyPage = ({ main_data }) => {
               <div className="container rounded-md border-0">
                 <h2 className="font-bold text-xl sm:text-xl">Extras</h2>
                 <div className="flex flex-grid text-lg py-1 leading-8">
-                  {main_data.Extras}
+                  {main_data.PublicRemarksExtras}
                 </div>
               </div>
             </div>
@@ -203,8 +204,7 @@ const PropertyPage = ({ main_data }) => {
             className="w-8 sm:w-10 inline mr-2"
             src="/property-page-img/walking.svg"
           />
-          Walk Score for {main_data.Street} {main_data.StreetName}{" "}
-          {main_data.StreetAbbreviation}
+          Walk Score for {main_data.StreetNumber} {main_data.StreetName}
         </h2>
 
         <div className="">
@@ -217,12 +217,13 @@ const PropertyPage = ({ main_data }) => {
                 title="Walk Score"
                 className="ham p-0"
                 width="100%"
-                src={`https://www.walkscore.com/serve-walkscore-tile.php?wsid=&amp&s=${dashedStreetName},${main_data.Municipality}&amp;o=h&amp;c=f&amp;h=500&amp;fh=0&amp;w=737`}
+                src={`https://www.walkscore.com/serve-walkscore-tile.php?wsid=&amp&s=${walkscoreAddress}&amp;o=h&amp;c=f&amp;h=500&amp;fh=0&amp;w=737`}
               ></iframe>
+             
               {/* </div> */}
               <script
                 type="text/javascript"
-                src="/property-page-imghttps://www.walkscore.com/tile/show-walkscore-tile.php"
+                src="https://www.walkscore.com/tile/show-walkscore-tile.php"
               ></script>
             </div>
           </div>

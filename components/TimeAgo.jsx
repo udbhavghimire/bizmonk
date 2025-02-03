@@ -10,45 +10,65 @@ function TimeAgo({ modificationTimestamp }) {
       return;
     }
 
-    // Parse the modification timestamp string into a Date object
-    const modificationTime = new Date(modificationTimestamp);
+    const calculateTimeAgo = () => {
+      // Parse the UTC timestamp
+      const modificationTime = new Date(modificationTimestamp);
+      const currentTime = new Date();
 
-    // Step 1: Get current time in UTC
-    const currentTime = new Date(); // This is already in UTC
+      // Calculate the time difference in seconds
+      const timeDifferenceSeconds = Math.floor(
+        (currentTime - modificationTime) / 1000
+      );
 
-    // Calculate the time difference in seconds
-    const timeDifferenceSeconds = Math.floor(
-      (currentTime.getTime() - modificationTime.getTime()) / 1000
-    );
+      // If the timestamp is in the future (listing not yet active)
+      if (timeDifferenceSeconds < 0) {
+        return "Coming soon";
+      }
 
-    // Define time units in seconds
-    const secondsInMinute = 60;
-    const secondsInHour = 60 * secondsInMinute;
-    const secondsInDay = 24 * secondsInHour;
+      // Define time units in seconds
+      const minute = 60;
+      const hour = minute * 60;
+      const day = hour * 24;
+      const week = day * 7;
+      const month = day * 30;
+      const year = day * 365;
 
-    // Determine the appropriate time unit based on the time difference
-    let timeAgoString = "";
-    if (isNaN(timeDifferenceSeconds)) {
-      timeAgoString = "Invalid timestamp"; // Handle invalid timestamp
-    } else if (timeDifferenceSeconds < secondsInMinute) {
-      timeAgoString =
-        timeDifferenceSeconds === 1
+      // Calculate the appropriate time unit
+      if (timeDifferenceSeconds < minute) {
+        return timeDifferenceSeconds === 1
           ? "1 second ago"
           : `${timeDifferenceSeconds} seconds ago`;
-    } else if (timeDifferenceSeconds < secondsInHour) {
-      const minutesAgo = Math.floor(timeDifferenceSeconds / secondsInMinute);
-      timeAgoString =
-        minutesAgo === 1 ? "1 minute ago" : `${minutesAgo} minutes ago`;
-    } else if (timeDifferenceSeconds < secondsInDay) {
-      const hoursAgo = Math.floor(timeDifferenceSeconds / secondsInHour);
-      timeAgoString = hoursAgo === 1 ? "1 hour ago" : `${hoursAgo} hours ago`;
-    } else {
-      const daysAgo = Math.floor(timeDifferenceSeconds / secondsInDay);
-      timeAgoString = daysAgo === 1 ? "1 day ago" : `${daysAgo} days ago`;
-    }
+      } else if (timeDifferenceSeconds < hour) {
+        const minutes = Math.floor(timeDifferenceSeconds / minute);
+        return minutes === 1 ? "1 minute ago" : `${minutes} minutes ago`;
+      } else if (timeDifferenceSeconds < day) {
+        const hours = Math.floor(timeDifferenceSeconds / hour);
+        return hours === 1 ? "1 hour ago" : `${hours} hours ago`;
+      } else if (timeDifferenceSeconds < week) {
+        const days = Math.floor(timeDifferenceSeconds / day);
+        return days === 1 ? "1 day ago" : `${days} days ago`;
+      } else if (timeDifferenceSeconds < month) {
+        const weeks = Math.floor(timeDifferenceSeconds / week);
+        return weeks === 1 ? "1 week ago" : `${weeks} weeks ago`;
+      } else if (timeDifferenceSeconds < year) {
+        const months = Math.floor(timeDifferenceSeconds / month);
+        return months === 1 ? "1 month ago" : `${months} months ago`;
+      } else {
+        const years = Math.floor(timeDifferenceSeconds / year);
+        return years === 1 ? "1 year ago" : `${years} years ago`;
+      }
+    };
 
-    // Update the state with the calculated time ago string
-    setTimeAgo(timeAgoString);
+    // Initial calculation
+    setTimeAgo(calculateTimeAgo());
+
+    // Update every minute
+    const intervalId = setInterval(() => {
+      setTimeAgo(calculateTimeAgo());
+    }, 60000);
+
+    // Cleanup interval on unmount
+    return () => clearInterval(intervalId);
   }, [modificationTimestamp]);
 
   // Only log if modificationTimestamp exists

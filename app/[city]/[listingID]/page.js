@@ -28,6 +28,7 @@ import { generateURL } from "@/helpers/generateURL";
 import MobileGallery from "@/components/MobileGallery";
 import Thumbnails from "@/components/Thumbnails";
 import TimeAgo from "@/helpers/TimeAgo";
+import cities from "@/data/gta-cities.json";
 // import { houseType } from "@/constant";
 // import { Button } from "@nextui-org/react";
 
@@ -83,8 +84,11 @@ const page = async ({ params }) => {
     const { city, listingID } = params;
 
     // Process city name
-    const cityName = city.split("-").join(" ");
-    const formattedSlug = capitalizeFirstLetter(cityName);
+    const cityName = city.split("-")[0]; // Only take the first part before any dash
+    // Find the matching city from our list (case-insensitive)
+    const properCityName =
+      cities.cities.find((c) => c.toLowerCase() === cityName.toLowerCase()) ||
+      cityName;
 
     // Get listing data
     const listingKey = listingID.split("-").pop();
@@ -100,12 +104,10 @@ const page = async ({ params }) => {
     );
 
     const breadcrumbItems = [
-      { label: "Ontario", href: "/ontario" },
-      { label: formattedSlug, href: generateURL({ cityVal: cityName }) },
+      { label: "Home", href: "/" },
+      { label: properCityName, href: `/${cityName.toLowerCase()}` },
       {
-        label: `${main_data.StreetNumber} ${main_data.StreetName} ${
-          main_data.StreetSuffix || ""
-        }`,
+        label: `${main_data.StreetNumber} ${main_data.StreetName}`,
         href: "#",
       },
     ];
@@ -135,17 +137,19 @@ const page = async ({ params }) => {
               </div>
               <section className="padding-top w-full text-sm flex flex-col items-center justify-center gy-2 relative">
                 <div className="hidden sm:block relative">
-                  <Gallery data={imageURLs} />
+                  <Gallery ResourceRecordKey={main_data.ListingKey} />
                   <div className="space-x-2 order-2 sm:order-1 absolute bottom-2 left-2">
                     <button className="bg-green-900 p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
-                      <TimeAgo modificationTimestamp={main_data.TimestampSql} />
+                      <TimeAgo
+                        modificationTimestamp={main_data.ModificationTimestamp}
+                      />
                     </button>
                     <button className="bg-green-900 p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
                       <span>{main_data.TypeOwn1Out}</span>
                     </button>
                   </div>
                 </div>
-                <Carousel urls={imageURLs} />
+                <MobileGallery ResourceRecordKey={main_data.ListingKey} />
                 <div className="w-full flex justify-center pt-0 sm:pt-4 relative">
                   <div className="grid sm:grid-cols-6 grid-cols-1 justify-between sm:justify-between w-full sm:gap-x-6 gap-y-12 sm:gap-y-0 relative">
                     <div className={`sm:col-span-6 col-span-4 col-md-8`}>

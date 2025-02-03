@@ -1,40 +1,33 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import NProgress from "nprogress";
+
+NProgress.configure({
+  showSpinner: false,
+  trickleSpeed: 200,
+  minimum: 0.08,
+});
 
 const LoadingBar = () => {
-  const [progress, setProgress] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((oldProgress) => {
-        if (oldProgress === 100) {
-          setIsLoading(false);
-          clearInterval(timer);
-          return 100;
-        }
-        const diff = Math.random() * 10;
-        return Math.min(oldProgress + diff, 97);
-      });
+    NProgress.start();
+    
+    // Small delay to make the loading bar visible even on fast page loads
+    const timer = setTimeout(() => {
+      NProgress.done();
     }, 200);
 
     return () => {
-      clearInterval(timer);
+      clearTimeout(timer);
+      NProgress.done();
     };
-  }, []);
+  }, [pathname, searchParams]);
 
-  if (!isLoading) return null;
-
-  return (
-    <div className="fixed top-0 left-0 right-0 z-[9999999]">
-      <div className="h-1 bg-gray-200">
-        <div
-          className="h-1 bg-primary transition-all duration-200 ease-out"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
-    </div>
-  );
+  return null;
 };
 
 export default LoadingBar;
