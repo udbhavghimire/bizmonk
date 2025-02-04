@@ -4,7 +4,7 @@ const baseFranchises = [
     type: "Fast Food Restaurant",
     investment: "$450K - $700K",
     locations: "Premium locations available",
-    image: "/mary.jpg",
+    image: "/marryb.webp",
     description:
       "Be part of Canada's fastest-growing chicken restaurant chain known for its Made Fresh from Scratch™ preparation. With over 50 years of success, Mary Brown's offers a proven business model and comprehensive support system.",
     brochure: "/brochures/marybrowns.pdf",
@@ -72,7 +72,7 @@ const baseFranchises = [
     type: "Fast Casual Restaurant",
     investment: "$350K - $500K",
     locations: "Prime locations available",
-    image: "/fatb.jpg",
+    image: "/fatbb.jpg",
     description:
       "Join Canada's fastest-growing burrito franchise with a unique menu and strong brand presence. Fat Bastard Burrito offers an innovative concept with exceptional profit potential and comprehensive franchise support.",
     specialities: [

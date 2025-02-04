@@ -114,7 +114,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
             </div>
 
             {/* Property Details */}
-            <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
+            <div className="flex items-center gap-4 text-xs text-gray-600 mb-2">
               {curElem.BuildingAreaTotal && (
                 <div className="flex items-center gap-1">
                   <LandPlot className="w-4 h-4" />

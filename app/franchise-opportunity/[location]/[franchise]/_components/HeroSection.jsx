@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+
 const HeroSection = ({ franchiseData, location }) => {
   return (
     <div className="relative pb-24 pt-10 overflow-hidden">
@@ -39,19 +40,22 @@ const HeroSection = ({ franchiseData, location }) => {
         <div className="max-w-5xl mx-auto">
           <div className="bg-white rounded-2xl overflow-hidden shadow-xl">
             {/* Hero Image */}
-            <div className="relative h-[400px]">
-              <Image
-                src={franchiseData.image}
-                alt={franchiseData.name}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+            <div className="relative h-[600px]">
+              {franchiseData.image && (
+                <Image
+                  src={franchiseData.image}
+                  alt={franchiseData.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 1024px"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/30 to-transparent" />
               <div className="absolute bottom-8 left-8 right-8">
-                <h1 className="text-4xl font-bold text-white mb-4">
+                <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-xl">
                   {franchiseData.name}
                 </h1>
-                <p className="text-lg text-gray-200">
+                <p className="text-lg text-white drop-shadow-xl">
                   Franchise Opportunity in{" "}
                   {location.charAt(0).toUpperCase() + location.slice(1)}
                 </p>
@@ -77,7 +81,7 @@ const HeroSection = ({ franchiseData, location }) => {
                       Why Choose This Franchise
                     </h2>
                     <ul className="space-y-3">
-                      {franchiseData.specialities.map((point, index) => (
+                      {franchiseData.specialities?.map((point, index) => (
                         <li key={index} className="flex items-center gap-3">
                           <span className="text-primary">✓</span>
                           <span className="text-gray-600">{point}</span>
@@ -86,8 +90,8 @@ const HeroSection = ({ franchiseData, location }) => {
                     </ul>
                   </div>
 
-                  <div>
-                    {franchiseData.brochure && (
+                  {franchiseData.brochure && (
+                    <div>
                       <a
                         href={franchiseData.brochure}
                         className="w-full px-6 py-3 mt-4 bg-black text-white rounded-full hover:bg-gray-800 transition-colors font-medium"
@@ -95,8 +99,8 @@ const HeroSection = ({ franchiseData, location }) => {
                       >
                         Download Brochure PDF
                       </a>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Sidebar */}
@@ -206,17 +210,20 @@ const HeroSection = ({ franchiseData, location }) => {
                       Available store models
                     </p>
                     <div className="flex flex-col space-y-4 my-4">
-                      {franchiseData.storeModels.map((obj) => (
-                        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-2 hover:bg-gray-100 p-4 rounded-md">
-                          <Image
-                            height={200}
-                            width={300}
-                            src={obj.image}
-                            className="rounded-md"
-                          />
+                      {franchiseData.storeModels.map((model) => (
+                        <div key={model.type} className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-2 hover:bg-gray-100 p-4 rounded-md">
+                          {model.image && (
+                            <Image
+                              height={200}
+                              width={300}
+                              src={model.image}
+                              alt={model.type}
+                              className="rounded-md"
+                            />
+                          )}
                           <section>
-                            <p className="text-lg font-bold">{obj.type}</p>
-                            <p>{obj.description}</p>
+                            <p className="text-lg font-bold">{model.type}</p>
+                            <p>{model.description}</p>
                           </section>
                         </div>
                       ))}

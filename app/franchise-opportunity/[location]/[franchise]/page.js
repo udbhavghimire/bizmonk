@@ -26,9 +26,7 @@ export default async function FranchiseDetailPage({ params }) {
     return (
       <div className="min-h-screen">
         {/* Hero Section */}
-        <Suspense fallback={<div>Loading...</div>}>
-          <HeroSection franchiseData={franchiseData} location={location} />
-        </Suspense>
+        <HeroSection franchiseData={franchiseData} location={location} />
 
         {/* Contact Form Section */}
         <Suspense fallback={<div>Loading contact form...</div>}>
@@ -36,25 +34,19 @@ export default async function FranchiseDetailPage({ params }) {
         </Suspense>
 
         {/* Related Franchises Section */}
-        <Suspense fallback={<div>Loading related franchises...</div>}>
-          <RelatedFranchises
-            franchiseData={franchiseData}
-            locationData={locationData}
-            location={location}
-          />
-        </Suspense>
+        <RelatedFranchises
+          franchiseData={franchiseData}
+          locationData={locationData}
+          location={location}
+        />
 
         {/* Explore More Cities Section */}
-        <Suspense fallback={<div>Loading cities...</div>}>
-          <ExploreMoreCities
-            franchise={franchise}
-            franchiseData={franchiseData}
-          />
-        </Suspense>
+        <ExploreMoreCities
+          franchise={franchise}
+          franchiseData={franchiseData}
+        />
 
-        <Suspense fallback={<div>Loading newsletter...</div>}>
-          <Newsletter />
-        </Suspense>
+        <Newsletter />
       </div>
     );
   } catch (error) {

@@ -101,3 +101,28 @@ export const getOfficeListings = async ({
 
   return filteredValues;
 };
+
+export async function getBramptonRestaurants() {
+  return getRestaurantListings({
+    city: "Brampton",
+    numberOfListings: 5,
+  });
+}
+
+export async function getBramptonStoresUnder500k() {
+  return getConvenienceStoreListings({
+    city: "Brampton",
+    numberOfListings: 5,
+    priceRange: {
+      min: 0,
+      max: 500000,
+    },
+  });
+}
+
+export async function getTorontoCommercialSpace() {
+  return getOfficeListings({
+    city: "Toronto",
+    numberOfListings: 5,
+  });
+}

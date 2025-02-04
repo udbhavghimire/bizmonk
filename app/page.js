@@ -5,10 +5,14 @@ import Newsletter from "@/components/Newsletter";
 import TextWithContactButton from "@/components/TextWithContactButton";
 import PropertyDisplaySection from "@/components/PropertyDisplaySection";
 import Slider from "@/components/Slider";
+import HomepageListing from "@/components/HomepageListing.jsx";
 import {
   getConvenienceStoreListings,
   getOfficeListings,
   getRestaurantListings,
+  getBramptonRestaurants,
+  getBramptonStoresUnder500k,
+  getTorontoCommercialSpace,
 } from "@/api/getBusinessListings";
 import { cities } from "@/constant/cities";
 import FranchisesList from "@/components/FranchisesList";
@@ -23,15 +27,20 @@ export default async function Home() {
   const officeListings = await getOfficeListings({
     numberOfListings: 4,
   });
+
+  // Fetch data for HomepageListing component
+  const bramptonRestaurants = await getBramptonRestaurants();
+  const bramptonStores = await getBramptonStoresUnder500k();
+  const torontoCommercial = await getTorontoCommercialSpace();
+
   return (
     <div className="min-h-screen bg-white">
       {/* Enhanced Hero Section */}
       <div className="relative overflow-hidden min-h-[90vh]">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="text-center">
-            <h1 className="text-2xl md:text-7xl font-black text-gray-900 tracking-tight max-w-5xl mx-auto leading-[1.1] mb-6">
-              Your Gateway to Business
-              <span className="block text-primary">Ownership in GTA</span>
+            <h1 className="text-xl md:text-5xl font-black text-gray-900 tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6">
+              Find Restaurants, Convinience store and commercial space in GTA
             </h1>
             <p className="text-sm text-black max-w-xl mx-auto mb-10">
               Discover premium business opportunities, from turnkey operations
@@ -87,24 +96,12 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Business Stats Section */}
-      <div className="bg-white py-12 border-y border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { number: "1,500+", label: "Active Listings" },
-              { number: "500+", label: "Successful Sales" },
-              { number: "15+", label: "Years Experience" },
-              { number: "98%", label: "Client Satisfaction" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <p className="text-4xl font-bold text-primary">{stat.number}</p>
-                <p className="text-gray-600 mt-1">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* Add HomepageListing component after the hero section */}
+      <HomepageListing
+        bramptonRestaurants={bramptonRestaurants}
+        bramptonStores={bramptonStores}
+        torontoCommercial={torontoCommercial}
+      />
 
       <TextWithContactButton
         title="Are you looking to start a business?"
@@ -116,10 +113,7 @@ export default async function Home() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Business Properties for sale in{" "}
-            <span className="text-bold text-transparent bg-clip-text  bg-gradient-to-r from-primary to-secondary">
-              your city
-            </span>
+            Business Properties for sale in your city
           </h2>
           <p className="text-lg text-gray-600">
             Explore top cities across Canada
@@ -163,24 +157,26 @@ export default async function Home() {
         </div>
 
         {/* Featured Franchises */}
-        <div className="grid md:grid-cols-2 gap-4 sm:gap-8 mb-8 sm:mb-16 px-2 sm:px-0">
+        <div className="grid md:grid-cols-2 gap-8 mb-16 px-4 sm:px-6">
           <Link
             href="/franchise-opportunity/ontario/mary-browns-chicken"
-            className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+            className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <div className="relative h-48 sm:h-64">
+            <div className="relative h-96 sm:h-[32rem]">
               <Image
-                src="/mary.jpg"
+                src="/marryb.webp"
                 alt="Mary Brown's Chicken"
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-              <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent" />
+              <div className="absolute bottom-8 sm:bottom-10 left-8 sm:left-10 right-8 sm:right-10">
+                <h3 className="text-3xl sm:text-4xl font-bold text-white mb-1 sm:mb-4">
                   Mary Brown's Chicken
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-200">
+                <p className="text-base sm:text-lg text-gray-200">
                   Investment: $450K - $700K
                 </p>
               </div>
@@ -189,21 +185,23 @@ export default async function Home() {
 
           <Link
             href="/franchise-opportunity/ontario/fat-bastard-burrito"
-            className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+            className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <div className="relative h-48 sm:h-64">
+            <div className="relative h-96 sm:h-[32rem]">
               <Image
-                src="/fatb.jpg"
+                src="/fatbb.jpg"
                 alt="Fat Bastard Burrito"
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-              <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent" />
+              <div className="absolute bottom-8 sm:bottom-10 left-8 sm:left-10 right-8 sm:right-10">
+                <h3 className="text-3xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">
                   Fat Bastard Burrito
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-200">
+                <p className="text-base sm:text-lg text-gray-200">
                   Investment: $350K - $500K
                 </p>
               </div>
@@ -259,7 +257,7 @@ export default async function Home() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mt-8 sm:mt-16 mx-2 sm:mx-0">
+        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mt-8 sm:mt-16 mx-2 sm:mx-0">
           {[
             { number: "2+", label: "Premium Franchises" },
             { number: "15+", label: "Available Locations" },
@@ -276,7 +274,7 @@ export default async function Home() {
               <p className="text-xs sm:text-sm text-gray-600">{stat.label}</p>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
 
       <PropertyDisplaySection
