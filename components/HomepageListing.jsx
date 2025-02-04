@@ -24,7 +24,7 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
         <div className="text-center mt-12">
           <Link 
             href="/brampton/restaurant-for-sale" 
-            className="text-primary hover:text-primary/80 font-semibold text-lg"
+            className="text-teal-500 hover:text-primary/80 font-semibold text-lg"
           >
             View All Brampton Restaurants →
           </Link>
@@ -49,7 +49,7 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
         <div className="text-center mt-12">
           <Link 
             href="/brampton/convenience-store-for-sale" 
-            className="text-primary hover:text-primary/80 font-semibold text-lg"
+            className="text-teal-500 hover:text-primary/80 font-semibold text-lg"
           >
             View All Brampton Convenience Stores →
           </Link>
@@ -74,7 +74,7 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
         <div className="text-center mt-12">
           <Link 
             href="/toronto/offices-for-lease" 
-            className="text-primary hover:text-primary/80 font-semibold text-lg"
+            className="text-teal-500 hover:text-primary/80 font-semibold text-lg"
           >
             View All Toronto Commercial Spaces →
           </Link>
