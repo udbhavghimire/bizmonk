@@ -9,19 +9,19 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
       {/* Brampton Restaurants Section */}
       <div className="mb-32">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
             Restaurants for Sale in Brampton
           </h2>
           <p className="text-gray-600 text-lg">
-            Discover profitable restaurant opportunities in Brampton
+             Profitable restaurant opportunities in Brampton
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
           {bramptonRestaurants?.slice(0, 5).map((listing) => (
             <ResaleCard key={listing.ListingKey} curElem={listing} />
           ))}
         </div>
-        <div className="text-center mt-12">
+        <div className="text-center mt-8">
           <Link 
             href="/brampton/restaurant-for-sale" 
             className="text-teal-500 hover:text-primary/80 font-semibold text-lg"
@@ -34,19 +34,19 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
       {/* Brampton Convenience Stores Section */}
       <div className="mb-32">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
             Affordable Convenience Stores in Brampton under 500k
           </h2>
           <p className="text-gray-600 text-lg">
             Convenience stores under $500,000 in Brampton
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
           {bramptonStores?.slice(0, 5).map((listing) => (
             <ResaleCard key={listing.ListingKey} curElem={listing} />
           ))}
         </div>
-        <div className="text-center mt-12">
+        <div className="text-center mt-8">
           <Link 
             href="/brampton/convenience-store-for-sale" 
             className="text-teal-500 hover:text-primary/80 font-semibold text-lg"
@@ -59,19 +59,19 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
       {/* Toronto Commercial Space Section */}
       <div>
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
             Commercial Space for Lease in Toronto
           </h2>
           <p className="text-gray-600 text-lg">
             Prime commercial locations available in Toronto
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
           {torontoCommercial?.slice(0, 5).map((listing) => (
             <ResaleCard key={listing.ListingKey} curElem={listing} />
           ))}
         </div>
-        <div className="text-center mt-12">
+        <div className="text-center mt-8">
           <Link 
             href="/toronto/offices-for-lease" 
             className="text-teal-500 hover:text-primary/80 font-semibold text-lg"

@@ -36,13 +36,14 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Enhanced Hero Section */}
-      <div className="relative overflow-hidden min-h-[90vh]">
+      <div className="relative overflow-hidden min-h-[90vh] bg-gradient-to-b from-blue-50/50 via-blue-50/50 to-white">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="text-center">
-            <h1 className="text-xl md:text-5xl font-black text-teal-500 tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6">
-              Find Restaurants, Convinience store and commercial space in GTA
+            <h1 className="text-3xl md:text-5xl font-black text-teal-500 tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6">
+              Find Restaurants, Convenience Store and Commercial Space in GTA
             </h1>
-            <p className="text-sm text-black max-w-xl mx-auto mb-10">
+            <p className="text-sm text-gray-600 max-w-xl mx-auto mb-10">
               Discover premium business opportunities, from turnkey operations
               to prime commercial spaces across Greater Toronto Area
             </p>
