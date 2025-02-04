@@ -30,31 +30,29 @@ const BookingDate = ({ listingId }) => {
 
   useEffect(() => {
     const fetchImage = async () => {
-      console.log('Starting fetchImage with ListingKey:', listingId); // Debug log
+      console.log("Fetching image for listingId:", listingId);
       if (!listingId) {
-        console.log('No ListingKey provided, setting loading to false'); // Debug log
+        console.log("No listingId provided");
         setLoadingImage(false);
         return;
       }
 
       try {
         setLoadingImage(true);
-        console.log('Fetching image URLs...'); // Debug log
         const urls = await getImageUrls({ 
-          ResourceRecordKey: listingId,  // Using listingId as ResourceRecordKey
-          thumbnailOnly: false 
+          ResourceRecordKey: listingId
         });
-        console.log('Received URLs:', urls); // Debug log
         
+        console.log("Received URLs:", urls);
         if (urls?.length > 0) {
-          console.log('Setting first image URL:', urls[0]); // Debug log
+          console.log("Setting image URL:", urls[0]);
           setImgUrl(urls[0]);
         } else {
-          console.log('No URLs received or empty array'); // Debug log
+          console.log("No valid URLs received");
           setImgUrl(null);
         }
       } catch (error) {
-        console.error('Error fetching image:', error);
+        console.error('Error in fetchImage:', error);
         setImgUrl(null);
       } finally {
         setLoadingImage(false);

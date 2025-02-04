@@ -154,7 +154,7 @@ const page = async ({ params }) => {
                   <div className="grid sm:grid-cols-6 grid-cols-1 justify-between sm:justify-between w-full sm:gap-x-6 gap-y-12 sm:gap-y-0 relative">
                     <div className={`sm:col-span-6 col-span-4 col-md-8`}>
                       <PropertyPage {...{ main_data }} />
-                      <BookingDate bannerImage={imageURLs[0]} />
+                      <BookingDate listingId={main_data.ListingKey} />
                       <MapSection main_data={main_data} />
                     </div>
                     <div className="mt-24 mb-10 col-span-6">
