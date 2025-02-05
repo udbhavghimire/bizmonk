@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 
 import TimeAgo from "@/components/TimeAgo";
-
+import StickyContactForm from "./StickyContactForm";
 //CUSTOM HOOKS
 import useDeviceView from "@/helpers/useDeviceView";
 
@@ -88,6 +88,7 @@ const PropertyPage = ({ main_data }) => {
   return (
     <>
       <div className="screenshot col-12 mt-2">
+
         <div
           className={`border-0  rounded-md ${
             isMobileView ? "sm:p-4 pt-3 mt-3" : "mt-5"

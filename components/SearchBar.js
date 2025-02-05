@@ -3,9 +3,22 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import citiesData from "@/data/gta-cities.json";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 // Helper function to convert city names to URL-friendly format
 const toUrlFormat = (cityName) => cityName.toLowerCase().replace(/\s+/g, "-");
+
+// Popular cities to show as quick links
+const popularCities = [
+  "Toronto",
+  "Oakville",
+  "Mississauga",
+  "Milton",
+  "Etobicoke",
+  "Brampton",
+  "Markham",
+  "Vaughan",
+];
 
 export default function SearchBar({ variant = "default" }) {
   const [query, setQuery] = useState("");
@@ -53,11 +66,26 @@ export default function SearchBar({ variant = "default" }) {
             <button
               onClick={() => handleSearch(query)}
               className="px-6 py-2 bg-primary text-white rounded-full hover:bg-primary/90 
-                         transition-colors duration-300 text-sm font-medium"
+                         transition-colors duration-300 text-sm font-medium whitespace-nowrap"
             >
               Search
             </button>
           </div>
+        </div>
+
+        {/* Quick city links */}
+        <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 justify-center">
+          {popularCities.map((city) => (
+            <Link
+              key={city}
+              href={`/${toUrlFormat(city)}`}
+              className="text-black hover:text-primary transition-all duration-200 text-sm 
+                         border-b border-black pb-0.5 px-1
+                         hover:border-primary hover:-translate-y-0.5"
+            >
+              {city}
+            </Link>
+          ))}
         </div>
 
         {suggestions.length > 0 && (

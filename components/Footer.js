@@ -36,13 +36,7 @@ export default function Footer() {
           {/* Company Info */}
           <div className="col-span-1 md:col-span-4 space-y-4">
             <Link href="/" className="block">
-              <Image
-                src="/bizmonk-logo.svg"
-                alt="BizMonk Logo"
-                width={120}
-                height={40}
-                className="h-8 w-auto"
-              />
+              <span className="text-2xl font-bold text-blue-600">Bizmonk</span>
             </Link>
             <p className="text-gray-600">
               Your trusted partner in finding the perfect business space across
@@ -123,10 +117,11 @@ export default function Footer() {
                   <span>📧</span> info@bizmonk.ca
                 </li>
                 <li className="flex items-center gap-2">
-                  <span>📞</span> (647) 123-4567
+                  <span>📞</span> 905-226-7284
                 </li>
                 <li className="flex items-center gap-2">
-                  <span>📍</span> Toronto, ON, Canada
+                  <span>📍</span> 1065 Canadian Pl Suite 207, Mississauga ON L4W
+                  0C2
                 </li>
               </ul>
             </div>
@@ -158,6 +153,47 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Logo and copyright */}
+        <div className="mt-16 pt-8 pb-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center space-y-4 gap-4">
+            <div className="flex flex-col items-center space-y-4">
+              <img src="/trebb.png" alt="TREBB Logo" className="w-28" />
+              <p className="text-xs text-gray-500 max-w-2xl text-center">
+                Toronto Real Estate Board (TRREB); All information deemed
+                reliable but not guaranteed. All properties are subject to prior
+                sale, change or withdrawal. Neither listing broker(s) or
+                information provider(s) shall be responsible for any
+                typographical errors, misinformation, misprints and shall be
+                held totally harmless. Listing(s) information is provided for
+                consumer's personal, non-commercial use and may not be used for
+                any purpose other than to identify prospective properties
+                consumers may be interested in purchasing. The data relating to
+                real estate for sale on this website comes in part from the
+                Internet Data Exchange program of the Multiple Listing Service.
+                Real estate listings held by brokerage firms other than Dolphin
+                Realty Inc. may be marked with the Internet Data Exchange logo
+                and detailed information about those properties will include the
+                name of the listing broker(s) when required by the MLS.
+                Copyright ©{new Date().getFullYear()} All rights reserved.
+              </p>
+            </div>
+            <div className="flex flex-col items-center space-y-4">
+              <img src="/crea.png" alt="CREA Logo" className="w-28" />
+              <p className="text-xs text-gray-500 max-w-2xl text-center">
+                The listing data displayed is deemed reliable but is not
+                guaranteed accurate by CREA®. The trademarks REALTOR®,
+                REALTORS®; and the REALTOR® logo are controlled by The Canadian
+                Real Estate Association (CREA®) and identify real estate
+                professionals who are members of CREA®. Used under license. The
+                trademarks MLS®, Multiple Listing Service® and the associated
+                logos are owned by The Canadian Real Estate Association (CREA®)
+                and identify the quality of services provided by real estate
+                professionals who are members of CREA®. Used under license.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom Section */}
         <div className="border-t border-gray-200 py-8">
           <div className="space-y-6">
@@ -170,7 +206,7 @@ export default function Footer() {
               and lease of real estate as part of a cooperative selling system.
             </div>
             <div className="flex justify-center">
-              <Image src="/crea.svg" alt="CREA Logo" width={64} height={32} />
+              <Image src="/crea.svg" alt="CREA Logo" width={64} height={64} />
             </div>
             <p className="text-center text-gray-600 text-sm">
               © {new Date().getFullYear()} BizMonk. All rights reserved.

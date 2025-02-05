@@ -74,7 +74,7 @@ const Gallery = ({ ResourceRecordKey }) => {
                 </a>
               ))
             ) : (
-              <div className="row-span-2 col-span-4 sm:col-span-2 h-[240px] sm:h-[520px] flex items-center justify-center bg-gray-100 rounded-[10px]">
+              <div className="row-span-2 col-span-4 sm:col-span-2 h-[240px] sm:h-[520px] flex  justify-center bg-gray-100 rounded-[10px]">
                 <div className="flex flex-col items-center">
                   <img src="/icons/no-photo.png" className="w-10 h-10" alt="No photos" />
                   <p className="text-gray-500">No images available</p>

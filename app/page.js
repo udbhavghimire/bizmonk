@@ -76,7 +76,7 @@ export default async function Home() {
                 {
                   icon: "🤝",
                   title: "Franchises",
-                  link: "/franchises",
+                  link: "/franchise-opportunity/ontario",
                   count: "90+",
                 },
               ].map((category) => (
@@ -98,52 +98,107 @@ export default async function Home() {
       </div>
 
       {/* Add HomepageListing component after the hero section */}
+      {/* Top Categories Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+          Top Categories on Bizmonk
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Restaurant Card */}
+          <Link
+            href="/restaurant-for-sale"
+            className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            <div className="relative h-64">
+              <Image
+                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4"
+                alt="Restaurant for Sale"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <h3 className="text-[18px] font-bold text-white">
+                  Restaurants for Sale
+                </h3>
+              </div>
+            </div>
+          </Link>
+
+          {/* Franchises Card */}
+          <Link
+            href="/franchise-opportunity/ontario"
+            className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            <div className="relative h-64">
+              <Image
+                src="/fatbb.jpg"
+                alt="Franchises for Sale"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <h3 className="text-[18px] font-bold text-white">
+                  Franchises for Sale
+                </h3>
+              </div>
+            </div>
+          </Link>
+
+          {/* Convenience Store Card */}
+          <Link
+            href="/convenience-store-for-sale"
+            className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            <div className="relative h-64">
+              <Image
+                src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a"
+                alt="Convenience Stores for Sale"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <h3 className="text-[18px] font-bold text-white">
+                  Convenience Stores for Sale
+                </h3>
+              </div>
+            </div>
+          </Link>
+
+          {/* Offices Card */}
+          <Link
+            href="/offices-for-lease"
+            className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            <div className="relative h-64">
+              <Image
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c"
+                alt="Offices for Lease"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <h3 className="text-[18px] font-bold text-white">
+                  Offices for Lease
+                </h3>
+              </div>
+            </div>
+          </Link>
+        </div>
+      </div>
+
       <HomepageListing
         bramptonRestaurants={bramptonRestaurants}
         bramptonStores={bramptonStores}
         torontoCommercial={torontoCommercial}
       />
-
-      <TextWithContactButton
-        title="Are you looking to start a business?"
-        subtitle="Not sure where to start?"
-        textContent="Looking for the perfect space to launch or grow your business? BizMonk specializes in providing premium real estate solutions tailored to meet your unique needs. Whether you're starting fresh or expanding your operations, we have the ideal commercial spaces to set your business up for success. Contact us today to find the right space and take the first step towards your business goals!"
-        imgSrc="/contact-img/person.png"
-      />
-      {/* Cities Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Business Properties for sale in your city
-          </h2>
-          <p className="text-lg text-gray-600">
-            Explore top cities across Canada
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {cities.map((city) => (
-            <Link
-              key={city.name}
-              href={`/${city.name.toLowerCase()}`}
-              className="group relative rounded-lg overflow-hidden aspect-[4/3]"
-            >
-              <Image
-                src={city.image}
-                alt={`${city.name} cityscape`}
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                className="object-cover group-hover:scale-110 transition-transform duration-300"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-              <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">
-                {city.name}
-              </h3>
-            </Link>
-          ))}
-        </div>
-      </div>
-
       {/* Franchise Opportunities Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 bg-gray-50">
         <div className="text-center mb-8 sm:mb-16">
@@ -256,26 +311,47 @@ export default async function Home() {
             </Link>
           </div>
         </div>
+      </div>
 
-        {/* Quick Stats */}
-        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mt-8 sm:mt-16 mx-2 sm:mx-0">
-          {[
-            { number: "2+", label: "Premium Franchises" },
-            { number: "15+", label: "Available Locations" },
-            { number: "95%", label: "Success Rate" },
-            { number: "24/7", label: "Support & Training" },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className="bg-white rounded-xl p-4 sm:p-6 text-center shadow-sm"
+      {/* <TextWithContactButton
+        title="Are you looking to start a business?"
+        subtitle="Not sure where to start?"
+        textContent="Looking for the perfect space to launch or grow your business? BizMonk specializes in providing premium real estate solutions tailored to meet your unique needs. Whether you're starting fresh or expanding your operations, we have the ideal commercial spaces to set your business up for success. Contact us today to find the right space and take the first step towards your business goals!"
+        imgSrc="/contact-img/person.png"
+      /> */}
+
+      {/* Cities Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Business Properties for sale in your city
+          </h2>
+          <p className="text-lg text-gray-600">
+            Explore top cities across Canada
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {cities.map((city) => (
+            <Link
+              key={city.name}
+              href={`/${city.name.toLowerCase()}`}
+              className="group relative rounded-lg overflow-hidden aspect-[4/3]"
             >
-              <p className="text-2xl sm:text-3xl font-bold text-primary mb-1">
-                {stat.number}
-              </p>
-              <p className="text-xs sm:text-sm text-gray-600">{stat.label}</p>
-            </div>
+              <Image
+                src={city.image}
+                alt={`${city.name} cityscape`}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                className="object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+              <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">
+                {city.name}
+              </h3>
+            </Link>
           ))}
-        </div> */}
+        </div>
       </div>
 
       <PropertyDisplaySection

@@ -31,3 +31,7 @@
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+
+.bg-primary {
+  background-color: #2463EB;
+}

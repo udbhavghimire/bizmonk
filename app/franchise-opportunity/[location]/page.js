@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+
+import FranchisesList from "@/components/FranchisesList";
 import { getLocationContent, franchiseLocations } from "@/data/franchise-data";
 import Newsletter from "@/components/Newsletter";
 
@@ -86,6 +88,8 @@ export default function FranchiseOpportunityPage({ params }) {
             </div>
           </div>
         </div>
+
+        <FranchisesList />
 
         {/* City Navigation Section */}
         <div className="py-24 bg-gray-50">

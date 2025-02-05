@@ -75,9 +75,9 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
   return (
     <div className="w-full">
       <Link href={listingUrl} className="text-black">
-        <div className="bg-white rounded-lg overflow-hidden shadow hover:shadow-md transition-all duration-200">
+        <div className="bg-white rounded-lg overflow-hidden shadow hover:shadow-md transition-all duration-200  flex flex-col">
           {/* Image Container */}
-          <div className="relative h-48">
+          <div className="relative h-48 flex-shrink-0">
             {loadingImage ? (
               <div className="w-full h-full flex items-center justify-center bg-gray-100 animate-pulse">
                 <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin"></div>
@@ -106,7 +106,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
           </div>
 
           {/* Content */}
-          <div className="p-3">
+          <div className="p-3 flex-1 flex flex-col">
             {/* Price */}
             <div className="text-2xl font-bold mb-2">
               {price}
@@ -142,7 +142,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
             
 
             {/* Footer Info */}
-            <div className="flex flex-col gap-1 text-xs text-gray-500 pt-2 border-t">
+            <div className="flex flex-col gap-1 text-xs text-gray-500 pt-2 mt-auto border-t">
               <div>MLS® #{curElem.ListingKey}</div>
               <div>Listed by {curElem.ListOfficeName}</div>
             </div>

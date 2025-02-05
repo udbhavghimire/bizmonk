@@ -29,6 +29,7 @@ import MobileGallery from "@/components/MobileGallery";
 import Thumbnails from "@/components/Thumbnails";
 import TimeAgo from "@/helpers/TimeAgo";
 import cities from "@/data/gta-cities.json";
+import StickyContactForm from "@/components/StickyContactForm";
 // import { houseType } from "@/constant";
 // import { Button } from "@nextui-org/react";
 
@@ -122,48 +123,59 @@ const page = async ({ params }) => {
 
     return (
       <>
-        <div className="flex justify-center sm:max-w-[68%] mx-auto">
-          <div>
-            <script
-              key={main_data.ListingKey}
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify(CreateSchema(main_data)),
-              }}
-            />
-            <div className="pt-md-3 pt-0">
-              <div className="sticky top-0 z-[999]">
-                <Breadcrumb items={breadcrumbItems} />
-              </div>
-              <section className="padding-top w-full text-sm flex flex-col items-center justify-center gy-2 relative">
-                <div className="hidden sm:block relative">
-                  <Gallery ResourceRecordKey={main_data.ListingKey} />
-                  <div className="space-x-2 order-2 sm:order-1 absolute bottom-2 left-2">
-                    <button className="bg-green-900 p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
-                      <TimeAgo
-                        modificationTimestamp={main_data.ModificationTimestamp}
-                      />
-                    </button>
-                    <button className="bg-green-900 p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
-                      <span>{main_data.TypeOwn1Out}</span>
-                    </button>
-                  </div>
+        <div className="flex justify-between max-w-7xl mx-auto px-4">
+          <div className="w-full">
+            <div>
+              <script
+                key={main_data.ListingKey}
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify(CreateSchema(main_data)),
+                }}
+              />
+              <div className="pt-md-3 pt-0">
+                <div className="sticky top-0 z-[999]">
+                  <Breadcrumb items={breadcrumbItems} />
                 </div>
-                <MobileGallery ResourceRecordKey={main_data.ListingKey} />
-                <div className="w-full flex justify-center pt-0 sm:pt-4 relative">
-                  <div className="grid sm:grid-cols-6 grid-cols-1 justify-between sm:justify-between w-full sm:gap-x-6 gap-y-12 sm:gap-y-0 relative">
-                    <div className={`sm:col-span-6 col-span-4 col-md-8`}>
+                <section className="padding-top w-full text-sm flex flex-col items-center justify-center gy-2 relative">
+                  <div className="hidden sm:block relative">
+                    <Gallery ResourceRecordKey={main_data.ListingKey} />
+                    <div className="space-x-2 order-2 sm:order-1 absolute bottom-2 left-2">
+                      <button className="bg-green-900 p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
+                        <TimeAgo
+                          modificationTimestamp={
+                            main_data.ModificationTimestamp
+                          }
+                        />
+                      </button>
+                      <button className="bg-green-900 p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
+                        <span>{main_data.TypeOwn1Out}</span>
+                      </button>
+                    </div>
+                  </div>
+                  <MobileGallery ResourceRecordKey={main_data.ListingKey} />
+
+                  {/* Main Content with Sticky Form */}
+                  <div className="w-full flex flex-col lg:flex-row gap-8 pt-0 sm:pt-4">
+                    {/* Left Content */}
+                    <div className="w-full lg:w-2/3">
                       <PropertyPage {...{ main_data }} />
                       <BookingDate listingId={main_data.ListingKey} />
                       <MapSection main_data={main_data} />
+                      <div className="mt-24 mb-10">
+                        <FAQ main_data={main_data} />
+                      </div>
                     </div>
-                    <div className="mt-24 mb-10 col-span-6">
-                      <FAQ main_data={main_data} />
+
+                    {/* Right Sticky Form */}
+                    <div className="w-full lg:w-1/3">
+                      <StickyContactForm listingData={main_data} />
                     </div>
                   </div>
-                </div>
-                <PriceButton price={formatCurrency(main_data?.ListPrice)} />
-              </section>
+
+                  <PriceButton price={formatCurrency(main_data?.ListPrice)} />
+                </section>
+              </div>
             </div>
           </div>
         </div>

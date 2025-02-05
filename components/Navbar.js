@@ -15,7 +15,6 @@ export default function Navbar() {
   const [isSellingOpen, setIsSellingOpen] = useState(false);
   const [isWidePage] = useWidePage();
   const navigation = [
-    { name: "Home", href: "/" },
     { name: "Franchises", href: "/franchise-opportunity/ontario" },
     {
       name: "Selling",
