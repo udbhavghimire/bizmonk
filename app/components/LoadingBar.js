@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import NProgress from "nprogress";
 import { usePathname, useSearchParams } from "next/navigation";
 
-export default function LoadingBar() {
+const LoadingBarContent = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -37,6 +37,12 @@ export default function LoadingBar() {
       window.navigation.addEventListener("navigateerror", handleStop);
     }
 
+    // Handle route changes from Next.js router
+    NProgress.start();
+    const timer = setTimeout(() => {
+      NProgress.done();
+    }, 300);
+
     return () => {
       // Clean up event listeners
       document.removeEventListener("navigationStart", handleStart);
@@ -47,21 +53,19 @@ export default function LoadingBar() {
         window.navigation.removeEventListener("navigatesuccess", handleStop);
         window.navigation.removeEventListener("navigateerror", handleStop);
       }
-    };
-  }, []);
 
-  // Handle route changes from Next.js router
-  useEffect(() => {
-    NProgress.start();
-    const timer = setTimeout(() => {
-      NProgress.done();
-    }, 300);
-
-    return () => {
       clearTimeout(timer);
       NProgress.done();
     };
   }, [pathname, searchParams]);
 
   return null;
+};
+
+export default function LoadingBar() {
+  return (
+    <Suspense fallback={null}>
+      <LoadingBarContent />
+    </Suspense>
+  );
 }
