@@ -20,6 +20,7 @@ const FranchisesList = () => {
                 alt={`${partner.name} logo`}
                 fill
                 className="object-contain"
+                sizes="(max-width: 768px) 33vw, (max-width: 1024px) 20vw, 15vw"
               />
             </div>
             <p className="text-sm text-gray-600 text-center">{partner.displayName}</p>

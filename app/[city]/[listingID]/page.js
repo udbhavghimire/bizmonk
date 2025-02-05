@@ -81,24 +81,21 @@ const fetchData = async (listingID) => {
 
 const page = async ({ params }) => {
   try {
-    // Get city and listing ID from params
-    const { city, listingID } = params;
-
-    // Process city name
-    const cityName = city.split("-")[0]; // Only take the first part before any dash
-    // Find the matching city from our list (case-insensitive)
-    const properCityName =
+    const { city, listingID } = await Promise.resolve(params);
+    const cityName = await Promise.resolve(city.split("-")[0]);
+    const properCityName = await Promise.resolve(
       cities.cities.find((c) => c.toLowerCase() === cityName.toLowerCase()) ||
-      cityName;
+        cityName
+    );
 
-    // Get listing data
-    const listingKey = listingID.split("-").pop();
+    const listingKey = await Promise.resolve(listingID.split("-").pop());
     const main_data = await fetchData(listingKey);
 
     if (!main_data) {
       throw new Error("Listing not found");
     }
 
+    // Get image URLs using the actual photo count
     const imageURLs = generateImageURLs(
       listingKey,
       parseInt(main_data?.PhotoCount || 0)
@@ -207,7 +204,7 @@ const page = async ({ params }) => {
 export async function generateMetadata({ params }, parent) {
   try {
     const { city, listingID } = await Promise.resolve(params);
-    const listingKey = listingID.split("-").pop();
+    const listingKey = await Promise.resolve(listingID.split("-").pop());
     const main_data = await fetchData(listingKey);
 
     if (!main_data) {
@@ -217,28 +214,45 @@ export async function generateMetadata({ params }, parent) {
       };
     }
 
-    const imageURLs = generateImageURLs(listingKey);
+    const imageURLs = generateImageURLs(
+      listingKey,
+      parseInt(main_data?.PhotoCount || 0)
+    );
 
-    return {
-      ...parent,
+    const metadata = {
+      title:
+        main_data?.StreetNumber && main_data?.StreetName
+          ? `${main_data.StreetNumber} ${main_data.StreetName} ${
+              main_data.StreetSuffix || ""
+            }`
+          : "Property Listing",
+      description:
+        main_data?.PropertySubType &&
+        main_data?.City &&
+        main_data?.StateOrProvince
+          ? `${main_data.PropertySubType} in ${main_data.City}, ${main_data.StateOrProvince}`
+          : "Property Listing Details",
       alternates: {
         canonical: `https://commercialspot.ca/${city}/${slugGenerator(
           main_data
         )}`,
       },
-      openGraph: {
-        images: await fetch(imageURLs[0]),
-      },
-      title: `${main_data?.StreetNumber} ${main_data?.StreetName} ${
-        main_data?.StreetSuffix || ""
-      }`,
-      description: `${main_data?.PropertySubType || ""} in ${
-        main_data?.City
-      }, ${main_data?.StateOrProvince}`,
     };
+
+    // Only add openGraph if we have valid image URLs
+    if (imageURLs && imageURLs.length > 0) {
+      metadata.openGraph = {
+        images: [imageURLs[0]],
+      };
+    }
+
+    return metadata;
   } catch (error) {
     console.error("Error generating metadata:", error);
-    return parent;
+    return {
+      title: "Property Listing",
+      description: "View property listing details",
+    };
   }
 }
 

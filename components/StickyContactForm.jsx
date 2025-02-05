@@ -36,11 +36,11 @@ const StickyContactForm = ({ listingData }) => {
   };
 
   return (
-    <div className="hidden lg:block sticky top-24">
-      <div className="bg-white p-6 rounded-3xl shadow-lg">
-        <div className="flex items-center gap-4 mb-6">
+    <div className="hidden lg:block sticky top-24 mt-10">
+      <div className="bg-gradient-to-br from-white via-white to-gray-50 p-8 rounded-3xl shadow-xl border border-gray-100">
+        <div className="flex items-center gap-5 mb-8">
           <div className="relative">
-            <div className="w-[60px] h-[60px] overflow-hidden relative rounded-[60px]">
+            <div className="w-[70px] h-[70px] overflow-hidden relative rounded-2xl shadow-md">
               <Image
                 src="/ravi-godara.png"
                 alt="Agent"
@@ -48,57 +48,58 @@ const StickyContactForm = ({ listingData }) => {
                 className="object-cover object-top"
               />
             </div>
-           
           </div>
           <div className="flex-1">
-            <h2 className="text-xl font-bold mb-1">Book a Showing</h2>
+            <h2 className="text-2xl font-bold mb-1 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">Book a Showing</h2>
             <p className="text-sm text-gray-600">Check Out this business!</p>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Name"
-            className="w-full px-4 py-2.5 bg-gray-50 border-none rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-700"
-            required
-          />
-          <input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="Phone"
-            className="w-full px-4 py-2.5 bg-gray-50 border-none rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-700"
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Your email"
-            className="w-full px-4 py-2.5 bg-gray-50 border-none rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-700"
-            required
-          />
-          <textarea
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            rows="3"
-            className="w-full px-4 py-2.5 bg-gray-50 border-none rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-700"
-            required
-          />
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-4">
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Name"
+              className="w-full px-5 py-3.5 bg-white border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-gray-700 placeholder-gray-400 transition-all duration-200 shadow-sm"
+              required
+            />
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Phone"
+              className="w-full px-5 py-3.5 bg-white border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-gray-700 placeholder-gray-400 transition-all duration-200 shadow-sm"
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Your email"
+              className="w-full px-5 py-3.5 bg-white border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-gray-700 placeholder-gray-400 transition-all duration-200 shadow-sm"
+              required
+            />
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              rows="3"
+              className="w-full px-5 py-3.5 bg-white border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-gray-700 placeholder-gray-400 transition-all duration-200 shadow-sm resize-none"
+              required
+            />
+          </div>
           <button
             type="submit"
-            className="w-full bg-black text-white py-3 px-6 rounded-xl hover:opacity-90 transition duration-200 text-base font-medium"
+            className="w-full bg-gradient-to-r from-gray-900 to-gray-700 text-white py-4 px-6 rounded-2xl hover:opacity-90 transition-all duration-200 text-base font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             Contact now
           </button>
-          <p className="text-xs text-gray-500 text-center mt-4">
+          <p className="text-xs text-gray-500 text-center mt-6 leading-relaxed">
             I agree to receive marketing and customer service calls and text
             messages from Bizmonk. Consent is not a condition of purchase.
             Msg/data rates may apply. Msg frequency varies. Reply STOP to

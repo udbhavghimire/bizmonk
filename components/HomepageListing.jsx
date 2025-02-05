@@ -16,7 +16,7 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
              Profitable restaurant opportunities in Brampton
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {bramptonRestaurants?.slice(0, 5).map((listing) => (
             <ResaleCard key={listing.ListingKey} curElem={listing} />
           ))}
@@ -41,7 +41,7 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
             Convenience stores under $500,000 in Brampton
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {bramptonStores?.slice(0, 5).map((listing) => (
             <ResaleCard key={listing.ListingKey} curElem={listing} />
           ))}
@@ -66,7 +66,7 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
             Prime commercial locations available in Toronto
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {torontoCommercial?.slice(0, 5).map((listing) => (
             <ResaleCard key={listing.ListingKey} curElem={listing} />
           ))}

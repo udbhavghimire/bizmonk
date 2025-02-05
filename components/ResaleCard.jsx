@@ -10,6 +10,7 @@ import Image from "next/image";
 const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
   const [loadingImage, setLoadingImage] = useState(true);
   const [imgUrl, setImgUrl] = useState(null);
+
   const price = Number(curElem.ListPrice).toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
@@ -23,22 +24,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
 
   const handleImageError = (e) => {
     e.target.onerror = null;
-    e.target.src = `/noimage.webp`;
-  };
-
-  const aboutProperty = () => {
-    let description;
-    if (curElem.BusinessType && curElem.PropertySubType) {
-      description = `${curElem.BusinessType.join(",")}, ${
-        curElem.PropertySubType
-      }`;
-    } else if (curElem.PropertySubType)
-      description = `${curElem.PropertySubType || null}`;
-    else if (curElem.BusinessType) description = curElem.BusinessType.join(",");
-    else description = "Property";
-
-    if (curElem.SaleLease) description += ` for ${curElem.SaleLease}`;
-    return description;
+    e.target.src = `/icons/no-photo.png`;
   };
 
   useEffect(() => {
@@ -64,6 +50,21 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
     }
   }, [curElem.ListingKey]);
 
+  const aboutProperty = () => {
+    let description;
+    if (curElem.BusinessType && curElem.PropertySubType) {
+      description = `${curElem.BusinessType.join(",")}, ${
+        curElem.PropertySubType
+      }`;
+    } else if (curElem.PropertySubType)
+      description = `${curElem.PropertySubType || null}`;
+    else if (curElem.BusinessType) description = curElem.BusinessType.join(",");
+    else description = "Property";
+
+    if (curElem.SaleLease) description += ` for ${curElem.SaleLease}`;
+    return description;
+  };
+
   const listingUrl = `/${curElem.City.toLowerCase().replace(/\s+/g, "-")}/${slugGenerator({
     Street: curElem.StreetNumber || "",
     StreetName: curElem.StreetName || "",
@@ -75,24 +76,21 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
   return (
     <div className="w-full">
       <Link href={listingUrl} className="text-black">
-        <div className="bg-white rounded-lg overflow-hidden shadow hover:shadow-md transition-all duration-200  flex flex-col">
+        <div className="bg-white rounded-lg overflow-hidden shadow hover:shadow-md transition-all duration-200 flex flex-col">
           {/* Image Container */}
-          <div className="relative h-48 flex-shrink-0">
+          <div className="relative h-72 flex-shrink-0">
             {loadingImage ? (
               <div className="w-full h-full flex items-center justify-center bg-gray-100 animate-pulse">
                 <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin"></div>
               </div>
             ) : imgUrl ? (
               <div className="relative w-full h-full group">
-                <Image
+                <img
                   src={imgUrl}
                   alt={`${curElem.StreetNumber} ${curElem.StreetName}`}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  priority={true}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  onError={handleImageError}
                 />
-                
                 <div className="absolute bottom-2 left-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-[10px]">
                   {aboutProperty()}
                 </div>
@@ -138,8 +136,6 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
                 ? `${curElem.StreetNumber} ${curElem.StreetName} ${curElem.StreetSuffix || ""}`
                 : ""} {curElem.City}, Ontario
             </div>
-            
-            
 
             {/* Footer Info */}
             <div className="flex flex-col gap-1 text-xs text-gray-500 pt-2 mt-auto border-t">

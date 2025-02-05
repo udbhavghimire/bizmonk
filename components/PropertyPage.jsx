@@ -87,7 +87,7 @@ const PropertyPage = ({ main_data }) => {
 
   return (
     <>
-      <div className="screenshot col-12 mt-2">
+      <div className="screenshot col-12 mt-10">
 
         <div
           className={`border-0  rounded-md ${

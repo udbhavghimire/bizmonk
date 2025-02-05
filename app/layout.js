@@ -1,10 +1,15 @@
-import { Bricolage_Grotesque } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
+import LoadingBar from "./components/LoadingBar";
 import "leaflet/dist/leaflet.css";
 import "nprogress/nprogress.css";
 
-const bricolage = Bricolage_Grotesque({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
+});
 
 export const metadata = {
   title: "Bizmonk - Find your business space in Greater Toronto Area",
@@ -32,7 +37,8 @@ export default function RootLayout({ children }) {
       <head>
         <style>{customNProgressStyles}</style>
       </head>
-      <body suppressHydrationWarning className={bricolage.className}>
+      <body suppressHydrationWarning className={inter.className}>
+        <LoadingBar />
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
