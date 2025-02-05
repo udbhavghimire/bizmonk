@@ -43,13 +43,7 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center">
-              <Image
-                src="/bizmonk-logo.svg"
-                alt="BizMonk Logo"
-                width={120}
-                height={80}
-                className="h-8 w-auto"
-              />
+              <span className="text-2xl font-bold text-blue-600">Bizmonk</span>
             </Link>
           </div>
 

@@ -40,7 +40,7 @@ export default async function Home() {
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="text-center">
-            <h1 className="text-3xl md:text-5xl font-black text-teal-500 tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6">
+            <h1 className="text-3xl md:text-5xl font-black text-blue-600 tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6">
               Find Restaurants, Convenience Store and Commercial Space in GTA
             </h1>
             <p className="text-sm text-gray-600 max-w-xl mx-auto mb-10">
