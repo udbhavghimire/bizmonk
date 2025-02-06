@@ -129,13 +129,9 @@ export default function Navbar() {
                 className="flex items-center"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <Image
-                  src="/bizmonk-logo.svg"
-                  alt="BizMonk Logo"
-                  width={120}
-                  height={40}
-                  className="h-8 w-auto"
-                />
+                <span className="text-2xl font-bold bg-gradient-to-r from-teal-500 to-blue-600 text-transparent bg-clip-text">
+                  Bizmonk
+                </span>
               </Link>
               <button
                 type="button"

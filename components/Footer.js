@@ -36,7 +36,9 @@ export default function Footer() {
           {/* Company Info */}
           <div className="col-span-1 md:col-span-4 space-y-4">
             <Link href="/" className="block">
-              <span className="text-2xl font-bold text-blue-600">Bizmonk</span>
+              <span className="text-2xl font-bold bg-gradient-to-r from-teal-500 to-blue-600 text-transparent bg-clip-text">
+                Bizmonk
+              </span>
             </Link>
             <p className="text-gray-600">
               Your trusted partner in finding the perfect business space across

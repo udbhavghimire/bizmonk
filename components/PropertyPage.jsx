@@ -120,7 +120,7 @@ const PropertyPage = ({ main_data }) => {
                 {main_data.UnparsedAddress}
               </h1>
             </div>
-            <div className="">
+            {/* <div className="">
               <Link
                 href="#bookdate"
                 className="bg-black rounded-md text-white h-10 px-4 text-md flex items-center hover:scale-110 transform max-w-fit my-3 sm:my-0 sm:w-auto"
@@ -135,7 +135,7 @@ const PropertyPage = ({ main_data }) => {
                 <HeadphonesIcon className="h-5 w-5 mr-2" />
                 Contact the seller
               </Link>
-            </div>
+            </div> */}
           </section>
           <p
             className={`text-lg pty-description pt-2 sm:leading-8 ${

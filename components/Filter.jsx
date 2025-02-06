@@ -58,39 +58,32 @@ const Filter = ({ onFilterChange, cityUrl }) => {
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-4 mb-4">
-      <div className="relative w-48">
-        <select
-          className="text-black w-full appearance-none bg-white border-2 border-gray-300 rounded-full px-3 py-1.5 text-sm cursor-pointer hover:border-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-          value={businessType}
-          onChange={(e) => handleFilterChange("business", e.target.value)}
-          disabled={isFiltering}
-        >
-          <option value="">Business Type</option>
-          {businessTypes.map((type) => (
-            <option key={type.value} value={type.value}>
-              {type.label}
-            </option>
-          ))}
-        </select>
-        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-          <svg
-            className="w-3 h-3 fill-current text-gray-600"
-            viewBox="0 0 20 20"
+    <div className="flex flex-wrap items-center gap-2 mb-4">
+      <div className="flex gap-2">
+        {businessTypes.map((type) => (
+          <button
+            key={type.value}
+            className={`px-3 md:py-1.5 py-1 md:text-sm text-[12px] rounded-full transition-colors ${
+              businessType === type.value
+                ? "bg-gray-900 text-white"
+                : "bg-white border-2 border-gray-300 text-gray-700 hover:border-gray-400"
+            } ${isFiltering ? "opacity-50" : ""}`}
+            onClick={() => handleFilterChange("business", type.value)}
+            disabled={isFiltering}
           >
-            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-          </svg>
-        </div>
+            {type.label.split(" for ")[0]}
+          </button>
+        ))}
       </div>
 
       {priceRanges.map((range) => (
         <button
           key={range.value}
-          className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
+          className={`px-3 md:py-1.5 py-1 md:text-sm text-[12px] rounded-full transition-colors ${
             priceRange === range.value
               ? "bg-gray-900 text-white"
               : "bg-white border-2 border-gray-300 text-gray-700 hover:border-gray-400"
-          } ${isFiltering ? "opacity-50 cursor-not-allowed" : ""}`}
+          } ${isFiltering ? "opacity-50" : ""}`}
           onClick={() => handleFilterChange("price", range.value)}
           disabled={isFiltering}
         >

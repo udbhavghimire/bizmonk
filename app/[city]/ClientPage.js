@@ -71,10 +71,10 @@ export default function ClientPage({ initialData, cityName }) {
     <>
       {isLoading && <LoadingBar />}
       <div className={`${isWidePage ? "sm:mx-20" : "max-w-7xl mx-auto"}`}>
-        <h1 className="text-4xl font-bold text-gray-900">
+        <h1 className="md:text-4xl text-3xl font-bold text-gray-900">
           {totalListings}+ Business Opportunities in {cityName}
         </h1>
-        <p className="text-sm mb-4">
+        <p className="md:text-sm text-[13px] mb-4">
           {totalListings}+ {cityName} businesses for sale. Book a showing for
           gas stations, restaurants, motels, convenience stores and lands.
           Prices from $1 to $5,000,000. Open houses available.
