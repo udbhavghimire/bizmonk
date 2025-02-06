@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import Gallery from "@/components/Gallery";
 import Link from "next/link";
 import { commercial } from "@/api/routes/fetchRoutes";
-import { generateImageURLs } from "@/helpers/generateImageURLs";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 // import {
 //   fetchDataFromMLS,
@@ -95,12 +94,6 @@ const page = async ({ params }) => {
       throw new Error("Listing not found");
     }
 
-    // Get image URLs using the actual photo count
-    const imageURLs = generateImageURLs(
-      listingKey,
-      parseInt(main_data?.PhotoCount || 0)
-    );
-
     const breadcrumbItems = [
       { label: "Home", href: "/" },
       { label: properCityName, href: `/${cityName.toLowerCase()}` },
@@ -135,7 +128,7 @@ const page = async ({ params }) => {
                   <Breadcrumb items={breadcrumbItems} />
                 </div>
                 <section className="padding-top w-full text-sm flex flex-col items-center justify-center gy-2 relative">
-                  <div className="hidden sm:block relative">
+                  <div className="w-full relative">
                     <Gallery ResourceRecordKey={main_data.ListingKey} />
                     <div className="space-x-2 order-2 sm:order-1 absolute bottom-2 left-2">
                       <button className="bg-green-900 p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
@@ -150,7 +143,6 @@ const page = async ({ params }) => {
                       </button>
                     </div>
                   </div>
-                  <MobileGallery ResourceRecordKey={main_data.ListingKey} />
 
                   {/* Main Content with Sticky Form */}
                   <div className="w-full flex flex-col lg:flex-row gap-8 pt-0 sm:pt-4">
@@ -214,11 +206,6 @@ export async function generateMetadata({ params }, parent) {
       };
     }
 
-    const imageURLs = generateImageURLs(
-      listingKey,
-      parseInt(main_data?.PhotoCount || 0)
-    );
-
     const metadata = {
       title:
         main_data?.StreetNumber && main_data?.StreetName
@@ -240,9 +227,9 @@ export async function generateMetadata({ params }, parent) {
     };
 
     // Only add openGraph if we have valid image URLs
-    if (imageURLs && imageURLs.length > 0) {
+    if (main_data?.PhotoCount && main_data.PhotoCount > 0) {
       metadata.openGraph = {
-        images: [imageURLs[0]],
+        images: [main_data.PhotoURLs[0]],
       };
     }
 

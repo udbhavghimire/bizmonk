@@ -33,7 +33,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
         setLoadingImage(true);
         const urls = await getImageUrls({ 
           ResourceRecordKey: curElem.ListingKey, 
-          thumbnailOnly: false 
+          size: 'medium'
         });
         if (urls?.length > 0) {
           setImgUrl(urls[0]);

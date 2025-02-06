@@ -3,7 +3,7 @@ import { commercial } from "./routes/fetchRoutes";
 
 export const getImageUrls = async ({
   ResourceRecordKey,
-  thumbnailOnly = false,
+  size = "medium", // Can be 'thumbnail', 'medium', or 'large'
 }) => {
   if (!ResourceRecordKey) return [];
 
@@ -17,7 +17,11 @@ export const getImageUrls = async ({
 
   try {
     // Using the photos endpoint from our routes configuration
-    let imageLink = `${commercial.photos}?$filter=ResourceRecordKey eq '${ResourceRecordKey}' and ResourceName eq 'Property' and MediaCategory eq 'Photo' and MediaStatus eq 'Active'`;
+    let imageLink = `${
+      commercial.photos
+    }?$filter=ResourceRecordKey eq '${ResourceRecordKey}' and ResourceName eq 'Property' and MediaCategory eq 'Photo' and MediaStatus eq 'Active' and ImageSizeDescription eq '${
+      size.charAt(0).toUpperCase() + size.slice(1)
+    }'`;
 
     // Add ordering to ensure consistent image order
     imageLink += "&$orderby=Order";

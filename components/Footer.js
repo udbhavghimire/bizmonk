@@ -170,11 +170,12 @@ export default function Footer() {
                 consumers may be interested in purchasing. The data relating to
                 real estate for sale on this website comes in part from the
                 Internet Data Exchange program of the Multiple Listing Service.
-                Real estate listings held by brokerage firms other than Dolphin
-                Realty Inc. may be marked with the Internet Data Exchange logo
-                and detailed information about those properties will include the
-                name of the listing broker(s) when required by the MLS.
-                Copyright ©{new Date().getFullYear()} All rights reserved.
+                Real estate listings held by brokerage firms other than Team
+                Ravi - Elixir Real Estate Inc. Brokerage. may be marked with the
+                Internet Data Exchange logo and detailed information about those
+                properties will include the name of the listing broker(s) when
+                required by the MLS. Copyright ©{new Date().getFullYear()} All
+                rights reserved.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4">

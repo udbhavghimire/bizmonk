@@ -23,8 +23,13 @@ const Gallery = ({ ResourceRecordKey }) => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const urls = await getImageUrls({ ResourceRecordKey });
-        setImages(urls);
+        const urls = await getImageUrls({ 
+          ResourceRecordKey,
+          size: 'large'  // Changed to use large size images
+        });
+        // Remove any duplicate URLs using Set
+        const uniqueUrls = [...new Set(urls)];
+        setImages(uniqueUrls);
       } catch (error) {
         console.error("Error fetching images:", error);
       } finally {
@@ -58,7 +63,7 @@ const Gallery = ({ ResourceRecordKey }) => {
             {images?.length > 0 ? (
               images.map((url, index) => (
                 <a
-                  key={index}
+                  key={url}
                   data-src={url}
                   className={`gallery-item overflow-hidden rounded-[10px] ${
                     index === 0
