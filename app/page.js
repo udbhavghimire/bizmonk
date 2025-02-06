@@ -10,7 +10,7 @@ import {
   getConvenienceStoreListings,
   getOfficeListings,
   getRestaurantListings,
-  getBramptonRestaurants,
+  getBramptonRestaurantsUnder300k,
   getBramptonStoresUnder500k,
   getTorontoCommercialSpace,
 } from "@/api/getBusinessListings";
@@ -29,7 +29,7 @@ export default async function Home() {
   });
 
   // Fetch data for HomepageListing component
-  const bramptonRestaurants = await getBramptonRestaurants();
+  const bramptonRestaurants = await getBramptonRestaurantsUnder300k();
   const bramptonStores = await getBramptonStoresUnder500k();
   const torontoCommercial = await getTorontoCommercialSpace();
 
@@ -43,10 +43,10 @@ export default async function Home() {
             <h1 className="text-3xl md:text-5xl font-black text-black tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6">
               Find Restaurants, Convenience Store and Commercial Space in GTA
             </h1>
-            <p className="text-sm text-gray-600 max-w-xl mx-auto mb-10">
+            {/* <p className="text-sm text-gray-600 max-w-xl mx-auto mb-10">
               Discover premium business opportunities, from turnkey operations
               to prime commercial spaces across Greater Toronto Area
-            </p>
+            </p> */}
 
             <div className="mt-8 max-w-3xl mx-auto">
               <SearchBar variant="hero" />
@@ -103,7 +103,7 @@ export default async function Home() {
         <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
           Top Categories on Bizmonk
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Restaurant Card */}
           <Link
             href="/restaurant-for-sale"
@@ -213,7 +213,7 @@ export default async function Home() {
         </div>
 
         {/* Featured Franchises */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16 px-4 sm:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 px-4 sm:px-6">
           <Link
             href="/franchise-opportunity/ontario/mary-browns-chicken"
             className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
@@ -273,7 +273,7 @@ export default async function Home() {
           <h3 className="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-8">
             Explore Franchises by Location
           </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-4">
             {[
               "Ontario",
               "Toronto",

@@ -102,10 +102,14 @@ export const getOfficeListings = async ({
   return filteredValues;
 };
 
-export async function getBramptonRestaurants() {
+export async function getBramptonRestaurantsUnder300k() {
   return getRestaurantListings({
     city: "Brampton",
     numberOfListings: 5,
+    priceRange: {
+      min: 0,
+      max: 300000,
+    },
   });
 }
 

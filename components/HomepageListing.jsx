@@ -10,10 +10,10 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
       <div className="mb-32">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            Restaurants for Sale in Brampton
+            Restaurants for Sale Under $300k in Brampton
           </h2>
           <p className="text-gray-600 text-lg">
-             Profitable restaurant opportunities in Brampton
+             Affordable restaurant opportunities under $300,000 in Brampton
           </p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">

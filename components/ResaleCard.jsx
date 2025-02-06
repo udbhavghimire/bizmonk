@@ -112,7 +112,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
             </div>
 
             {/* Property Details */}
-            <div className="flex items-center gap-4 text-xs text-gray-600 mb-2">
+            <div className="flex items-center gap-4 md:text-xs text-[10px] text-gray-600 mb-2">
               {curElem.BuildingAreaTotal && (
                 <div className="flex items-center gap-1">
                   <LandPlot className="w-4 h-4" />
@@ -131,7 +131,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
             </div>
 
             {/* Address */}
-            <div className="text-sm text-gray-800 mb-1">
+            <div className="md:text-sm text-[12px] text-gray-800 mb-1">
               {curElem.StreetName
                 ? `${curElem.StreetNumber} ${curElem.StreetName} ${curElem.StreetSuffix || ""}`
                 : ""} {curElem.City}, Ontario
@@ -140,7 +140,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
             {/* Footer Info */}
             <div className="flex flex-col gap-1 text-xs text-gray-500 pt-2 mt-auto border-t">
               <div>MLS® #{curElem.ListingKey}</div>
-              <div>Listed by {curElem.ListOfficeName}</div>
+              {/* <div>Listed by {curElem.ListOfficeName}</div> */}
             </div>
           </div>
         </div>

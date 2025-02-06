@@ -75,7 +75,7 @@ export default function SearchBar({ variant = "default" }) {
             <div className="h-6 w-[1px] bg-gray-200"></div>
             <button
               onClick={handleSearchSubmit}
-              className="px-4 py-1.5 bg-primary text-white rounded-md hover:bg-primary/90 
+              className="px-4 py-1.5  bg-gradient-to-r from-teal-500 to-blue-600 text-white rounded-md hover:bg-primary/90 
                          transition-all duration-200 text-sm font-medium shadow-sm
                          hover:shadow-md active:scale-95"
             >
@@ -85,7 +85,7 @@ export default function SearchBar({ variant = "default" }) {
         </div>
 
         {/* Quick city links */}
-        <div className="mt-8 flex flex-wrap gap-4 justify-center">
+        <div className="mt-8 flex flex-wrap md:gap-4 gap-2 justify-center">
           {popularCities.map((city) => (
             <Link
               key={city}
