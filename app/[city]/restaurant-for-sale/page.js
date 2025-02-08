@@ -8,8 +8,11 @@ import Filter from "@/components/Filter";
 import LoadingBar from "@/components/LoadingBar";
 import { getRestaurantListings } from "@/api/getBusinessListings";
 import { useWidePage } from "@/hooks/useWidePage";
+import Image from "next/image";
+import Link from "next/link";
+import { cities } from "@/constant/cities";
 
-const { cities } = citiesData;
+const { cities: gtaCities } = citiesData;
 
 export default function CityRestaurants({ params }) {
   const [filteredListings, setFilteredListings] = useState([]);
@@ -23,7 +26,9 @@ export default function CityRestaurants({ params }) {
     notFound();
   }
 
-  const cityExists = cities.find((c) => c.toLowerCase() === city.toLowerCase());
+  const cityExists = gtaCities.find(
+    (c) => c.toLowerCase() === city.toLowerCase()
+  );
   const cityUrl = city.toLowerCase();
 
   if (!cityExists) {
@@ -86,6 +91,40 @@ export default function CityRestaurants({ params }) {
           {filteredListings.map((listing) => (
             <ResaleCard curElem={listing} key={listing.ListingKey} />
           ))}
+        </div>
+
+        {/* Cities Section */}
+        <div className="py-24">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Business Properties for sale in your city
+            </h2>
+            <p className="text-lg text-gray-600">
+              Explore top cities across Canada
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {cities?.map((city) => (
+              <Link
+                key={city.name}
+                href={`/${city.name.toLowerCase()}`}
+                className="group relative rounded-lg overflow-hidden aspect-[4/3]"
+              >
+                <Image
+                  src={city.image}
+                  alt={`${city.name} cityscape`}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">
+                  {city.name}
+                </h3>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </>

@@ -105,7 +105,7 @@ export const getOfficeListings = async ({
 export async function getBramptonRestaurantsUnder300k() {
   return getRestaurantListings({
     city: "Brampton",
-    numberOfListings: 5,
+    numberOfListings: 8,
     priceRange: {
       min: 0,
       max: 300000,
@@ -116,7 +116,7 @@ export async function getBramptonRestaurantsUnder300k() {
 export async function getBramptonStoresUnder500k() {
   return getConvenienceStoreListings({
     city: "Brampton",
-    numberOfListings: 5,
+    numberOfListings: 8,
     priceRange: {
       min: 0,
       max: 500000,
@@ -127,6 +127,6 @@ export async function getBramptonStoresUnder500k() {
 export async function getTorontoCommercialSpace() {
   return getOfficeListings({
     city: "Toronto",
-    numberOfListings: 5,
+    numberOfListings: 8,
   });
 }
