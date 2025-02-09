@@ -6,6 +6,7 @@ import ClientPage from "./ClientPage";
 import Image from "next/image";
 import Link from "next/link";
 import { cities } from "@/constant/cities";
+import CityContent from "@/data/CityContent";
 
 const ITEMS_PER_PAGE = 20;
 
@@ -82,6 +83,9 @@ export default async function Page({ params }) {
           ))}
         </div>
       </div>
+
+      {/* New SEO Content Section */}
+      <CityContent cityName={data.cityName} />
     </Suspense>
   );
 }
