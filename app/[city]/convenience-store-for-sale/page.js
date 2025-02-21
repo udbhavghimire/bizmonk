@@ -1,12 +1,12 @@
 "use client";
-import { useState, use, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getConvenienceStoreListings } from "@/api/getBusinessListings";
 import Breadcrumb from "@/components/Breadcrumb";
 import ResaleCard from "@/components/ResaleCard";
 import citiesData from "@/data/gta-cities.json";
 import Filter from "@/components/Filter";
 import LoadingBar from "@/components/LoadingBar";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { useWidePage } from "@/hooks/useWidePage";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,16 +15,15 @@ import Pagination from "@/components/Pagination";
 
 const { cities: gtaCities } = citiesData;
 
-export default function CityConvenienceStores({ params }) {
+export default function CityConvenienceStores() {
   const [filteredListings, setFilteredListings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isWidePage] = useWidePage();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
 
-  // Unwrap params using React.use()
-  const unwrappedParams = use(params);
-  const { city } = unwrappedParams;
+  const params = useParams();
+  const city = params?.city;
 
   if (!city) {
     notFound();

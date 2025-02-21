@@ -1,6 +1,6 @@
 "use client";
-import { useState, use, useEffect } from "react";
-import { notFound } from "next/navigation";
+import { useState, useEffect } from "react";
+import { notFound, useParams } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumb";
 import citiesData from "@/data/gta-cities.json";
 import ResaleCard from "@/components/ResaleCard";
@@ -11,16 +11,16 @@ import { useWidePage } from "@/hooks/useWidePage";
 import Image from "next/image";
 import Link from "next/link";
 import { cities } from "@/constant/cities";
+import Pagination from "@/components/Pagination";
+import { businessDescriptions } from "@/data/business-descriptions";
 
 const { cities: gtaCities } = citiesData;
 
-export default function CityRestaurants({ params }) {
-  const [filteredListings, setFilteredListings] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+export default function CityRestaurants() {
+  const params = useParams();
+  const city = params?.city;
+
   const [isWidePage] = useWidePage();
-  // Unwrap params using React.use()
-  const unwrappedParams = use(params);
-  const { city } = unwrappedParams;
 
   if (!city) {
     notFound();
@@ -40,22 +40,28 @@ export default function CityRestaurants({ params }) {
     { label: "Restaurants for Sale" },
   ];
 
-  // Fetch initial data when component mounts
-  useEffect(() => {
-    const fetchInitialData = async () => {
-      setIsLoading(true);
-      try {
-        const listings = await getRestaurantListings({
-          city: city,
-        });
-        setFilteredListings(listings);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const [listings, setListings] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [filteredListings, setFilteredListings] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
 
-    fetchInitialData();
-  }, [city]);
+  useEffect(() => {
+    fetchListings();
+  }, []);
+
+  const fetchListings = async () => {
+    setIsLoading(true);
+    try {
+      const listings = await getRestaurantListings({
+        city: city,
+      });
+      setListings(listings);
+      setFilteredListings(listings);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleFilterChange = async (filters) => {
     setIsLoading(true);

@@ -5,10 +5,10 @@ import Link from "next/link";
 import gtaCities from "@/data/gta-cities.json";
 
 const commercialTypes = [
-  { label: "Convenience Stores", path: "convenience-stores-for-sale" },
-  { label: "Restaurants", path: "restaurants-for-sale" },
-  { label: "Office Spaces", path: "offices-for-lase" },
-  { label: "Franchises", path: "franchises" },
+  { label: "Convenience Stores", path: "convenience-store-for-sale" },
+  { label: "Restaurants", path: "restaurant-for-sale" },
+  { label: "Office Spaces", path: "offices-for-lease" },
+  { label: "Franchises", path: "franchise-opportunity" },
 ];
 
 const priceRanges = [
@@ -24,21 +24,17 @@ export default function OntarioCitiesGrid() {
     // Organize links by category
     const categories = {
       commercialTypes: commercialTypes.map((type) => ({
-        href: `/commercial/ontario/${citySlug}/${type.path}-for-sale`,
-        text: `${type.label} for sale in ${city}`,
+        href:
+          type.path === "franchise-opportunity"
+            ? `/franchise-opportunity/${citySlug}`
+            : `/${citySlug}/${type.path}`,
+        text:
+          type.path === "franchise-opportunity"
+            ? `Franchise Opportunities in ${city}`
+            : `${type.label} ${
+                type.path.includes("lease") ? "for lease" : "for sale"
+              } in ${city}`,
       })),
-      priceRanges: commercialTypes.flatMap((type) =>
-        priceRanges.map((range) => ({
-          href: `/commercial/ontario/${citySlug}/${type.path}-${range.label
-            .toLowerCase()
-            .replace(/ /g, "-")}`,
-          text: `${type.label} in ${city} ${range.label}`,
-        }))
-      ),
-      office: {
-        href: `/commercial/ontario/${citySlug}/office-spaces-for-lease`,
-        text: `Office Spaces for lease in ${city}`,
-      },
     };
 
     return categories;
@@ -87,36 +83,6 @@ export default function OntarioCitiesGrid() {
                     </Link>
                   </div>
                 ))}
-              </div>
-
-              {/* Price Ranges */}
-              <div className="">
-                <h3 className="text-[16px] font-semibold">
-                  Properties by Price Range
-                </h3>
-                {categories.priceRanges.map((link, index) => (
-                  <div key={index}>
-                    <Link
-                      href={link.href}
-                      className="text-gray-700 hover:text-blue-800 text-[14px]"
-                    >
-                      {link.text}
-                    </Link>
-                  </div>
-                ))}
-              </div>
-
-              {/* Office Spaces for Lease */}
-              <div className="py-2">
-                <h3 className="text-[16px] font-semibold">Office Spaces</h3>
-                <div>
-                  <Link
-                    href={categories.office.href}
-                    className="text-gray-700 hover:text-blue-800 text-[14px]"
-                  >
-                    {categories.office.text}
-                  </Link>
-                </div>
               </div>
             </div>
           );

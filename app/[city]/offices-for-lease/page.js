@@ -1,5 +1,5 @@
 "use client";
-import { useState, use, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Breadcrumb from "@/components/Breadcrumb";
 import citiesData from "@/data/gta-cities.json";
 import { notFound } from "next/navigation";
@@ -22,9 +22,7 @@ export default function CityOffices({ params }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
 
-  // Unwrap params using React.use()
-  const unwrappedParams = use(params);
-  const { city } = unwrappedParams;
+  const { city } = params;
 
   if (!city) {
     notFound();
