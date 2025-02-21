@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
-import LoadingBar from "./components/LoadingBar";
+import LoadingBar from "@/components/LoadingBar";
 import "leaflet/dist/leaflet.css";
 import "nprogress/nprogress.css";
 
