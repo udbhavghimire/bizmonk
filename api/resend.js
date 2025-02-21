@@ -22,7 +22,7 @@ export const sendEmail = async ({ content, title = null }) => {
   console.log("sending...");
   const { error } = await resend.emails.send({
     from: "info@bizmonk.ca",
-    to: ["ghimireudbhav@gmail.com"],
+    to: ["bizmonkcanada@gmail.com", "milan@homebaba.ca", "info@bizmonk.ca"],
     subject: "Bizmonk Inquiry from Listing Page",
     html: `<h1>${
       title || "Bizmonk Inquiry from Listing Page"
