@@ -1,36 +1,18 @@
-import dynamic from "next/dynamic";
 import Gallery from "@/components/Gallery";
 import Link from "next/link";
 import { commercial } from "@/api/routes/fetchRoutes";
-import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
-// import {
-//   fetchDataFromMLS,
-//   // fetchStatsFromMLS,
-//   getSalesData,
-// } from "../../../../../api/getSalesData";
-import BookShowingForm from "@/components/BookShowingForm";
 import MapSection from "@/components/MapSection";
 import PropertyPage from "@/components/PropertyPage";
 import BookingDate from "@/components/BookingDate";
 import FAQ from "@/components/FAQ";
-import MortgageCalculator from "@/components/MortgageCalculator";
-import Image from "next/image";
-import Slider from "@/components/Slider";
 import Breadcrumb from "@/components/Breadcrumb";
 import CreateSchema from "@/helpers/CreateSchema";
 import { slugGenerator } from "@/helpers/slugGenerator";
-import PropertyDisplaySection from "@/components/PropertyDisplaySection";
 import PriceButton from "@/components/PriceButton";
 import formatCurrency from "@/helpers/formatCurrency";
-import Carousel from "@/components/Carousel";
-import { generateURL } from "@/helpers/generateURL";
-import MobileGallery from "@/components/MobileGallery";
-import Thumbnails from "@/components/Thumbnails";
 import TimeAgo from "@/helpers/TimeAgo";
 import cities from "@/data/gta-cities.json";
 import StickyContactForm from "@/components/StickyContactForm";
-// import { houseType } from "@/constant";
-// import { Button } from "@nextui-org/react";
 
 const INITIAL_OFFSET = 0;
 const INITIAL_LIMIT = 3;

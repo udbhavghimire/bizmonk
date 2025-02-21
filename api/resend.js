@@ -1,7 +1,7 @@
 "use server";
 import { Resend } from "resend";
 import swal from "sweetalert";
-import capitalizeFirstLetter from "@/helpers/capitalizeFirstLetter";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -22,7 +22,7 @@ export const sendEmail = async ({ content, title = null }) => {
   console.log("sending...");
   const { error } = await resend.emails.send({
     from: "info@bizmonk.ca",
-    to: ["bizmonkcanada@gmail.com", "milan@homebaba.ca", "info@bizmonk.ca"],
+    to: ["ghimireudbhav@gmail.com"],
     subject: "Bizmonk Inquiry from Listing Page",
     html: `<h1>${
       title || "Bizmonk Inquiry from Listing Page"
