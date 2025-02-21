@@ -1,5 +1,3 @@
-"use client";
-import { useState, useEffect } from "react";
 import Breadcrumb from "@/components/Breadcrumb";
 import { cities } from "@/constant/cities";
 import { notFound } from "next/navigation";
@@ -8,11 +6,6 @@ import OfficeListings from "@/components/OfficeListings";
 import { businessDescriptions } from "@/data/business-descriptions";
 import Image from "next/image";
 import Link from "next/link";
-import ResaleCard from "@/components/ResaleCard";
-import Filter from "@/components/Filter";
-import LoadingBar from "@/components/LoadingBar";
-import { useWidePage } from "@/hooks/useWidePage";
-import Pagination from "@/components/Pagination";
 
 export async function generateStaticParams() {
   return cities.map((city) => ({
@@ -20,91 +13,17 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function OntarioOffices() {
-  const [filteredListings, setFilteredListings] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isWidePage] = useWidePage();
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 20;
-
-  // Fetch initial data when component mounts
-  useEffect(() => {
-    const fetchInitialData = async () => {
-      setIsLoading(true);
-      try {
-        const listings = await getOfficeListings({});
-        setFilteredListings(listings);
-      } catch (error) {
-        console.error("Error fetching initial listings:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchInitialData();
-  }, []);
-
-  const handleFilterChange = async (filters) => {
-    setIsLoading(true);
-    setCurrentPage(1); // Reset to first page when filter changes
-    try {
-      const listings = await getOfficeListings({
-        priceRange: filters.priceRange,
-      });
-      setFilteredListings(listings);
-    } catch (error) {
-      console.error("Error fetching filtered listings:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Calculate pagination
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredListings.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-  const totalPages = Math.ceil(filteredListings.length / itemsPerPage);
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+export default async function CityOffices() {
+  const data = await getOfficeListings({});
 
   return (
-    <>
-      {isLoading && <LoadingBar />}
-      <div className={`${isWidePage ? "sm:mx-20" : "max-w-7xl mx-auto"}`}>
-        <h1 className="text-3xl font-bold text-gray-900">
+    <div className="">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">
           Offices for Lease in Ontario
         </h1>
-        <p className="text-sm mb-4">
-          500+ Ontario offices for lease. Book a showing for offices. Prices
-          from $1 to $5,000,000. Open houses available.
-        </p>
-        <Filter onFilterChange={handleFilterChange} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {currentItems.map((listing) => (
-            <ResaleCard curElem={listing} key={listing.ListingKey} />
-          ))}
-        </div>
-
-        {filteredListings.length === 0 && !isLoading && (
-          <div className="text-center py-8 text-gray-500">
-            No listings found in this price range
-          </div>
-        )}
-
-        {filteredListings.length > 0 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        )}
+        <OfficeListings initialData={data} />
 
         {/* Cities Section */}
         <div className="py-24">
@@ -154,6 +73,6 @@ export default function OntarioOffices() {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
