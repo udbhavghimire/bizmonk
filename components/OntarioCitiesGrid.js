@@ -58,11 +58,7 @@ export default function OntarioCitiesGrid() {
           const categories = generateCategorizedLinks(city);
           return (
             <div key={city} className="space-y-4">
-              <Link
-                href={`/commercial/ontario/${city
-                  .toLowerCase()
-                  .replace(/ /g, "-")}`}
-              >
+              <Link href={`/${city.toLowerCase().replace(/ /g, "-")}`}>
                 <h2 className="text-3xl font-bold mb-6 text-black hover:text-blue-800 pt-6">
                   {city}
                 </h2>
