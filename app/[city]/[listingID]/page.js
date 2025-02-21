@@ -129,7 +129,9 @@ const page = async ({ params }) => {
                 </div>
                 <section className="padding-top w-full text-sm flex flex-col items-center justify-center gy-2 relative">
                   <div className="w-full relative">
-                    <Gallery ResourceRecordKey={main_data.ListingKey} />
+                    <Gallery
+                      ResourceRecordKey={main_data?.ListingKey || null}
+                    />
                     <div className="space-x-2 order-2 sm:order-1 absolute bottom-2 left-2">
                       <button className="bg-green-900 p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
                         <TimeAgo
@@ -145,9 +147,9 @@ const page = async ({ params }) => {
                   </div>
 
                   {/* Main Content with Sticky Form */}
-                  <div className="w-full flex flex-col lg:flex-row gap-8 pt-0 sm:pt-4">
+                  <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-8 pt-0 sm:pt-4">
                     {/* Left Content */}
-                    <div className="w-full lg:w-2/3">
+                    <div className="lg:col-span-2 col">
                       <PropertyPage {...{ main_data }} />
                       <BookingDate listingId={main_data.ListingKey} />
                       <MapSection main_data={main_data} />
@@ -157,7 +159,7 @@ const page = async ({ params }) => {
                     </div>
 
                     {/* Right Sticky Form */}
-                    <div className="w-full lg:w-1/3">
+                    <div id="contact-form" className="lg:col-span-1 col">
                       <StickyContactForm listingData={main_data} />
                     </div>
                   </div>

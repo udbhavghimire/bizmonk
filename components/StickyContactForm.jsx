@@ -1,8 +1,14 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import { sendEmail } from "@/api/resend";
+import { usePathname } from 'next/navigation';
+import swal from 'sweetalert';
 
 const StickyContactForm = ({ listingData }) => {
+  const pathname = usePathname();
+  const listingUrl = `https://bizmonk.ca${pathname}`;
+
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -21,8 +27,24 @@ const StickyContactForm = ({ listingData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Add your form submission logic here
-      console.log("Form submitted:", formData);
+      await sendEmail({
+        content: {
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          message: formData.message,
+          "inquiry from": window.location.href
+        },
+        title: "Bizmonk Inquiry from Listing Page"
+      });
+
+      // Show success message
+      swal(
+        "Thank You!",
+        "Your message has been sent successfully. We will get back to you soon.",
+        "success"
+      );
+
       // Reset form after successful submission
       setFormData(prev => ({
         ...prev,
@@ -32,11 +54,17 @@ const StickyContactForm = ({ listingData }) => {
       }));
     } catch (error) {
       console.error("Error submitting form:", error);
+      // Show error message
+      swal(
+        "Error",
+        "There was a problem sending your message. Please try again.",
+        "error"
+      );
     }
   };
 
   return (
-    <div className="hidden lg:block sticky top-24 mt-10">
+    <div className=" sticky top-24 mt-10" id="contactform">
       <div className="bg-gradient-to-br from-white via-white to-gray-50 p-8 rounded-3xl shadow-xl border border-gray-100">
         <div className="flex items-center gap-5 mb-8">
           <div className="relative">

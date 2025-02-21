@@ -11,12 +11,19 @@ const options = {
   },
 };
 
-export const getSaleOfBusinessListings = async (city = null) => {
+export const getSaleOfBusinessListings = async (
+  city = null,
+  searchParams = {}
+) => {
+  const pageSize = 60;
+  const page = Number(searchParams?.page) || 1;
+  const skip = (page - 1) * pageSize;
+
   try {
     const response = await fetch(
       `https://query.ampre.ca/odata/Property?$filter=PropertySubType eq 'Sale Of Business'${
         city ? ` and contains(City,'${capitalizeFirstLetter(city)}')` : ""
-      }&$top=500&$orderby=OriginalEntryTimestamp desc`,
+      }&$top=60&$skip=${skip}&$orderby=OriginalEntryTimestamp desc`,
       options
     );
 

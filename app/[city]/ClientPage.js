@@ -6,7 +6,8 @@ import LoadingBar from "@/components/LoadingBar";
 import { useWidePage } from "@/hooks/useWidePage";
 import Pagination from "@/components/Pagination";
 
-const ITEMS_PER_PAGE = 20;
+// Add this constant at the top of the file
+const ITEMS_PER_PAGE = 12; // or whatever number you want to show per page
 
 // Helper function to convert city names to URL-friendly format
 const toUrlFormat = (cityName) => cityName.toLowerCase().replace(/\s+/g, "-");
@@ -52,7 +53,8 @@ export default function ClientPage({ initialData, cityName }) {
   // Get current page listings
   const getCurrentPageListings = () => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    return filteredListings.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    return filteredListings.slice(startIndex, endIndex);
   };
 
   const handleFilterChange = (newFilters) => {

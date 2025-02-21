@@ -18,7 +18,8 @@ const BookShowingForm = ({ address }) => {
             className="object-cover w-full h-full"
           />
         </div> */}
-        <div className="w-full sm:mx-2 p-4 flex flex-col justify-center items-center">
+        <Link href="#contactform"> 
+        <div className="w-full sm:mx-2 p-4 flex flex-col justify-center items-center" >
           {/**Schedule a viewing form */}
           <h1 className="font-bold text-2xl sm:text-3xl my-2 text-center">
             Book a Showing
@@ -26,6 +27,7 @@ const BookShowingForm = ({ address }) => {
           <DateSelector showBookingType={false} />
           <span className="my-4">{address}</span>
         </div>
+        </Link>
       </div>
     </div>
   );

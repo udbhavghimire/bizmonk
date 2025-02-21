@@ -152,7 +152,7 @@ const BookingDate = ({ listingId }) => {
 
   return (
     <div
-      className="relative z-0 w-full rounded-md bg-very-light-gray flex items-center mt-12 sm:mt-24"
+      className="relative z-0 w-full rounded-md bg-very-light-gray flex items-center mt-12 sm:mt-24 hidden md:block"
       id="bookdate"
     >
       <div className="flex sm:flex-row flex-col w-full overflow-hidden">

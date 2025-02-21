@@ -20,12 +20,12 @@ const findCityByUrlFormat = (urlFormat) => {
   );
 };
 
-async function getCityData(city) {
+async function getCityData(city, searchParams) {
   const cityExists = findCityByUrlFormat(city);
   if (!cityExists) return null;
 
   try {
-    const data = await getSaleOfBusinessListings(cityExists);
+    const data = await getSaleOfBusinessListings(cityExists, searchParams);
     return {
       cityName: cityExists,
       listings: data?.value || [],
@@ -39,8 +39,8 @@ async function getCityData(city) {
   }
 }
 
-export default async function Page({ params }) {
-  const data = await getCityData(params.city);
+export default async function Page({ params, searchParams }) {
+  const data = await getCityData(params.city, searchParams);
 
   if (!data) {
     notFound();
