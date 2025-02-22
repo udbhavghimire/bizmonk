@@ -109,12 +109,10 @@ export default async function Home() {
             className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <div className="relative h-64">
-              <Image
+              <img
                 src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4"
                 alt="Restaurant for Sale"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
@@ -131,12 +129,10 @@ export default async function Home() {
             className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <div className="relative h-64">
-              <Image
+              <img
                 src="/fatbb.jpg"
                 alt="Franchises for Sale"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
@@ -153,12 +149,10 @@ export default async function Home() {
             className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <div className="relative h-64">
-              <Image
+              <img
                 src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a"
                 alt="Convenience Stores for Sale"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
@@ -175,12 +169,10 @@ export default async function Home() {
             className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <div className="relative h-64">
-              <Image
+              <img
                 src="https://images.unsplash.com/photo-1497366216548-37526070297c"
                 alt="Offices for Lease"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
@@ -226,13 +218,10 @@ export default async function Home() {
             className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <div className="relative h-96 sm:h-[32rem]">
-              <Image
+              <img
                 src="/marryb.webp"
                 alt="Mary Brown's Chicken"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-                priority
-                sizes="(max-width: 768px) 100vw, 50vw"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent" />
               <div className="absolute bottom-8 sm:bottom-10 left-8 sm:left-10 right-8 sm:right-10">
@@ -251,13 +240,10 @@ export default async function Home() {
             className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <div className="relative h-96 sm:h-[32rem]">
-              <Image
+              <img
                 src="/fatbb.jpg"
                 alt="Fat Bastard Burrito"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-                priority
-                sizes="(max-width: 768px) 100vw, 50vw"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent" />
               <div className="absolute bottom-8 sm:bottom-10 left-8 sm:left-10 right-8 sm:right-10">
@@ -345,12 +331,10 @@ export default async function Home() {
               href={`/${city.name.toLowerCase()}`}
               className="group relative rounded-lg overflow-hidden aspect-[4/3]"
             >
-              <Image
+              <img
                 src={city.image}
                 alt={`${city.name} cityscape`}
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                className="object-cover group-hover:scale-110 transition-transform duration-300"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
               <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">
@@ -391,21 +375,21 @@ export default async function Home() {
             href="/restaurant-for-sale"
             className="group relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
-            <Image
-              src="/restaurant.webp"
-              alt="Restaurant interior"
-              width={600}
-              height={400}
-              className="object-cover h-64 w-full transform group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-6">
-              <h3 className="text-xl font-semibold text-white">
-                Restaurants for Sale
-              </h3>
-              <p className="mt-2 text-sm text-gray-200">
-                Browse available restaurant spaces and turnkey operations
-              </p>
+            <div className="relative h-64">
+              <img
+                src="/restaurant.webp"
+                alt="Restaurant interior"
+                className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <h3 className="text-xl font-semibold text-white">
+                  Restaurants for Sale
+                </h3>
+                <p className="mt-2 text-sm text-gray-200">
+                  Browse available restaurant spaces and turnkey operations
+                </p>
+              </div>
             </div>
           </Link>
 
@@ -413,21 +397,21 @@ export default async function Home() {
             href="/convenience-store-for-sale"
             className="group relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
-            <Image
-              src="/store.jpg"
-              alt="Convenience store"
-              width={600}
-              height={400}
-              className="object-cover h-64 w-full transform group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-6">
-              <h3 className="text-xl font-semibold text-white">
-                Convenience Stores for Sale
-              </h3>
-              <p className="mt-2 text-sm text-gray-200">
-                Explore convenience store opportunities
-              </p>
+            <div className="relative h-64">
+              <img
+                src="/store.jpg"
+                alt="Convenience store"
+                className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <h3 className="text-xl font-semibold text-white">
+                  Convenience Stores for Sale
+                </h3>
+                <p className="mt-2 text-sm text-gray-200">
+                  Explore convenience store opportunities
+                </p>
+              </div>
             </div>
           </Link>
 
@@ -435,21 +419,21 @@ export default async function Home() {
             href="/offices-for-lease"
             className="group relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
-            <Image
-              src="/office.jpeg"
-              alt="Modern office space"
-              width={600}
-              height={400}
-              className="object-cover h-64 w-full transform group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-6">
-              <h3 className="text-xl font-semibold text-white">
-                Offices for Lease
-              </h3>
-              <p className="mt-2 text-sm text-gray-200">
-                Find the perfect office space for your business
-              </p>
+            <div className="relative h-64">
+              <img
+                src="/office.jpeg"
+                alt="Modern office space"
+                className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <h3 className="text-xl font-semibold text-white">
+                  Offices for Lease
+                </h3>
+                <p className="mt-2 text-sm text-gray-200">
+                  Find the perfect office space for your business
+                </p>
+              </div>
             </div>
           </Link>
         </div>
