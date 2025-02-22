@@ -191,6 +191,14 @@ export default async function Home() {
             </div>
           </Link>
         </div>
+        <div className="text-center mt-8">
+          <Link
+            href="commercial/ontario"
+            className="text-blue-600 hover:text-primary/80 font-semibold text-lg"
+          >
+            View All Commercial Properties in Ontario →
+          </Link>
+        </div>
       </div>
 
       <HomepageListing
