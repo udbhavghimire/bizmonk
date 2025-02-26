@@ -285,7 +285,7 @@ export default async function Home() {
                 key={city}
                 href={`/franchise-opportunity/${city
                   .toLowerCase()
-                  .replace(" ", "-")}`}
+                  .replaceAll(" ", "-")}`}
                 className="px-3 sm:px-4 py-2 sm:py-3 text-center rounded-lg bg-gray-50 hover:bg-primary/5 transition-colors group"
               >
                 <span className="text-xs sm:text-sm font-medium text-gray-900 group-hover:text-primary">

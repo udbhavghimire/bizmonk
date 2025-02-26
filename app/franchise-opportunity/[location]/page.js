@@ -110,16 +110,16 @@ export default function FranchiseOpportunityPage({ params }) {
               <h3 className="text-xl font-semibold mb-6 text-center">
                 Popular Locations
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-7xl mx-auto">
                 {cities.map((city) => (
                   <Link
                     key={city}
                     href={`/franchise-opportunity/${city
                       .toLowerCase()
-                      .replace(" ", "-")}`}
+                      .replaceAll(" ", "-")}`}
                     className={`${
                       location.toLowerCase() ===
-                      city.toLowerCase().replace(" ", "-")
+                      city.toLowerCase().replaceAll(" ", "-")
                         ? "bg-primary text-white"
                         : "bg-white text-gray-600 hover:bg-primary/5"
                     } px-4 py-3 rounded-lg text-center transition-colors duration-300`}

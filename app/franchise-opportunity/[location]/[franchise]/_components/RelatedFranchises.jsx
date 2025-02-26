@@ -18,7 +18,8 @@ const RelatedFranchises = ({ franchiseData, locationData, location }) => {
                 key={franchise.name}
                 href={`/franchise-opportunity/${location}/${franchise.name
                   .toLowerCase()
-                  .replace(/['\s]+/g, "-")}`}
+                  .replaceAll(" ", "-")
+                  .replaceAll("'", "")}`}
                 className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <div className="relative h-72 sm:h-80">
@@ -35,7 +36,9 @@ const RelatedFranchises = ({ franchiseData, locationData, location }) => {
                     <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-xl">
                       {franchise.name}
                     </h3>
-                    <p className="text-white drop-shadow-xl">{franchise.type}</p>
+                    <p className="text-white drop-shadow-xl">
+                      {franchise.type}
+                    </p>
                   </div>
                 </div>
                 <div className="p-8">
@@ -43,7 +46,7 @@ const RelatedFranchises = ({ franchiseData, locationData, location }) => {
                     Join one of Canada's fastest-growing franchise networks
                   </p>
                   <p className="text-primary font-semibold inline-flex items-center">
-                    Learn More 
+                    Learn More
                     <span className="ml-2 text-lg">→</span>
                   </p>
                 </div>

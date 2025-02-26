@@ -1,3 +1,5 @@
+import { franchiseCities } from "@/constant/franchiseCities";
+
 const baseFranchises = [
   {
     name: "Mary Brown's Chicken",
@@ -117,21 +119,14 @@ export const franchiseLocations = {
       financingOptions: "Multiple Available",
     },
   },
-  toronto: createLocationData("Toronto"),
-  mississauga: createLocationData("Mississauga"),
-  brampton: createLocationData("Brampton"),
-  vaughan: createLocationData("Vaughan"),
-  markham: createLocationData("Markham"),
-  "richmond-hill": createLocationData("Richmond Hill"),
-  oakville: createLocationData("Oakville"),
-  ajax: createLocationData("Ajax"),
-  pickering: createLocationData("Pickering"),
-  milton: createLocationData("Milton"),
-  burlington: createLocationData("Burlington"),
-  oshawa: createLocationData("Oshawa"),
-  newmarket: createLocationData("Newmarket"),
-  aurora: createLocationData("Aurora"),
-  whitby: createLocationData("Whitby"),
+  ...Object.fromEntries(
+    franchiseCities.map((city) => [
+      // Convert city name to kebab-case for the key
+      city.toLowerCase().replace(/ /g, "-").replace(/\./g, ""),
+      // Create location data for each city
+      createLocationData(city),
+    ])
+  ),
 };
 
 // Helper function to get location-specific content with error handling

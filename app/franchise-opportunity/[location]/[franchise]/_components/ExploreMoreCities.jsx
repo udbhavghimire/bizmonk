@@ -1,3 +1,4 @@
+import { franchiseCities } from "@/constant/franchiseCities";
 import Link from "next/link";
 import React from "react";
 
@@ -9,10 +10,12 @@ const ExploreMoreCities = ({ franchise, franchiseData }) => {
           Explore {franchiseData.name} in Other Cities
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {["Toronto", "Mississauga", "Brampton", "Vaughan"].map((city) => (
+          {franchiseCities.map((city) => (
             <Link
               key={city}
-              href={`/franchise-opportunity/${city.toLowerCase()}/${franchise}`}
+              href={`/franchise-opportunity/${city
+                .toLowerCase()
+                .replaceAll(" ", "-")}/${franchise}`}
               className="bg-gray-50 rounded-lg p-4 text-center hover:bg-primary/5 transition-colors"
             >
               <span className="text-gray-900">{city}</span>

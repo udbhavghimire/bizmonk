@@ -1,8 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 
 const HeroSection = ({ franchiseData, location }) => {
+  const locationText = location
+    .replace(/-/g, " ")
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
   return (
     <div className="relative pb-24 pt-10 overflow-hidden">
       <div className="absolute inset-0" />
@@ -22,12 +28,10 @@ const HeroSection = ({ franchiseData, location }) => {
             </Link>
             <span>→</span>
             <Link
-              href={`/franchise-opportunity/${location}`}
+              href={`/franchise-opportunity/${location.replaceAll(" ", "-")}`}
               className="hover:text-primary"
             >
-              {location === "ontario"
-                ? "Ontario"
-                : location.charAt(0).toUpperCase() + location.slice(1)}
+              {location === "ontario" ? "Ontario" : locationText}
             </Link>
             <span>→</span>
             <span className="text-primary font-medium">
@@ -56,8 +60,7 @@ const HeroSection = ({ franchiseData, location }) => {
                   {franchiseData.name}
                 </h1>
                 <p className="text-lg text-white drop-shadow-xl">
-                  Franchise Opportunity in{" "}
-                  {location.charAt(0).toUpperCase() + location.slice(1)}
+                  Franchise Opportunity in {locationText}
                 </p>
               </div>
             </div>
@@ -211,7 +214,10 @@ const HeroSection = ({ franchiseData, location }) => {
                     </p>
                     <div className="flex flex-col space-y-4 my-4">
                       {franchiseData.storeModels.map((model) => (
-                        <div key={model.type} className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-2 hover:bg-gray-100 p-4 rounded-md">
+                        <div
+                          key={model.type}
+                          className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-2 hover:bg-gray-100 p-4 rounded-md"
+                        >
                           {model.image && (
                             <Image
                               height={200}
