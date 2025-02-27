@@ -100,7 +100,7 @@ export default async function Home() {
       {/* Top Categories Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <h2 className="md:text-[42px] text-3xl font-extrabold text-gray-900 mb-8 text-center">
-          Top Categories on Bizmonk
+          Looking to own a business?
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Restaurant Card */}
