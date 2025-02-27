@@ -106,7 +106,7 @@ export default async function Home() {
           {/* Restaurant Card */}
           <Link
             href="/restaurant-for-sale"
-            className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+            className="group flex flex-col rounded-xl overflow-hidden"
           >
             <div className="relative h-64">
               <img
@@ -114,19 +114,18 @@ export default async function Home() {
                 alt="Restaurant for Sale"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
-                <h3 className="text-[18px] font-bold text-white">
-                  Restaurants for Sale
-                </h3>
-              </div>
+            </div>
+            <div className="p-4 text-center">
+              <h3 className="text-[18px] font-bold text-gray-900 group-hover:text-primary transition-colors">
+                Restaurants for Sale
+              </h3>
             </div>
           </Link>
 
           {/* Franchises Card */}
           <Link
             href="/franchise-opportunity/ontario"
-            className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+            className="group flex flex-col rounded-xl overflow-hidden"
           >
             <div className="relative h-64">
               <img
@@ -134,19 +133,18 @@ export default async function Home() {
                 alt="Franchises for Sale"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
-                <h3 className="text-[18px] font-bold text-white">
-                  Franchises for Sale
-                </h3>
-              </div>
+            </div>
+            <div className="p-4 text-center">
+              <h3 className="text-[18px] font-bold text-gray-900 group-hover:text-primary transition-colors">
+                Franchises for Sale
+              </h3>
             </div>
           </Link>
 
           {/* Convenience Store Card */}
           <Link
             href="/convenience-store-for-sale"
-            className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+            className="group flex flex-col rounded-xl overflow-hidden"
           >
             <div className="relative h-64">
               <img
@@ -154,19 +152,18 @@ export default async function Home() {
                 alt="Convenience Stores for Sale"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
-                <h3 className="text-[18px] font-bold text-white">
-                  Convenience Stores for Sale
-                </h3>
-              </div>
+            </div>
+            <div className="p-4 text-center">
+              <h3 className="text-[18px] font-bold text-gray-900 group-hover:text-primary transition-colors">
+                Convenience Stores for Sale
+              </h3>
             </div>
           </Link>
 
           {/* Offices Card */}
           <Link
             href="/offices-for-lease"
-            className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+            className="group flex flex-col rounded-xl overflow-hidden"
           >
             <div className="relative h-64">
               <img
@@ -174,12 +171,11 @@ export default async function Home() {
                 alt="Offices for Lease"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
-                <h3 className="text-[18px] font-bold text-white">
-                  Offices for Lease
-                </h3>
-              </div>
+            </div>
+            <div className="p-4 text-center">
+              <h3 className="text-[18px] font-bold text-gray-900 group-hover:text-primary transition-colors">
+                Offices for Lease
+              </h3>
             </div>
           </Link>
         </div>

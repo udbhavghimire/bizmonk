@@ -1,30 +1,35 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { franchiseList } from '@/data/franchise-data';
 
 const FranchisesList = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Franchise oppurtunities on Bizmonk</h2>
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-bold text-gray-900 mb-4">Franchise opportunities on Bizmonk</h2>
       </div>
       
-      <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
         {franchiseList.map((partner) => (
-          <div 
+          <Link 
             key={partner.name}
-            className="bg-white p-3 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-center justify-center"
+            href={"/franchise-opportunity/ontario/"}
+            className="group flex flex-col items-center justify-center text-center"
           >
-            <div className="relative w-full h-20 mb-3">
+          
+            <div className="relative w-24 h-24 rounded-xl overflow-hidden bg-white/50">
               <Image
                 src={partner.logo}
                 alt={`${partner.name} logo`}
                 fill
-                className="object-contain"
+                className="object-contain p-2"
                 sizes="(max-width: 768px) 33vw, (max-width: 1024px) 20vw, 15vw"
               />
             </div>
-            <p className="text-sm text-gray-600 text-center">{partner.displayName}</p>
-          </div>
+            <p className="text-sm font-medium text-gray-900 mb-3 group-hover:text-primary transition-colors">
+              {partner.displayName}
+            </p>
+          </Link>
         ))}
       </div>
     </div>
