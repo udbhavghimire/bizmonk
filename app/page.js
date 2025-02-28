@@ -104,82 +104,198 @@ export default async function Home() {
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Restaurant Card */}
-          <Link
-            href="/restaurant-for-sale"
-            className="group flex flex-col rounded-xl overflow-hidden"
-          >
-            <div className="relative h-64">
-              <img
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4"
-                alt="Restaurant for Sale"
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
+          <div className="flex flex-col">
+            <Link
+              href="/restaurant-for-sale"
+              className="group relative rounded-xl overflow-hidden"
+            >
+              <div className="relative h-64">
+                <img
+                  src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4"
+                  alt="Restaurant for Sale"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-[18px] font-bold text-white">
+                    Restaurants for Sale
+                  </h3>
+                </div>
+              </div>
+            </Link>
+            <div className="mt-4 flex flex-col space-y-2 px-4">
+              <Link
+                href="/brampton/restaurant-for-sale"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Brampton Restaurants for Sale
+              </Link>
+              <Link
+                href="/mississauga/restaurant-for-sale"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Mississauga Restaurants for Sale
+              </Link>
+              <Link
+                href="/toronto/restaurant-for-sale"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Toronto Restaurants for Sale
+              </Link>
+              <Link
+                href="/vaughan/restaurant-for-sale"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Vaughan Restaurants for Sale
+              </Link>
             </div>
-            <div className="p-4 text-center">
-              <h3 className="text-[18px] font-bold text-gray-900 group-hover:text-primary transition-colors">
-                Restaurants for Sale
-              </h3>
-            </div>
-          </Link>
+          </div>
 
           {/* Franchises Card */}
-          <Link
-            href="/franchise-opportunity/ontario"
-            className="group flex flex-col rounded-xl overflow-hidden"
-          >
-            <div className="relative h-64">
-              <img
-                src="/fatbb.jpg"
-                alt="Franchises for Sale"
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
+          <div className="flex flex-col">
+            <Link
+              href="/franchise-opportunity/ontario"
+              className="group relative rounded-xl overflow-hidden"
+            >
+              <div className="relative h-64">
+                <img
+                  src="/fatbb.jpg"
+                  alt="Franchises for Sale"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-[18px] font-bold text-white">
+                    Franchises for Sale
+                  </h3>
+                </div>
+              </div>
+            </Link>
+            <div className="mt-4 flex flex-col space-y-2 px-4">
+              <Link
+                href="/franchise-opportunity/brampton"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Brampton Franchises
+              </Link>
+              <Link
+                href="/franchise-opportunity/mississauga"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Mississauga Franchises
+              </Link>
+              <Link
+                href="/franchise-opportunity/toronto"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Toronto Franchises
+              </Link>
+              <Link
+                href="/franchise-opportunity/vaughan"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Vaughan Franchises
+              </Link>
             </div>
-            <div className="p-4 text-center">
-              <h3 className="text-[18px] font-bold text-gray-900 group-hover:text-primary transition-colors">
-                Franchises for Sale
-              </h3>
-            </div>
-          </Link>
+          </div>
 
           {/* Convenience Store Card */}
-          <Link
-            href="/convenience-store-for-sale"
-            className="group flex flex-col rounded-xl overflow-hidden"
-          >
-            <div className="relative h-64">
-              <img
-                src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a"
-                alt="Convenience Stores for Sale"
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
+          <div className="flex flex-col">
+            <Link
+              href="/convenience-store-for-sale"
+              className="group relative rounded-xl overflow-hidden"
+            >
+              <div className="relative h-64">
+                <img
+                  src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a"
+                  alt="Convenience Stores for Sale"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-[18px] font-bold text-white">
+                    Convenience Stores for Sale
+                  </h3>
+                </div>
+              </div>
+            </Link>
+            <div className="mt-4 flex flex-col space-y-2 px-4">
+              <Link
+                href="/brampton/convenience-store-for-sale"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Brampton Convenience Stores
+              </Link>
+              <Link
+                href="/mississauga/convenience-store-for-sale"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Mississauga Convenience Stores
+              </Link>
+              <Link
+                href="/toronto/convenience-store-for-sale"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Toronto Convenience Stores
+              </Link>
+              <Link
+                href="/vaughan/convenience-store-for-sale"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Vaughan Convenience Stores
+              </Link>
             </div>
-            <div className="p-4 text-center">
-              <h3 className="text-[18px] font-bold text-gray-900 group-hover:text-primary transition-colors">
-                Convenience Stores for Sale
-              </h3>
-            </div>
-          </Link>
+          </div>
 
           {/* Offices Card */}
-          <Link
-            href="/offices-for-lease"
-            className="group flex flex-col rounded-xl overflow-hidden"
-          >
-            <div className="relative h-64">
-              <img
-                src="https://images.unsplash.com/photo-1497366216548-37526070297c"
-                alt="Offices for Lease"
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
+          <div className="flex flex-col">
+            <Link
+              href="/offices-for-lease"
+              className="group relative rounded-xl overflow-hidden"
+            >
+              <div className="relative h-64">
+                <img
+                  src="https://images.unsplash.com/photo-1497366216548-37526070297c"
+                  alt="Offices for Lease"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-[18px] font-bold text-white">
+                    Offices for Lease
+                  </h3>
+                </div>
+              </div>
+            </Link>
+            <div className="mt-4 flex flex-col space-y-2 px-4">
+              <Link
+                href="/brampton/offices-for-lease"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Brampton Office Space
+              </Link>
+              <Link
+                href="/mississauga/offices-for-lease"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Mississauga Office Space
+              </Link>
+              <Link
+                href="/toronto/offices-for-lease"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Toronto Office Space
+              </Link>
+              <Link
+                href="/vaughan/offices-for-lease"
+                className="text-sm text-gray-600 hover:text-primary"
+              >
+                Vaughan Office Space
+              </Link>
             </div>
-            <div className="p-4 text-center">
-              <h3 className="text-[18px] font-bold text-gray-900 group-hover:text-primary transition-colors">
-                Offices for Lease
-              </h3>
-            </div>
-          </Link>
+          </div>
         </div>
-        <div className="text-center mt-8">
+        <div className="text-center mt-12">
           <Link
             href="commercial/ontario"
             className="text-blue-600 hover:text-primary/80 font-semibold text-lg"

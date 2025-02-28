@@ -30,7 +30,8 @@ const Filter = ({ onFilterChange, cityUrl }) => {
       setBusinessType(value);
       const selectedType = businessTypes.find((t) => t.value === value);
       if (selectedType) {
-        router.push(`/${cityUrl}/${selectedType.path}`);
+        const basePath = cityUrl ? `/${cityUrl}` : '';
+        router.push(`${basePath}/${selectedType.path}`);
       }
     } else if (type === "price") {
       setIsFiltering(true);

@@ -79,7 +79,11 @@ export default function CityRestaurants() {
           Restaurants for Sale in Ontario
         </h1>
 
-        <Filter onFilterChange={handleFilterChange} isLoading={isLoading} />
+        <Filter
+          onFilterChange={handleFilterChange}
+          isLoading={isLoading}
+          cityUrl=""
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
           {currentItems.map((listing) => (
