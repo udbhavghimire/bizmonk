@@ -7,6 +7,7 @@ import RelatedFranchises from "./_components/RelatedFranchises";
 import ExploreMoreCities from "./_components/ExploreMoreCities";
 import ContactForm from "./_components/ContactForm";
 import { Suspense } from "react";
+import VideoSection from "./_components/VideoSection";
 
 export default async function FranchiseDetailPage({ params }) {
   const { location, franchise } = await params;
@@ -27,6 +28,9 @@ export default async function FranchiseDetailPage({ params }) {
       <div className="min-h-screen">
         {/* Hero Section */}
         <HeroSection franchiseData={franchiseData} location={location} />
+
+        {/* Video Section - Will only show for franchises with video */}
+        <VideoSection videoUrl={franchiseData.video} />
 
         {/* Contact Form Section */}
         <Suspense fallback={<div>Loading contact form...</div>}>

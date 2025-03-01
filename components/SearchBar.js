@@ -55,17 +55,16 @@ export default function SearchBar({ variant = "default" }) {
 
   if (variant === "hero") {
     return (
-      <div className="relative w-full max-w-3xl mx-auto">
+      <div className="relative  mx-auto">
         <div className="relative">
           <div className="relative flex items-center">
-            <MagnifyingGlassIcon className="absolute left-4 h-5 w-5 text-gray-500" />
             <input
               type="text"
               value={query}
               onChange={(e) => handleSearch(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
               placeholder="Search business opportunities"
-              className="w-full pl-12 pr-32 py-3.5 text-base border border-gray-300 rounded-lg
+              className="w-full px-3  py-3.5 text-base border border-gray-300 rounded-lg
                          focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary
                          transition-all duration-200 bg-white shadow-sm
                          text-gray-900 placeholder-gray-400"
@@ -103,7 +102,7 @@ export default function SearchBar({ variant = "default" }) {
 
         {suggestions.length > 0 && (
           <div
-            className="absolute z-10 w-full mt-2 bg-white rounded-lg shadow-lg 
+            className="absolute top-16 z-10 w-full  bg-white rounded-lg shadow-lg 
                        border border-gray-100 overflow-hidden backdrop-blur-sm"
           >
             <ul className="max-h-72 overflow-auto">
@@ -135,7 +134,7 @@ export default function SearchBar({ variant = "default" }) {
           value={query}
           onChange={(e) => handleSearch(e.target.value)}
           placeholder="Search by city..."
-          className="w-[280px] pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-md
+          className=" pl-9  py-2 text-sm border border-gray-200 rounded-md
                      focus:outline-none focus:ring-1 focus:ring-primary/20 focus:border-primary
                      transition-all duration-200 bg-white/90 text-gray-900"
         />

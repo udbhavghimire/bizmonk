@@ -38,17 +38,18 @@ export default async function Home() {
       {/* Enhanced Hero Section */}
       <div className="relative overflow-hidden min-h-[90vh] bg-gradient-to-b from-blue-50/50 via-blue-50/50 to-white">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+        <div className="relative max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="text-center">
-            <h1 className="text-3xl md:text-5xl font-black text-black tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6">
-              Find Restaurants, Convenience Store and Commercial Space in GTA
+            <h1 className="text-2xl md:text-[43px] font-black text-black tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6">
+              Restaurants, Convenience Store, Franchise and Commercial Space in
+              Ontario
             </h1>
             {/* <p className="text-sm text-gray-600 max-w-xl mx-auto mb-10">
               Discover premium business opportunities, from turnkey operations
               to prime commercial spaces across Greater Toronto Area
             </p> */}
 
-            <div className="mt-8 max-w-3xl mx-auto">
+            <div className="mt-8 max-w-4xl mx-auto">
               <SearchBar variant="hero" />
             </div>
 
@@ -305,11 +306,6 @@ export default async function Home() {
         </div>
       </div>
 
-      <HomepageListing
-        bramptonRestaurants={bramptonRestaurants}
-        bramptonStores={bramptonStores}
-        torontoCommercial={torontoCommercial}
-      />
       {/* Franchise Opportunities Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 bg-gray-50">
         <div className="text-center mb-8 sm:mb-16">
@@ -324,12 +320,12 @@ export default async function Home() {
         </div>
 
         {/* Featured Franchises */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 px-4 sm:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 px-4 sm:px-6">
           <Link
             href="/franchise-opportunity/ontario/mary-browns-chicken"
             className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <div className="relative h-96 sm:h-[32rem]">
+            <div className="relative h-96 md:h-[25rem]">
               <img
                 src="/marryb.webp"
                 alt="Mary Brown's Chicken"
@@ -337,10 +333,10 @@ export default async function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent" />
               <div className="absolute bottom-8 sm:bottom-10 left-8 sm:left-10 right-8 sm:right-10">
-                <h3 className="text-3xl sm:text-4xl font-bold text-white mb-1 sm:mb-4">
+                <h3 className="text-3xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
                   Mary Brown's Chicken
                 </h3>
-                <p className="text-base sm:text-lg text-gray-200">
+                <p className="text-base sm:text-lg text-white">
                   Investment: $450K - $700K
                 </p>
               </div>
@@ -351,7 +347,7 @@ export default async function Home() {
             href="/franchise-opportunity/ontario/fat-bastard-burrito"
             className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <div className="relative h-96 sm:h-[32rem]">
+            <div className="relative h-96 md:h-[25rem]">
               <img
                 src="/fatbb.jpg"
                 alt="Fat Bastard Burrito"
@@ -359,11 +355,32 @@ export default async function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent" />
               <div className="absolute bottom-8 sm:bottom-10 left-8 sm:left-10 right-8 sm:right-10">
-                <h3 className="text-3xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">
+                <h3 className="text-3xl md:text-3xl font-bold text-white mb-3 sm:mb-2">
                   Fat Bastard Burrito
                 </h3>
-                <p className="text-base sm:text-lg text-gray-200">
+                <p className="text-base sm:text-lg text-white">
                   Investment: $350K - $500K
+                </p>
+              </div>
+            </div>
+          </Link>
+          <Link
+            href="/franchise-opportunity/ontario/wingsup"
+            className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            <div className="relative h-92 md:h-[25rem]">
+              <img
+                src="/franchises/wingsup.jpg"
+                alt="Wingsup"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent" />
+              <div className="absolute bottom-8 sm:bottom-10 left-8 sm:left-10 right-8 sm:right-10">
+                <h3 className="text-3xl md:text-3xl font-bold text-white mb-3 sm:mb-2">
+                  Wingsup!
+                </h3>
+                <p className="text-base sm:text-lg text-white">
+                  Investment: $400K - $480K
                 </p>
               </div>
             </div>
@@ -417,6 +434,12 @@ export default async function Home() {
           </div>
         </div>
       </div>
+
+      <HomepageListing
+        bramptonRestaurants={bramptonRestaurants}
+        bramptonStores={bramptonStores}
+        torontoCommercial={torontoCommercial}
+      />
 
       {/* <TextWithContactButton
         title="Are you looking to start a business?"

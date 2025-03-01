@@ -12,7 +12,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Bizmonk - Find your business space in Greater Toronto Area",
+  title:
+    " Restaurants, Convenience Store, Franchise and Commercial Space in Ontario",
   description:
     "Looking for a business space in Greater Toronto Area? Bizmonk is the best place to find your business space.",
 };

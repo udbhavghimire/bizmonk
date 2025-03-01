@@ -20,6 +20,47 @@ const findCityByUrlFormat = (urlFormat) => {
   );
 };
 
+// Add metadata export
+export async function generateMetadata({ params }) {
+  const cityName = findCityByUrlFormat(params.city);
+
+  if (!cityName) {
+    return {
+      title: "Business Opportunities - Bizmonk",
+      description: "Find business opportunities across Ontario",
+    };
+  }
+
+  // Get the actual count of listings
+  try {
+    const data = await getSaleOfBusinessListings(cityName);
+    const listingCount = data?.value?.length || 0;
+
+    const title = `${listingCount}+ Business Opportunities in ${cityName}`;
+    const description = `${listingCount}+ ${cityName} businesses for sale. Book a showing for gas stations, restaurants, motels, convenience stores and lands. Prices from $1 to $5,000,000. Open houses available.`;
+
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+      },
+    };
+  } catch (error) {
+    console.error("Error getting listing count:", error);
+    // Fallback if count fetch fails
+    return {
+      title: `Business Opportunities in ${cityName}`,
+      description: `${cityName} businesses for sale. Book a showing for gas stations, restaurants, motels, convenience stores and lands. Prices from $1 to $5,000,000. Open houses available.`,
+      openGraph: {
+        title: `Business Opportunities in ${cityName}`,
+        description: `${cityName} businesses for sale. Book a showing for gas stations, restaurants, motels, convenience stores and lands. Prices from $1 to $5,000,000. Open houses available.`,
+      },
+    };
+  }
+}
+
 async function getCityData(city, searchParams) {
   const cityExists = findCityByUrlFormat(city);
   if (!cityExists) return null;

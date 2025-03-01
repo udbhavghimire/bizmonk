@@ -85,6 +85,34 @@ const baseFranchises = [
       "Established supply chain and operations systems",
     ],
   },
+
+  {
+    name: "WingsUp",
+    type: "Fast Casual Restaurant",
+    investment: "$400K - $480K",
+    locations: "Prime locations available",
+    image: "/franchises/wingsup.jpg",
+    description:
+      "Join Canada's leading takeout and delivery chicken wing franchise with a proven business model and strong brand presence. WingsUp! offers a turn-key operation with high efficiency, low overhead, and strong profit potential in the growing QSR industry.",
+    specialities: [
+      "Proven business model with minimal risk",
+      "Turn-key storefronts with low overhead",
+      "Strong brand recognition and growing customer base",
+      "Perfect for the fast-growing online takeout and delivery market",
+      "High-quality recipes that align with modern eating habits",
+    ],
+    financing: {
+      "Restaurant Model": "Quick Service: 1,200-1,800 sq. ft.",
+      "startUp Costs": "$400,000+",
+      "liquid Capital": "$200,000",
+      "franchisee Fee": "$34,500",
+      royalties: "4.5%",
+      marketing: "3%",
+    },
+
+    contactImage: "/contact-wingsup.png",
+    video: "https://www.youtube.com/embed/nu6iHiKgzjg?si=6ulmBDnB1kWxbp5p",
+  },
 ];
 
 // Helper function to create location data

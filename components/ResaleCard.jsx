@@ -3,9 +3,8 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import TimeAgo from "./TimeAgo";
 import { getImageUrls } from "@/api/getImageUrls";
-import { LandPlot, Timer, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 import { slugGenerator } from "@/helpers/slugGenerator";
-import Image from "next/image";
 
 const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
   const [loadingImage, setLoadingImage] = useState(true);
@@ -74,73 +73,87 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
   })}`;
 
   return (
-    <div className="w-full">
-      <Link href={listingUrl} className="text-black">
-        <div className="bg-white rounded-lg overflow-hidden shadow hover:shadow-md transition-all duration-200 flex flex-col">
+    <div className="w-full p-0.5">
+      <Link href={listingUrl}>
+        <div className="group relative flex flex-col rounded-lg transition-all duration-300 hover:shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
           {/* Image Container */}
-          <div className="relative h-72 flex-shrink-0">
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-gray-50">
             {loadingImage ? (
-              <div className="w-full h-full flex items-center justify-center bg-gray-100 animate-pulse">
-                <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
               </div>
             ) : imgUrl ? (
-              <div className="relative w-full h-full group">
+              <div className="relative w-full h-full">
                 <img
                   src={imgUrl}
                   alt={`${curElem.StreetNumber} ${curElem.StreetName}`}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   onError={handleImageError}
                 />
-                <div className="absolute bottom-2 left-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-[10px]">
-                  {aboutProperty()}
+              
+                {/* Heart Icon */}
+                <button className="absolute top-3 right-3 bg-white rounded-full p-1.5 hover:bg-gray-100 z-10">
+                  <Heart className="w-5 h-5" />
+                </button>
+                {/* Property Type & Time Badge */}
+                <div className="absolute bottom-3 left-3 flex gap-2 z-10">
+                  <span className="bg-white rounded px-2.5 py-1 text-xs font-medium">
+                    {curElem.PropertySubType || "Detached"}
+                  </span>
+                  <span className="bg-white rounded px-2.5 py-1 text-xs font-medium">
+                    <TimeAgo modificationTimestamp={curElem.OriginalEntryTimestamp} />
+                  </span>
                 </div>
+                {/* Dark Overlay on Hover */}
+                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             ) : (
-              <div className="w-full h-full flex flex-col justify-center items-center bg-gray-50">
-                <img src="/icons/no-photo.png" className="w-8 h-8" alt="No photo" />
-                <p className="text-gray-500 text-sm mt-2">No Image Available</p>
+              <div className="w-full h-full flex flex-col justify-center items-center">
+                <img src="/icons/no-photo.png" className="w-6 h-6 opacity-40" alt="No photo" />
               </div>
             )}
           </div>
 
           {/* Content */}
-          <div className="p-3 flex-1 flex flex-col">
+          <div className="pt-3 flex flex-col px-1">
             {/* Price */}
-            <div className="text-2xl font-bold mb-2">
+            <div className="text-[24px] font-bold text-gray-900">
               {price}
-              {curElem.SaleLease === saleLease.lease.value && <span> /mo</span>}
             </div>
 
             {/* Property Details */}
-            <div className="flex items-center gap-4 md:text-xs text-[10px] text-gray-600 mb-2">
-              {curElem.BuildingAreaTotal && (
-                <div className="flex items-center gap-1">
-                  <LandPlot className="w-4 h-4" />
-                  <span>
-                    {curElem.BuildingAreaTotal > 0
-                      ? Math.floor(curElem.BuildingAreaTotal)
-                      : "N/A"}{" "}
-                    sq. ft.
-                  </span>
-                </div>
+            <div className="flex items-center gap-2 mt-1 text-sm">
+              {curElem.BedroomsTotal && (
+                <span className="text-gray-700">{curElem.BedroomsTotal} Bed</span>
               )}
-              <div className="flex items-center gap-1">
-                <Timer className="w-4 h-4" />
-                <TimeAgo modificationTimestamp={curElem.OriginalEntryTimestamp} />
-              </div>
+              {curElem.BathroomsTotalInteger && (
+                <>
+                 
+                  <span className="text-gray-700">{curElem.BathroomsTotalInteger} Bath</span>
+                </>
+              )}
+              {curElem.BuildingAreaTotal && (
+                <>
+               
+                  <span className="text-gray-700">
+                    {Math.floor(curElem.BuildingAreaTotal).toLocaleString()} Sq.Ft.
+                  </span>
+                </>
+              )}
             </div>
 
             {/* Address */}
-            <div className="md:text-sm text-[12px] text-gray-800 mb-1">
-              {curElem.StreetName
-                ? `${curElem.StreetNumber} ${curElem.StreetName} ${curElem.StreetSuffix || ""}`
-                : ""} {curElem.City}, Ontario
+            <div className="mt-1">
+              <div className="text-[15px] text-gray-700 line-clamp-1">
+                {curElem.StreetName
+                  ? `${curElem.StreetNumber} ${curElem.StreetName} ${curElem.StreetSuffix || ""}`
+                  : ""}, {curElem.City}, ON
+              </div>
             </div>
 
-            {/* Footer Info */}
-            <div className="flex flex-col gap-1 text-xs text-gray-500 pt-2 mt-auto border-t">
-              <div>MLS® #{curElem.ListingKey}</div>
-              {/* <div>Listed by {curElem.ListOfficeName}</div> */}
+            {/* Listed By */}
+            <div className="mt-1 text-xs text-gray-500">
+              Listed by: {curElem.ListOfficeName || "Real Estate Office"}
             </div>
           </div>
         </div>

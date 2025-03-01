@@ -9,13 +9,31 @@ import {
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
 import { useWidePage } from "@/hooks/useWidePage";
+import SearchBar from "@/components/SearchBar";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSellingOpen, setIsSellingOpen] = useState(false);
+  const [isFranchiseOpen, setIsFranchiseOpen] = useState(false);
   const [isWidePage] = useWidePage();
   const navigation = [
-    { name: "Franchises", href: "/franchise-opportunity/ontario" },
+    {
+      name: "Franchises",
+      items: [
+        {
+          name: "Mary Brown's Chicken",
+          href: "/franchise-opportunity/ontario/mary-browns-chicken",
+        },
+        {
+          name: "Fat Bastard Burrito",
+          href: "/franchise-opportunity/ontario/fat-bastard-burrito",
+        },
+        {
+          name: "Wingsup",
+          href: "/franchise-opportunity/ontario/wingsup",
+        },
+      ],
+    },
     {
       name: "Selling",
       items: [
@@ -39,13 +57,19 @@ export default function Navbar() {
         } px-4 sm:px-6 lg:px-8`}
       >
         <div className="flex justify-between h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="flex items-center">
-              <span className="text-2xl font-bold bg-gradient-to-r from-teal-500 to-blue-600 text-transparent bg-clip-text">
-                Bizmonk
-              </span>
-            </Link>
+          {/* Logo and Search Bar */}
+          <div className="flex items-center gap-4 ">
+            <div className="flex-shrink-0 flex items-center">
+              <Link href="/" className="flex items-center">
+                <span className="text-2xl font-bold bg-gradient-to-r from-teal-500 to-blue-600 text-transparent bg-clip-text">
+                  Bizmonk
+                </span>
+              </Link>
+            </div>
+
+            <div className="">
+              <SearchBar />
+            </div>
           </div>
 
           {/* Desktop Navigation */}
@@ -55,20 +79,32 @@ export default function Navbar() {
                 <div key={item.name} className="relative">
                   <button
                     className="text-gray-600 hover:text-primary transition-colors duration-200 flex items-center gap-1"
-                    onClick={() => setIsSellingOpen(!isSellingOpen)}
+                    onClick={() => {
+                      if (item.name === "Franchises") {
+                        setIsFranchiseOpen(!isFranchiseOpen);
+                        setIsSellingOpen(false);
+                      } else if (item.name === "Selling") {
+                        setIsSellingOpen(!isSellingOpen);
+                        setIsFranchiseOpen(false);
+                      }
+                    }}
                   >
                     {item.name}
                     <ChevronDownIcon className="h-4 w-4" />
                   </button>
 
-                  {isSellingOpen && (
+                  {((item.name === "Franchises" && isFranchiseOpen) ||
+                    (item.name === "Selling" && isSellingOpen)) && (
                     <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-md shadow-lg py-1">
                       {item.items.map((subItem) => (
                         <Link
                           key={subItem.name}
                           href={subItem.href}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                          onClick={() => setIsSellingOpen(false)}
+                          onClick={() => {
+                            setIsFranchiseOpen(false);
+                            setIsSellingOpen(false);
+                          }}
                         >
                           {subItem.name}
                         </Link>
@@ -92,7 +128,7 @@ export default function Navbar() {
           <div className="flex items-center md:hidden">
             <button
               type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-primary hover:bg-gray-50 focus:outline-none"
+              className="inline-flex  p-2 rounded-md text-gray-600 hover:text-primary hover:bg-gray-50 focus:outline-none"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <span className="sr-only">Open main menu</span>
@@ -141,18 +177,28 @@ export default function Navbar() {
                 <XMarkIcon className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
+
             <div className="flex flex-col space-y-1">
               {navigation.map((item) =>
                 item.items ? (
                   <div key={item.name}>
                     <button
                       className="w-full px-3 py-4 text-left text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50 rounded-md flex items-center justify-between"
-                      onClick={() => setIsSellingOpen(!isSellingOpen)}
+                      onClick={() => {
+                        if (item.name === "Franchises") {
+                          setIsFranchiseOpen(!isFranchiseOpen);
+                          setIsSellingOpen(false);
+                        } else if (item.name === "Selling") {
+                          setIsSellingOpen(!isSellingOpen);
+                          setIsFranchiseOpen(false);
+                        }
+                      }}
                     >
                       {item.name}
                       <ChevronDownIcon className="h-4 w-4" />
                     </button>
-                    {isSellingOpen && (
+                    {((item.name === "Franchises" && isFranchiseOpen) ||
+                      (item.name === "Selling" && isSellingOpen)) && (
                       <div className="pl-4">
                         {item.items.map((subItem) => (
                           <Link
@@ -160,6 +206,7 @@ export default function Navbar() {
                             href={subItem.href}
                             className="block px-3 py-3 text-sm text-gray-600 hover:text-primary hover:bg-gray-50"
                             onClick={() => {
+                              setIsFranchiseOpen(false);
                               setIsSellingOpen(false);
                               setIsMenuOpen(false);
                             }}

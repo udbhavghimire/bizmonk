@@ -13,7 +13,8 @@ const BottomContactForm = ({ proj_name, city }) => {
     name: "",
     phone: "",
     email: "",
-    message: "",
+    message:
+      "I would like to learn more about your services. Please contact me.",
   });
 
   const handleChange = (e) => {
@@ -26,37 +27,45 @@ const BottomContactForm = ({ proj_name, city }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await sendEmail({
-        content: {
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email,
-          message: formData.message,
-          "inquiry from": pageUrl,
-        },
-        title: "Bizmonk Inquiry from Contact Page",
+      // Determine if this is from contact page
+      const isContactPage = pathname === "/contact";
+
+      const emailContent = {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        message: formData.message,
+        "inquiry from": pageUrl,
+      };
+
+      const emailTitle = isContactPage
+        ? "Bizmonk Inquiry from Contact Page"
+        : `Bizmonk Inquiry from ${pathname}`;
+
+      const response = await sendEmail({
+        content: emailContent,
+        title: emailTitle,
       });
 
-      // Show success message
-      swal(
-        "Thank You!",
-        "Your message has been sent successfully. We will get back to you soon.",
-        "success"
-      );
-
-      // Reset form after successful submission
-      setFormData((prev) => ({
-        ...prev,
+      // Reset form
+      setFormData({
         name: "",
         phone: "",
         email: "",
         message:
           "I would like to learn more about your services. Please contact me.",
-      }));
+      });
+
+      // Show success message
+      swal(
+        `Thank You, ${formData.name}!`,
+        "Your message has been sent successfully. We will get back to you soon.",
+        "success"
+      );
     } catch (error) {
       console.error("Error submitting form:", error);
-      // Show error message
       swal(
         "Error",
         "There was a problem sending your message. Please try again.",
