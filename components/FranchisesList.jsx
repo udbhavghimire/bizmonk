@@ -5,8 +5,9 @@ import { franchiseList } from '@/data/franchise-data';
 const FranchisesList = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Franchise opportunities on Bizmonk</h2>
+      <div className="text-center ">
+        <h2 className="text-3xl font-bold text-gray-900 mb-3"> 50+ Franchise opportunities on Bizmonk</h2>
+        <p className='max-w-3xl mx-auto text-center mb-5'>Find the perfect franchise opportunity in Ontario with Bizmonk—offering 50+ profitable options to kickstart your entrepreneurial journey. Never too late to start.</p>
       </div>
       
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">

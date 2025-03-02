@@ -308,12 +308,12 @@ export default async function Home() {
 
       {/* Franchise Opportunities Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 bg-gray-50">
-        <div className="text-center mb-8 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 px-4">
+        <div className="text-center mb-8 sm:mb-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2 sm:mb-2 px-4">
             Looking for{" "}
             <span className="text-primary">Franchise Opportunities?</span>
           </h2>
-          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
+          <p className="text-base sm:text-lg text-black max-w-2xl mx-auto px-4 ">
             Explore premium franchise opportunities across Ontario and find the
             perfect business venture
           </p>
@@ -323,66 +323,56 @@ export default async function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 px-4 sm:px-6">
           <Link
             href="/franchise-opportunity/ontario/mary-browns-chicken"
-            className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+            className="group rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <div className="relative h-96 md:h-[25rem]">
+            <div className="relative h-72">
               <img
                 src="/marryb.webp"
                 alt="Mary Brown's Chicken"
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent" />
-              <div className="absolute bottom-8 sm:bottom-10 left-8 sm:left-10 right-8 sm:right-10">
-                <h3 className="text-3xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
-                  Mary Brown's Chicken
-                </h3>
-                <p className="text-base sm:text-lg text-white">
-                  Investment: $450K - $700K
-                </p>
-              </div>
+            </div>
+            <div className="p-6">
+              <h3 className="text-2xl font-bold text-gray-900 ">
+                Mary Brown's Chicken
+              </h3>
+              <p className="text-lg text-gray-700">Investment: $450K - $700K</p>
             </div>
           </Link>
 
           <Link
             href="/franchise-opportunity/ontario/fat-bastard-burrito"
-            className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+            className="group rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <div className="relative h-96 md:h-[25rem]">
+            <div className="relative h-72">
               <img
                 src="/fatbb.jpg"
                 alt="Fat Bastard Burrito"
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent" />
-              <div className="absolute bottom-8 sm:bottom-10 left-8 sm:left-10 right-8 sm:right-10">
-                <h3 className="text-3xl md:text-3xl font-bold text-white mb-3 sm:mb-2">
-                  Fat Bastard Burrito
-                </h3>
-                <p className="text-base sm:text-lg text-white">
-                  Investment: $350K - $500K
-                </p>
-              </div>
+            </div>
+            <div className="p-6">
+              <h3 className="text-2xl font-bold text-gray-900 ">
+                Fat Bastard Burrito
+              </h3>
+              <p className="text-lg text-gray-700">Investment: $350K - $500K</p>
             </div>
           </Link>
+
           <Link
             href="/franchise-opportunity/ontario/wingsup"
-            className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+            className="group rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <div className="relative h-92 md:h-[25rem]">
+            <div className="relative h-72">
               <img
                 src="/franchises/wingsup.jpg"
                 alt="Wingsup"
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent" />
-              <div className="absolute bottom-8 sm:bottom-10 left-8 sm:left-10 right-8 sm:right-10">
-                <h3 className="text-3xl md:text-3xl font-bold text-white mb-3 sm:mb-2">
-                  Wingsup!
-                </h3>
-                <p className="text-base sm:text-lg text-white">
-                  Investment: $400K - $480K
-                </p>
-              </div>
+            </div>
+            <div className="p-6">
+              <h3 className="text-2xl font-bold text-gray-900 ">Wingsup!</h3>
+              <p className="text-lg text-gray-700">Investment: $400K - $480K</p>
             </div>
           </Link>
         </div>
@@ -392,7 +382,7 @@ export default async function Home() {
 
         {/* Explore by Location */}
         <div className="bg-white rounded-2xl p-4 sm:p-8 shadow-sm mx-2 sm:mx-0">
-          <h3 className="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-8">
+          <h3 className="text-xl sm:text-2xl font-bold text-center mb-3 sm:mb-3">
             Explore Franchises by Location
           </h3>
           <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-4">
@@ -426,10 +416,9 @@ export default async function Home() {
           <div className="text-center mt-6 sm:mt-8">
             <Link
               href="/franchise-opportunity/ontario"
-              className="inline-flex items-center gap-2 text-sm sm:text-base text-primary hover:text-primary/80 transition-colors font-medium"
+              className="inline-flex items-center gap-2 text-sm sm:text-base text-blue-600  hover:underline transition-colors font-bold"
             >
               View All Locations
-              <span className="text-lg">→</span>
             </Link>
           </div>
         </div>
