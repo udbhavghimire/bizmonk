@@ -36,8 +36,29 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Enhanced Hero Section */}
-      <div className="relative overflow-hidden min-h-[90vh] bg-gradient-to-b from-blue-50/50 via-blue-50/50 to-white">
+      <div className="relative overflow-hidden min-h-[90vh] bg-gradient-to-b from-[#EEF5FF] via-[#EEF5FF] to-white">
+        {/* Curved background shape */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[#EEF5FF]">
+            <svg
+              className="absolute bottom-0 w-full h-[20vh] text-white"
+              viewBox="0 0 1440 320"
+              preserveAspectRatio="none"
+              style={{ transform: "scale(1.1)" }}
+            >
+              <path
+                fill="currentColor"
+                fillOpacity="1"
+                d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,224C672,213,768,171,864,149.3C960,128,1056,128,1152,149.3C1248,171,1344,213,1392,234.7L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+              ></path>
+            </svg>
+          </div>
+        </div>
+
+        {/* Grid overlay */}
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"></div>
+
+        {/* Content */}
         <div className="relative max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="text-center">
             <h1 className="text-2xl md:text-[43px] font-black text-black tracking-tight max-w-4xl mx-auto leading-[1.1] mb-6">

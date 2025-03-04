@@ -18,7 +18,11 @@ export default function Navbar() {
   const [isWidePage] = useWidePage();
   const navigation = [
     {
-      name: "Franchises",
+      name: "Home",
+      href: "/",
+    },
+    {
+      name: "Franchise",
       items: [
         {
           name: "Mary Brown's Chicken",
@@ -43,10 +47,10 @@ export default function Navbar() {
         { name: "Advertise a Franchise", href: "/advertise-franchise" },
       ],
     },
-    { name: "Restaurants", href: "/restaurant-for-sale" },
-    { name: "Convenience Stores", href: "/convenience-store-for-sale" },
-    { name: "Offices", href: "/offices-for-lease" },
-    { name: "Contact", href: "/contact" },
+    { name: "Buying", href: "/buying" },
+    { name: "Valuation", href: "/valuation" },
+    { name: "About Us", href: "/about" },
+    { name: "Resources", href: "/resources" },
   ];
 
   return (
@@ -54,11 +58,11 @@ export default function Navbar() {
       <div
         className={`${
           isWidePage ? "sm:mx-20" : "max-w-7xl mx-auto"
-        } px-4 sm:px-6 lg:px-8`}
+        } px-2 sm:px-2 lg:px-2`}
       >
         <div className="flex justify-between h-16">
           {/* Logo and Search Bar */}
-          <div className="flex items-center gap-4 ">
+          <div className="flex items-center ">
             <div className="flex-shrink-0 flex items-center">
               <Link href="/" className="flex items-center">
                 <span className="text-2xl font-bold bg-gradient-to-r from-teal-500 to-blue-600 text-transparent bg-clip-text">
@@ -73,14 +77,14 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-8">
+          <div className="hidden md:flex md:items-center md:space-x-6">
             {navigation.map((item) =>
               item.items ? (
                 <div key={item.name} className="relative">
                   <button
                     className="text-gray-600 hover:text-primary transition-colors duration-200 flex items-center gap-1"
                     onClick={() => {
-                      if (item.name === "Franchises") {
+                      if (item.name === "Franchise") {
                         setIsFranchiseOpen(!isFranchiseOpen);
                         setIsSellingOpen(false);
                       } else if (item.name === "Selling") {
@@ -93,7 +97,7 @@ export default function Navbar() {
                     <ChevronDownIcon className="h-4 w-4" />
                   </button>
 
-                  {((item.name === "Franchises" && isFranchiseOpen) ||
+                  {((item.name === "Franchise" && isFranchiseOpen) ||
                     (item.name === "Selling" && isSellingOpen)) && (
                     <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-md shadow-lg py-1">
                       {item.items.map((subItem) => (
@@ -185,7 +189,7 @@ export default function Navbar() {
                     <button
                       className="w-full px-3 py-4 text-left text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50 rounded-md flex items-center justify-between"
                       onClick={() => {
-                        if (item.name === "Franchises") {
+                        if (item.name === "Franchise") {
                           setIsFranchiseOpen(!isFranchiseOpen);
                           setIsSellingOpen(false);
                         } else if (item.name === "Selling") {
@@ -197,7 +201,7 @@ export default function Navbar() {
                       {item.name}
                       <ChevronDownIcon className="h-4 w-4" />
                     </button>
-                    {((item.name === "Franchises" && isFranchiseOpen) ||
+                    {((item.name === "Franchise" && isFranchiseOpen) ||
                       (item.name === "Selling" && isSellingOpen)) && (
                       <div className="pl-4">
                         {item.items.map((subItem) => (
