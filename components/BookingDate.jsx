@@ -1,38 +1,21 @@
 "use client";
 import React from "react";
-import { useRef, useState, useEffect } from "react";
-import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
-import BookingDateOption from "./BookingDateOption";
-import TimingList from "./TimingList";
-import BookingType from "./BookingType";
-import DateSelector from "./DateSelector";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { getImageUrls } from "@/api/getImageUrls";
 
 const BookingDate = ({ listingId }) => {
-  // const [scrollPosition, setScrollPosition] = useState(0);
-  // const [maxScroll, setMaxScroll] = useState(0);
-  const cardRef = useRef(null);
-
-  //slide right and left code for cardref and containerref
-  const containerRef = useRef(null);
-  const scrollRef = useRef(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [phone, setPhone] = useState("");
   const [loadingImage, setLoadingImage] = useState(true);
   const [imgUrl, setImgUrl] = useState(null);
-  const [timing, setTiming] = useState({
-    type: "",
-    date: "",
-    time: "",
+  const [contactInfo, setContactInfo] = useState({
+    name: "",
     phone: "",
+    email: ""
   });
 
   useEffect(() => {
     const fetchImage = async () => {
-      console.log("Fetching image for listingId:", listingId);
       if (!listingId) {
-        console.log("No listingId provided");
         setLoadingImage(false);
         return;
       }
@@ -43,12 +26,9 @@ const BookingDate = ({ listingId }) => {
           ResourceRecordKey: listingId
         });
         
-        console.log("Received URLs:", urls);
         if (urls?.length > 0) {
-          console.log("Setting image URL:", urls[0]);
           setImgUrl(urls[0]);
         } else {
-          console.log("No valid URLs received");
           setImgUrl(null);
         }
       } catch (error) {
@@ -62,104 +42,29 @@ const BookingDate = ({ listingId }) => {
     fetchImage();
   }, [listingId]);
 
-  const slideLeft = (e) => {
-    e.preventDefault();
-    const scrollContainer = scrollRef.current;
-    const cardWidth = cardRef.current.offsetWidth;
-    const scrollAmount = 300; // Adjust the scroll amount as needed
-    scrollContainer.scrollLeft -= scrollAmount;
-  };
-
-  const slideRight = (e) => {
-    e.preventDefault();
-    const scrollContainer = scrollRef.current;
-    const cardWidth = cardRef.current.offsetWidth;
-    const scrollAmount = 300; // Adjust the scroll amount as needed
-    scrollContainer.scrollLeft += scrollAmount;
-  };
-  function getDaysInMonth(year, month) {
-    // Get the number of days in a month
-    return new Date(year, month + 1, 0).getDate();
-  }
-
-  function getSevenDaysStartingTomorrow() {
-    const today = new Date();
-    const daysArray = [];
-
-    for (let i = 1; i <= 7; i++) {
-      const date = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() + i
-      );
-      const day = date.getDate();
-      const dayName = date
-        .toLocaleDateString("en-US", { weekday: "long" })
-        .slice(0, 3);
-      const monthName = date
-        .toLocaleDateString("default", { month: "long" })
-        .slice(0, 3);
-      const month = date.getMonth() + 1; // Month is 0-indexed, so we add 1 to get the correct month
-      const year = date.getFullYear();
-
-      daysArray.push({
-        day,
-        dayName,
-        month: monthName,
-        monthNumber: month,
-        year,
-        selected: false,
-      });
-    }
-
-    // select option for any date
-    // daysArray.unshift({
-    //   day: "Any",
-    //   month: "",
-    //   dayName: "",
-    //   selected: false,
-    //   time: "",
-    // });
-
-    return daysArray;
-  }
-  const year = new Date().getFullYear();
-  const month = new Date().getMonth();
-  const [daysArray, setDaysArray] = useState(
-    getSevenDaysStartingTomorrow(year, month)
-  );
-  const selectOption = (e, data) => {
-    const updatedDaysArray = daysArray.map((day) => {
-      if (day.day === data.day) {
-        return { ...day, selected: true };
-      } else {
-        return { ...day, selected: false };
-      }
-    });
-    setDaysArray(updatedDaysArray);
-    handleChange(e);
-  };
-
   const handleChange = (e) => {
-    const { id, value } = e.currentTarget;
-    setTiming((prevState) => ({
-      ...prevState,
-      [id]: value,
+    const { name, value } = e.target;
+    setContactInfo(prev => ({
+      ...prev,
+      [name]: value
     }));
   };
 
-  const submitData = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Contact info submitted:', contactInfo);
+  };
 
   return (
     <div
-      className="relative z-0 w-full rounded-md bg-very-light-gray flex items-center mt-12 sm:mt-24 hidden md:block"
+      className="relative z-0 w-full rounded-xl bg-very-light-gray flex items-center mt-8 sm:mt-16 hidden md:block overflow-hidden shadow-lg"
       id="bookdate"
     >
-      <div className="flex sm:flex-row flex-col w-full overflow-hidden">
-        <div className="w-full sm:w-1/2 relative h-[300px] sm:h-auto">
+      <div className="flex sm:flex-row flex-col w-full">
+        <div className="w-full sm:w-1/2 relative h-[400px]">
           {loadingImage ? (
             <div className="w-full h-full flex items-center justify-center bg-gray-100 animate-pulse">
-              <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin"></div>
             </div>
           ) : imgUrl ? (
             <div className="relative w-full h-full">
@@ -167,24 +72,86 @@ const BookingDate = ({ listingId }) => {
                 src={imgUrl}
                 alt="Schedule viewing"
                 fill
-                className="object-cover rounded-t-md sm:rounded-l-md sm:rounded-t-none"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
                 priority={true}
               />
+              {/* Dark overlay */}
+              <div className="absolute inset-0 bg-black bg-opacity-40"></div>
             </div>
           ) : (
             <div className="w-full h-full flex flex-col justify-center items-center bg-gray-50">
-              <img src="/icons/no-photo.png" className="w-10 h-10" alt="No photo" />
-              <p className="text-gray-500 mt-2">No Image Available</p>
+              <img src="/icons/no-photo.png" className="w-8 h-8" alt="No photo" />
+              <p className="text-gray-500 mt-1 text-sm">No Image Available</p>
             </div>
           )}
         </div>
-        <div className="w-full sm:w-1/2 sm:mx-2 p-4 flex flex-col justify-center items-center">
-          {/**Schedule a viewing form */}
-          <h1 className="font-bold text-3xl my-2 text-center">
-            Schedule a viewing
-          </h1>
-          <DateSelector />
+
+        <div className="w-full sm:w-1/2 flex items-center justify-center p-8">
+          <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-8">
+            <h1 className="font-bold text-2xl mb-6 text-center text-gray-800">
+              Contact Us
+            </h1>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Name field - full width */}
+              <div className="w-full">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={contactInfo.name}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  placeholder="Enter your name"
+                  required
+                />
+              </div>
+
+              {/* Phone and Email on the same row */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={contactInfo.phone}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    placeholder="Phone number"
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={contactInfo.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    placeholder="Email address"
+                    required
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
