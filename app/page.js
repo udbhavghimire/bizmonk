@@ -119,6 +119,45 @@ export default async function Home() {
         </div>
       </div>
 
+      {/* Introduction to BizMonk */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <h2 className="text-4xl font-bold text-gray-900 leading-tight">
+              Your Gateway to Business{" "}
+              <span className="text-primary">Ownership</span> in Ontario
+            </h2>
+            <p className="text-lg text-gray-600">
+              BizMonk is Ontario's premier platform connecting entrepreneurs
+              with business opportunities. Whether you're looking to buy a
+              restaurant, invest in a franchise, or lease commercial space,
+              we're here to make your business dreams a reality.
+            </p>
+            <div className="grid grid-cols-3 gap-4 pt-6">
+              <div className="text-center p-4 bg-blue-50 rounded-lg">
+                <div className="text-3xl font-bold text-primary">500+</div>
+                <div className="text-sm text-gray-600">Active Listings</div>
+              </div>
+              <div className="text-center p-4 bg-blue-50 rounded-lg">
+                <div className="text-3xl font-bold text-primary">50+</div>
+                <div className="text-sm text-gray-600">Partner Brands</div>
+              </div>
+              <div className="text-center p-4 bg-blue-50 rounded-lg">
+                <div className="text-3xl font-bold text-primary">1000+</div>
+                <div className="text-sm text-gray-600">Success Stories</div>
+              </div>
+            </div>
+          </div>
+          <div className="relative">
+            <img
+              src="/Commercial-img.jpg"
+              alt="Business Growth"
+              className="relative rounded-2xl shadow-lg w-full h-[400px] object-cover"
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Top Categories Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <h2 className="md:text-[42px] text-3xl font-extrabold text-gray-900 mb-8 text-center">

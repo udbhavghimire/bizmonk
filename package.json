@@ -13,7 +13,7 @@
     "@nextui-org/react": "^2.6.11",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.0.6",
+    "framer-motion": "^12.4.10",
     "leaflet": "^1.9.4",
     "lightgallery": "^2.8.2",
     "lucide-react": "^0.473.0",
