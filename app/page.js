@@ -80,7 +80,7 @@ export default async function Home() {
                 {
                   icon: "🏢",
                   title: "Offices",
-                  link: "/offices-for-lease",
+                  link: "/retail-lease",
                   count: "250+",
                 },
                 {
@@ -311,47 +311,47 @@ export default async function Home() {
           {/* Offices Card */}
           <div className="flex flex-col">
             <Link
-              href="/offices-for-lease"
+              href="/retail-lease"
               className="group relative rounded-xl overflow-hidden"
             >
               <div className="relative h-64">
                 <img
                   src="https://images.unsplash.com/photo-1497366216548-37526070297c"
-                  alt="Offices for Lease"
+                  alt="Retail Lease"
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
                   <h3 className="text-[18px] font-bold text-white">
-                    Offices for Lease
+                    Retail Lease
                   </h3>
                 </div>
               </div>
             </Link>
             <div className="mt-4 flex flex-col space-y-2 px-4">
               <Link
-                href="/brampton/offices-for-lease"
+                href="/brampton/retail-lease"
                 className="text-sm text-gray-600 hover:text-primary"
               >
-                Brampton Office Space
+                Brampton Retail Lease
               </Link>
               <Link
-                href="/mississauga/offices-for-lease"
+                href="/mississauga/retail-lease"
                 className="text-sm text-gray-600 hover:text-primary"
               >
-                Mississauga Office Space
+                Mississauga Retail Lease
               </Link>
               <Link
-                href="/toronto/offices-for-lease"
+                href="/toronto/retail-lease"
                 className="text-sm text-gray-600 hover:text-primary"
               >
-                Toronto Office Space
+                Toronto Retail Lease
               </Link>
               <Link
-                href="/vaughan/offices-for-lease"
+                href="/vaughan/retail-lease"
                 className="text-sm text-gray-600 hover:text-primary"
               >
-                Vaughan Office Space
+                Vaughan Retail Lease
               </Link>
             </div>
           </div>
@@ -600,22 +600,22 @@ export default async function Home() {
           </Link>
 
           <Link
-            href="/offices-for-lease"
+            href="/retail-lease"
             className="group relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
             <div className="relative h-64">
               <img
                 src="/office.jpeg"
-                alt="Modern office space"
+                alt="Modern Retail Lease"
                 className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <h3 className="text-xl font-semibold text-white">
-                  Offices for Lease
+                  Retail Lease
                 </h3>
                 <p className="mt-2 text-sm text-gray-200">
-                  Find the perfect office space for your business
+                  Find the perfect Retail Lease for your business
                 </p>
               </div>
             </div>
@@ -624,9 +624,9 @@ export default async function Home() {
       </div>
 
       <PropertyDisplaySection
-        title="Premium Office Spaces"
-        subtitle="Find the perfect office space for your business growth"
-        exploreAllLink="/offices-for-lease"
+        title="Premium Retail Leases"
+        subtitle="Find the perfect Retail Lease for your business growth"
+        exploreAllLink="/retail-lease"
       >
         <Slider data={officeListings} />
       </PropertyDisplaySection>

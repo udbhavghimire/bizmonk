@@ -157,14 +157,14 @@ export default function FranchiseOpportunityPage({ params }) {
               </Link>
 
               <Link
-                href={`/${location}/offices-for-lease`}
+                href={`/${location}/retail-lease`}
                 className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 group"
               >
                 <h3 className="text-lg font-semibold mb-2 group-hover:text-primary">
-                  Office Spaces
+                  Retail Leases
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Find available office spaces in {location}
+                  Find available Retail Leases in {location}
                 </p>
               </Link>
             </div>

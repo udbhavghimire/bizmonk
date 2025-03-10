@@ -23,7 +23,7 @@ const TextWithContactButton = ({ title, subtitle, textContent, imgSrc }) => {
             {/* Franchise Categories */}
             <div className="grid grid-cols-2 gap-4 mt-8">
               {[
-                { name: "Office Spaces", count: "500+" },
+                { name: "Retail Leases", count: "500+" },
                 { name: "Convenience Stores", count: "300+" },
                 { name: "Restaurants", count: "400+" },
                 { name: "Franchises", count: "25+" },

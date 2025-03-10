@@ -73,7 +73,7 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
         </div>
         <div className="text-center mt-8">
           <Link 
-            href="/toronto/offices-for-lease" 
+            href="/toronto/retail-lease" 
             className="text-blue-600 hover:text-primary/80 font-semibold text-lg"
           >
             View All Toronto Commercial Spaces →

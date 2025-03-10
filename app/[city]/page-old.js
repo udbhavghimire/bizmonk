@@ -133,7 +133,7 @@ export default function CityPage({ params }) {
       return (
         <div className="p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Offices for Lease
+            Retail Lease
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {filteredListings.offices.map((data, index) => (
@@ -189,11 +189,9 @@ export default function CityPage({ params }) {
         {/* Office Section */}
         <div className="py-8">
           <div className="flex justify-between mb-2">
-            <h2 className="text-2xl font-bold text-gray-900">
-              Offices for Lease
-            </h2>
+            <h2 className="text-2xl font-bold text-gray-900">Retail Lease</h2>
             <Link
-              href={`/${cityUrl}/offices-for-lease`}
+              href={`/${cityUrl}/retail-lease`}
               className="bg-black text-white rounded-md px-4 py-2 hover:scale-105"
             >
               View More

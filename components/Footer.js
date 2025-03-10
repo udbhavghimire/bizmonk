@@ -94,7 +94,7 @@ export default function Footer() {
                     label: "Convenience Stores",
                     href: "/convenience-store-for-sale",
                   },
-                  { label: "Office Spaces", href: "/offices-for-lease" },
+                  { label: "Retail Leases", href: "/retail-lease" },
                   { label: "Franchises", href: "/franchises" },
                 ].map((link) => (
                   <li key={link.href}>

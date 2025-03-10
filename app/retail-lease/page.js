@@ -20,7 +20,7 @@ export default async function CityOffices() {
     <div className="">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          Offices for Lease in Ontario
+          Retail Lease in Ontario
         </h1>
 
         <OfficeListings initialData={data} />

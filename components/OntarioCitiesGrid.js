@@ -7,7 +7,7 @@ import gtaCities from "@/data/gta-cities.json";
 const commercialTypes = [
   { label: "Convenience Stores", path: "convenience-store-for-sale" },
   { label: "Restaurants", path: "restaurant-for-sale" },
-  { label: "Office Spaces", path: "offices-for-lease" },
+  { label: "Retail Leases", path: "retail-lease" },
   { label: "Franchises", path: "franchise-opportunity" },
 ];
 

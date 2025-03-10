@@ -32,7 +32,7 @@ export const businessDescriptions = {
     ],
   },
   office: {
-    title: "Why Choose Office Space in Ontario?",
+    title: "Why Choose Retail Lease in Ontario?",
     paragraphs: [
       "Ontario's office market represents a strategic opportunity for businesses seeking prime locations in Canada's economic heartland. From downtown towers to suburban office parks, the province offers diverse options for every business need.",
       "<strong>Prime Location Benefits:</strong>",

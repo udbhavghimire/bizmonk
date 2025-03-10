@@ -10,9 +10,9 @@ export const businessTypes = [
     path: "convenience-store-for-sale",
   },
   {
-    label: "Office Space for Lease",
+    label: "Retail Lease for Lease",
     value: "commercial",
-    path: "offices-for-lease",
+    path: "retail-lease",
   },
 ];
 

@@ -43,7 +43,7 @@ export default function CityOffices({ params }) {
       href: `/${cityUrl}`,
     },
     {
-      label: "Offices for Lease",
+      label: "Retail Lease",
     },
   ];
 
@@ -103,7 +103,7 @@ export default function CityOffices({ params }) {
         {/* <Breadcrumb items={breadcrumbItems} /> */}
 
         <h1 className="text-3xl font-bold text-gray-900">
-          Offices for Lease in {cityExists}
+          Retail Lease in {cityExists}
         </h1>
         <p className="text-sm mb-4">
           500+ {cityExists} businesses for sale. Book a showing for offices.
