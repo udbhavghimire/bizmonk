@@ -79,7 +79,7 @@ export default async function Home() {
               {[
                 {
                   icon: "🏢",
-                  title: "Offices",
+                  title: "Retail Lease",
                   link: "/retail-lease",
                   count: "250+",
                 },
