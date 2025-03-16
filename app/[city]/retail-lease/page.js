@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumb from "@/components/Breadcrumb";
 import citiesData from "@/data/gta-cities.json";
-import { notFound } from "next/navigation";
+import { notFound, useSearchParams } from "next/navigation";
 import ResaleCard from "@/components/ResaleCard";
 import Filter from "@/components/Filter";
 import LoadingBar from "@/components/LoadingBar";
@@ -21,6 +21,11 @@ export default function CityOffices({ params }) {
   const [isWidePage] = useWidePage();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
+  const [selectedPropertyType, setSelectedPropertyType] = useState(null);
+  const [activePriceRange, setActivePriceRange] = useState(null);
+
+  const searchParams = useSearchParams();
+  const propertyTypeSlug = searchParams.get("type");
 
   const { city } = params;
 
@@ -43,9 +48,27 @@ export default function CityOffices({ params }) {
       href: `/${cityUrl}`,
     },
     {
-      label: "Retail Lease",
+      label: selectedPropertyType || "Retail Lease",
     },
   ];
+
+  // Function to convert slug back to display name
+  const getDisplayNameFromSlug = (slug) => {
+    if (!slug) return null;
+
+    const displayMap = {
+      "medical-dental": "Medical/Dental",
+      "professional-office": "Professional Office",
+      industrial: "Industrial",
+      warehouse: "Warehouse",
+      retail: "Retail",
+    };
+
+    return displayMap[slug] || slug.charAt(0).toUpperCase() + slug.slice(1);
+  };
+
+  // Get the display name for the property type
+  const propertyType = getDisplayNameFromSlug(propertyTypeSlug);
 
   // Fetch initial data when component mounts
   useEffect(() => {
@@ -55,7 +78,20 @@ export default function CityOffices({ params }) {
         const listings = await getOfficeListings({
           city: city,
         });
-        setFilteredListings(listings);
+
+        // If there's a property type in the URL, filter by it
+        if (propertyType && propertyType !== "All Properties") {
+          setSelectedPropertyType(propertyType);
+          const filtered = listings.filter((listing) => {
+            return (
+              listing.BusinessType &&
+              listing.BusinessType.includes(propertyType)
+            );
+          });
+          setFilteredListings(filtered);
+        } else {
+          setFilteredListings(listings);
+        }
       } catch (error) {
         console.error("Error fetching initial listings:", error);
       } finally {
@@ -64,19 +100,38 @@ export default function CityOffices({ params }) {
     };
 
     fetchInitialData();
-  }, [city]);
+  }, [city, propertyType]);
 
   const handleFilterChange = async (filters) => {
     setIsLoading(true);
-    setCurrentPage(1); // Reset to first page when filter changes
+    setCurrentPage(1);
     try {
+      // Get all listings first
       const listings = await getOfficeListings({
         city: city,
         priceRange: filters.priceRange,
       });
-      setFilteredListings(listings);
+
+      // Update the selected property type state
+      setSelectedPropertyType(filters.propertyType);
+      // Update the price range state
+      setActivePriceRange(filters.priceRange);
+
+      // Apply property type filter if selected
+      let filtered = listings;
+      if (filters.propertyType) {
+        filtered = listings.filter((listing) => {
+          return (
+            listing.BusinessType &&
+            listing.BusinessType.includes(filters.propertyType)
+          );
+        });
+      }
+
+      setFilteredListings(filtered);
     } catch (error) {
       console.error("Error fetching filtered listings:", error);
+      setFilteredListings([]);
     } finally {
       setIsLoading(false);
     }
@@ -103,10 +158,14 @@ export default function CityOffices({ params }) {
         {/* <Breadcrumb items={breadcrumbItems} /> */}
 
         <h1 className="text-3xl font-bold text-gray-900">
-          Retail Lease in {cityExists}
+          {selectedPropertyType
+            ? `${selectedPropertyType} Properties`
+            : "Commercial Properties for Lease"}{" "}
+          in {cityExists}
         </h1>
         <p className="text-sm mb-4">
-          500+ {cityExists} businesses for sale. Book a showing for offices.
+          {filteredListings.length}+ {cityExists} properties for lease.
+          {selectedPropertyType ? ` Filtered by ${selectedPropertyType}.` : ""}
           Prices from $1 to $5,000,000. Open houses available.
         </p>
         <Filter onFilterChange={handleFilterChange} cityUrl={cityUrl} />
@@ -119,7 +178,11 @@ export default function CityOffices({ params }) {
 
         {filteredListings.length === 0 && !isLoading && (
           <div className="text-center py-8 text-gray-500">
-            No listings found in this price range
+            {selectedPropertyType
+              ? `No ${selectedPropertyType} properties found in this area${
+                  activePriceRange ? " and price range" : ""
+                }.`
+              : "No listings found in this price range."}
           </div>
         )}
 

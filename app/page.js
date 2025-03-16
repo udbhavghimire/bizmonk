@@ -380,7 +380,7 @@ export default async function Home() {
         </div>
 
         {/* Featured Franchises */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 px-4 sm:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 px-4 sm:px-6">
           <Link
             href="/franchise-opportunity/ontario/mary-browns-chicken"
             className="group rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
@@ -434,6 +434,15 @@ export default async function Home() {
               <h3 className="text-2xl font-bold text-gray-900 ">Wingsup!</h3>
               <p className="text-lg text-gray-700">Investment: $400K - $480K</p>
             </div>
+          </Link>
+        </div>
+
+        <div className="text-center mt-6 sm:mt-8">
+          <Link
+            href="/franchise-opportunity/ontario"
+            className="inline-flex items-center gap-2 text-sm sm:text-base text-blue-600  hover:underline transition-colors font-bold"
+          >
+            View All Franchises in Ontario
           </Link>
         </div>
 

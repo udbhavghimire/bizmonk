@@ -93,7 +93,7 @@ export default function CityRestaurants() {
         </p>
         <Filter onFilterChange={handleFilterChange} cityUrl={cityUrl} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {filteredListings.map((listing) => (
             <ResaleCard curElem={listing} key={listing.ListingKey} />
           ))}

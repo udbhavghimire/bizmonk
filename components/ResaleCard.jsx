@@ -98,7 +98,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
                 {/* Property Type & Time Badge */}
                 <div className="absolute bottom-3 left-3 flex gap-2 z-10">
                   <span className="bg-white rounded px-2.5 py-1 text-xs font-medium">
-                    {curElem.PropertySubType || "Detached"}
+                    {curElem.BusinessType}
                   </span>
                   <span className="bg-white rounded px-2.5 py-1 text-xs font-medium">
                     <TimeAgo modificationTimestamp={curElem.OriginalEntryTimestamp} />

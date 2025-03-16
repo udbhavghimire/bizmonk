@@ -4,7 +4,7 @@ import { franchiseList } from '@/data/franchise-data';
 
 const FranchisesList = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mt-8">
       <div className="text-center ">
         <h2 className="text-3xl font-bold text-gray-900 mb-3"> 50+ Franchise opportunities on Bizmonk</h2>
         <p className='max-w-3xl mx-auto text-center mb-5'>Find the perfect franchise opportunity in Ontario with Bizmonk—offering 50+ profitable options to kickstart your entrepreneurial journey. Never too late to start.</p>

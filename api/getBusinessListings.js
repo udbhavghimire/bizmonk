@@ -90,13 +90,22 @@ export const getOfficeListings = async ({
   priceRange = null,
 }) => {
   const data = await fetch(
-    `https://query.ampre.ca/odata/Property?$filter=PropertySubType eq 'Office'${
+    `https://query.ampre.ca/odata/Property?$filter=PropertyType eq 'Commercial' and TransactionType eq 'For Lease'${
       city ? ` and contains(City,'${capitalizeFirstLetter(city)}')` : ""
     }&$top=${numberOfListings || 200}&$orderby=OriginalEntryTimestamp desc`,
     options
   ).then((response) => response.json());
 
-  let filteredValues = data.value;
+  let filteredValues = data.value.filter((listing) => {
+    const validTypes = [
+      "Industrial",
+      "Medical/Dental",
+      "Warehouse",
+      "Retail Store Related",
+      "Professional Office",
+    ];
+    return validTypes.some((type) => listing.BusinessType?.includes(type));
+  });
 
   // Apply price filter if provided
   if (priceRange) {
