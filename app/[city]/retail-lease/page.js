@@ -1,33 +1,21 @@
-"use client";
-import { useState, useEffect } from "react";
 import Breadcrumb from "@/components/Breadcrumb";
 import citiesData from "@/data/gta-cities.json";
-import { notFound, useSearchParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import ResaleCard from "@/components/ResaleCard";
-import Filter from "@/components/Filter";
-import LoadingBar from "@/components/LoadingBar";
-import { getOfficeListings } from "@/api/getBusinessListings";
-import { useWidePage } from "@/hooks/useWidePage";
 import Image from "next/image";
 import Link from "next/link";
 import { cities } from "@/constant/cities";
-import Pagination from "@/components/Pagination";
+import ClientFilter from "@/components/ClientFilter";
+import ClientPagination from "@/components/ClientPagination";
+import { getOfficeListings } from "@/api/getBusinessListings";
 
 const { cities: gtaCities } = citiesData;
 
-export default function CityOffices({ params }) {
-  const [filteredListings, setFilteredListings] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isWidePage] = useWidePage();
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 20;
-  const [selectedPropertyType, setSelectedPropertyType] = useState(null);
-  const [activePriceRange, setActivePriceRange] = useState(null);
-
-  const searchParams = useSearchParams();
-  const propertyTypeSlug = searchParams.get("type");
-
+// Convert to a server component
+export default async function CityOffices({ params, searchParams }) {
   const { city } = params;
+  const propertyTypeSlug = searchParams.type;
+  const page = searchParams.page ? parseInt(searchParams.page) : 1;
 
   if (!city) {
     notFound();
@@ -41,16 +29,6 @@ export default function CityOffices({ params }) {
   if (!cityExists) {
     notFound();
   }
-
-  const breadcrumbItems = [
-    {
-      label: cityExists,
-      href: `/${cityUrl}`,
-    },
-    {
-      label: selectedPropertyType || "Retail Lease",
-    },
-  ];
 
   // Function to convert slug back to display name
   const getDisplayNameFromSlug = (slug) => {
@@ -70,74 +48,24 @@ export default function CityOffices({ params }) {
   // Get the display name for the property type
   const propertyType = getDisplayNameFromSlug(propertyTypeSlug);
 
-  // Fetch initial data when component mounts
-  useEffect(() => {
-    const fetchInitialData = async () => {
-      setIsLoading(true);
-      try {
-        const listings = await getOfficeListings({
-          city: city,
-        });
+  // Fetch data server-side
+  const listings = await getOfficeListings({
+    city: city,
+  });
 
-        // If there's a property type in the URL, filter by it
-        if (propertyType && propertyType !== "All Properties") {
-          setSelectedPropertyType(propertyType);
-          const filtered = listings.filter((listing) => {
-            return (
-              listing.BusinessType &&
-              listing.BusinessType.includes(propertyType)
-            );
-          });
-          setFilteredListings(filtered);
-        } else {
-          setFilteredListings(listings);
-        }
-      } catch (error) {
-        console.error("Error fetching initial listings:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  // Filter listings based on property type if provided
+  let filteredListings = listings;
+  if (propertyType && propertyType !== "All Properties") {
+    filteredListings = listings.filter((listing) => {
+      return (
+        listing.BusinessType && listing.BusinessType.includes(propertyType)
+      );
+    });
+  }
 
-    fetchInitialData();
-  }, [city, propertyType]);
-
-  const handleFilterChange = async (filters) => {
-    setIsLoading(true);
-    setCurrentPage(1);
-    try {
-      // Get all listings first
-      const listings = await getOfficeListings({
-        city: city,
-        priceRange: filters.priceRange,
-      });
-
-      // Update the selected property type state
-      setSelectedPropertyType(filters.propertyType);
-      // Update the price range state
-      setActivePriceRange(filters.priceRange);
-
-      // Apply property type filter if selected
-      let filtered = listings;
-      if (filters.propertyType) {
-        filtered = listings.filter((listing) => {
-          return (
-            listing.BusinessType &&
-            listing.BusinessType.includes(filters.propertyType)
-          );
-        });
-      }
-
-      setFilteredListings(filtered);
-    } catch (error) {
-      console.error("Error fetching filtered listings:", error);
-      setFilteredListings([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Calculate pagination
+  // For server-side rendering with pagination
+  const currentPage = page;
+  const itemsPerPage = 20;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredListings.slice(
@@ -146,29 +74,35 @@ export default function CityOffices({ params }) {
   );
   const totalPages = Math.ceil(filteredListings.length / itemsPerPage);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const breadcrumbItems = [
+    {
+      label: cityExists,
+      href: `/${cityUrl}`,
+    },
+    {
+      label: propertyType || "Retail Lease",
+    },
+  ];
 
   return (
     <>
-      {isLoading && <LoadingBar />}
-      <div className={`${isWidePage ? "sm:mx-20" : "max-w-7xl mx-auto"}`}>
+      <div className="max-w-7xl mx-auto">
         {/* <Breadcrumb items={breadcrumbItems} /> */}
 
         <h1 className="text-3xl font-bold text-gray-900">
-          {selectedPropertyType
-            ? `${selectedPropertyType} Properties`
+          {propertyType
+            ? `${propertyType} Properties`
             : "Commercial Properties for Lease"}{" "}
           in {cityExists}
         </h1>
         <p className="text-sm mb-4">
           {filteredListings.length}+ {cityExists} properties for lease.
-          {selectedPropertyType ? ` Filtered by ${selectedPropertyType}.` : ""}
+          {propertyType ? ` Filtered by ${propertyType}.` : ""}
           Prices from $1 to $5,000,000. Open houses available.
         </p>
-        <Filter onFilterChange={handleFilterChange} cityUrl={cityUrl} />
+
+        {/* Use a client component wrapper for Filter */}
+        <ClientFilter cityUrl={cityUrl} />
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {currentItems.map((listing) => (
@@ -176,21 +110,19 @@ export default function CityOffices({ params }) {
           ))}
         </div>
 
-        {filteredListings.length === 0 && !isLoading && (
+        {filteredListings.length === 0 && (
           <div className="text-center py-8 text-gray-500">
-            {selectedPropertyType
-              ? `No ${selectedPropertyType} properties found in this area${
-                  activePriceRange ? " and price range" : ""
-                }.`
-              : "No listings found in this price range."}
+            {propertyType
+              ? `No ${propertyType} properties found in this area.`
+              : "No listings found."}
           </div>
         )}
 
         {filteredListings.length > 0 && (
-          <Pagination
+          <ClientPagination
             currentPage={currentPage}
             totalPages={totalPages}
-            onPageChange={handlePageChange}
+            baseUrl={`/${cityUrl}/retail-lease`}
           />
         )}
 
