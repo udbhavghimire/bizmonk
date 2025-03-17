@@ -22,7 +22,7 @@ export default function RetailLease() {
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
 
   // Get the property type from URL
-  const typeParam = searchParams.get("type");
+  const typeParam = searchParams?.get("type");
 
   useEffect(() => {
     fetchListings();
@@ -30,7 +30,7 @@ export default function RetailLease() {
 
   useEffect(() => {
     // Only apply URL parameter filtering after initial data load
-    if (listings.length > 0 && initialLoadComplete) {
+    if (listings.length > 0 && initialLoadComplete && typeParam) {
       filterListingsByParams();
     }
   }, [typeParam, listings, initialLoadComplete]);
@@ -46,7 +46,7 @@ export default function RetailLease() {
       // After initial load, apply URL filters if any
       setInitialLoadComplete(true);
       if (typeParam) {
-        filterListingsByParams();
+        setTimeout(() => filterListingsByParams(), 0);
       }
     } catch (error) {
       console.error("Error fetching listings:", error);
@@ -56,31 +56,29 @@ export default function RetailLease() {
   };
 
   const filterListingsByParams = () => {
-    if (listings.length === 0) return;
+    if (!listings || listings.length === 0 || !typeParam) return;
 
     setIsLoading(true);
     try {
       let filtered = [...listings];
 
       // Apply property type filter if present in URL
-      if (typeParam) {
-        let propertyType;
+      let propertyType;
 
-        // Map URL parameter back to actual property type
-        if (typeParam === "retail-store-related") {
-          propertyType = "Retail Store Related";
-        } else if (typeParam === "medical-dental") {
-          propertyType = "Medical/Dental";
-        } else if (typeParam === "professional-office") {
-          propertyType = "Professional Office";
-        } else {
-          propertyType = typeParam.charAt(0).toUpperCase() + typeParam.slice(1);
-        }
-
-        filtered = filtered.filter((listing) =>
-          listing.BusinessType?.includes(propertyType)
-        );
+      // Map URL parameter back to actual property type
+      if (typeParam === "retail-store-related") {
+        propertyType = "Retail Store Related";
+      } else if (typeParam === "medical-dental") {
+        propertyType = "Medical/Dental";
+      } else if (typeParam === "professional-office") {
+        propertyType = "Professional Office";
+      } else {
+        propertyType = typeParam.charAt(0).toUpperCase() + typeParam.slice(1);
       }
+
+      filtered = filtered.filter((listing) =>
+        listing.BusinessType?.includes(propertyType)
+      );
 
       setFilteredListings(filtered);
     } catch (error) {
@@ -91,7 +89,7 @@ export default function RetailLease() {
   };
 
   const handleFilterChange = async (filters) => {
-    if (listings.length === 0) return;
+    if (!listings || listings.length === 0) return;
 
     setIsLoading(true);
     setCurrentPage(1); // Reset to first page when filter changes
