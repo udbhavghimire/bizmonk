@@ -17,7 +17,7 @@ const Filter = ({ onFilterChange, cityUrl }) => {
     "Industrial",
     "Medical/Dental",
     "Warehouse",
-    "Retail",
+    "Retail Store Related",
     "Professional Office"
   ];
 
@@ -73,6 +73,7 @@ const Filter = ({ onFilterChange, cityUrl }) => {
 
   // Function to slugify property type names
   const slugifyPropertyType = (type) => {
+    if (type === "Retail Store Related") return "retail-store-related";
     return type.toLowerCase().replace(/\s+/g, '-').replace(/\//g, '-');
   };
 
@@ -80,7 +81,8 @@ const Filter = ({ onFilterChange, cityUrl }) => {
   const getDisplayNameFromSlug = (slug) => {
     const displayMap = {
       'medical-dental': 'Medical/Dental',
-      'professional-office': 'Professional Office'
+      'professional-office': 'Professional Office',
+      'retail-store-related': 'Retail Store Related'
     };
     return displayMap[slug] || slug.charAt(0).toUpperCase() + slug.slice(1);
   };
@@ -100,6 +102,13 @@ const Filter = ({ onFilterChange, cityUrl }) => {
         // Navigate to the main retail-lease page
         const basePath = cityUrl ? `/${cityUrl}` : '';
         router.push(`${basePath}/retail-lease`);
+        
+        // Apply filter immediately
+        setIsFiltering(true);
+        debouncedFilterChange({
+          propertyType: null,
+          priceRange: null
+        });
         return;
       }
       
@@ -107,9 +116,8 @@ const Filter = ({ onFilterChange, cityUrl }) => {
       setSelectedPropertyType(value);
       const basePath = cityUrl ? `/${cityUrl}` : '';
       const slugifiedValue = slugifyPropertyType(value);
-      router.push(`${basePath}/retail-lease?type=${encodeURIComponent(slugifiedValue)}`);
       
-      // Also apply filter
+      // Apply filter immediately before navigation
       setIsFiltering(true);
       debouncedFilterChange({
         propertyType: value,
@@ -120,6 +128,9 @@ const Filter = ({ onFilterChange, cityUrl }) => {
             }
           : null,
       });
+      
+      // Then navigate
+      router.push(`${basePath}/retail-lease?type=${encodeURIComponent(slugifiedValue)}`);
       setShowDropdown(false);
     } else if (type === "price") {
       setIsFiltering(true);
