@@ -43,7 +43,7 @@ export default function FranchiseOpportunityPage({ params }) {
                 >
                   {/* Image Section */}
                   <div className="relative h-64">
-                    <Image
+                    <img
                       src={franchise.image}
                       alt={franchise.name}
                       fill
