@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +12,7 @@ import Filter from "@/components/Filter";
 import Pagination from "@/components/Pagination";
 import { businessDescriptions } from "@/data/business-descriptions";
 
-export default function RetailLease() {
+function RetailLeaseContent() {
   const searchParams = useSearchParams();
   const [listings, setListings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -224,5 +224,13 @@ export default function RetailLease() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function RetailLease() {
+  return (
+    <Suspense>
+      <RetailLeaseContent />
+    </Suspense>
   );
 }
