@@ -64,7 +64,7 @@ export default function SearchBar({ variant = "default" }) {
               onChange={(e) => handleSearch(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
               placeholder="Search business opportunities"
-              className="w-full px-3  py-3.5 text-base border border-gray-300 rounded-lg
+              className="w-full px-3 py-5 text-base border border-gray-300 rounded-full
                          focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary
                          transition-all duration-200 bg-white shadow-sm
                          text-gray-900 placeholder-gray-400"
@@ -72,19 +72,11 @@ export default function SearchBar({ variant = "default" }) {
           </div>
           <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center space-x-3">
             <div className="h-6 w-[1px] bg-gray-200"></div>
-            <button
-              onClick={handleSearchSubmit}
-              className="px-4 py-1.5  bg-gradient-to-r from-teal-500 to-blue-600 text-white rounded-md hover:bg-primary/90 
-                         transition-all duration-200 text-sm font-medium shadow-sm
-                         hover:shadow-md active:scale-95"
-            >
-              Search
-            </button>
           </div>
         </div>
 
         {/* Quick city links */}
-        <div className="mt-8 flex flex-wrap md:gap-4 gap-2 justify-center">
+        <div className="mt-8 flex flex-wrap md:gap-4 gap-1 justify-center">
           {popularCities.map((city) => (
             <Link
               key={city}

@@ -36,6 +36,34 @@ export default function Navbar() {
           name: "Wingsup",
           href: "/franchise-opportunity/ontario/wingsup",
         },
+        {
+          name: "Burger King",
+          href: "/franchise-opportunity/ontario/burger-king",
+        },
+        {
+          name: "Burrito Jax",
+          href: "/franchise-opportunity/ontario/burrito-jax",
+        },
+        {
+          name: "Boston Pizza",
+          href: "/franchise-opportunity/ontario/boston-pizza",
+        },
+        {
+          name: "Naturals2Go",
+          href: "/franchise-opportunity/ontario/naturals2go",
+        },
+        {
+          name: "A&W Restaurant",
+          href: "/franchise-opportunity/ontario/a&w-restaurant",
+        },
+        {
+          name: "Charleys Philly Steak",
+          href: "/franchise-opportunity/ontario/charleys-philly-steak",
+        },
+        {
+          name: "Potikki's",
+          href: "/franchise-opportunity/ontario/potikkis",
+        },
       ],
     },
     {
