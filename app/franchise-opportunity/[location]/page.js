@@ -35,20 +35,20 @@ export default function FranchiseOpportunityPage({ params }) {
             </div>
 
             {/* Franchise Cards */}
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-6xl mx-auto">
               {locationData.franchises.map((franchise) => (
                 <div
                   key={franchise.name}
                   className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
                 >
                   {/* Image Section */}
-                  <div className="relative h-72">
+                  <div className="relative h-64">
                     <Image
                       src={franchise.image}
                       alt={franchise.name}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      sizes="(max-width: 768px) 90vw, 50vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-black/20 to-transparent" />
                     <div className="absolute bottom-6 left-6 right-6 text-center">
@@ -62,24 +62,23 @@ export default function FranchiseOpportunityPage({ params }) {
                   </div>
 
                   {/* Content Section */}
-                  <div className="p-8 text-center">
-                    <p className="text-gray-600 mb-6 leading-relaxed">
+                  <div className="p-4 text-center">
+                    <p className="text-gray-600 mb-6 leading-relaxed text-xs ">
                       {franchise.description}
                     </p>
 
                     {/* Action Buttons */}
-                    <div className="flex gap-4 justify-center">
-                      {console.log(franchise.name)}
+                    <div className="flex gap-3 justify-center">
                       <Link
                         href={`/franchise-opportunity/${location}/${franchise.name
                           .toLowerCase()
                           .replace(/\s+/g, "-")
                           .replace(/'/g, "")}`}
-                        className="px-6 py-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors font-medium"
+                        className="px-2 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-xs"
                       >
                         Learn More
                       </Link>
-                      <button className="px-6 py-3 border-2 border-primary text-primary rounded-full hover:bg-primary/5 transition-colors font-medium">
+                      <button className="px-2 py-1 border-2 border-primary text-primary rounded-full hover:bg-primary/5 transition-colors font-medium text-xs">
                         Contact
                       </button>
                     </div>

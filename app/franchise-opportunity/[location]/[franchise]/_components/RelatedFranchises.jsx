@@ -10,7 +10,7 @@ const RelatedFranchises = ({ franchiseData, locationData, location }) => {
           Other Franchise Opportunities in{" "}
           {location.charAt(0).toUpperCase() + location.slice(1)}
         </h2>
-        <div className="grid md:grid-cols-2 gap-10">
+        <div className="grid md:grid-cols-3 gap-4">
           {locationData.franchises
             .filter((f) => f.name !== franchiseData.name)
             .map((franchise) => (

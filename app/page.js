@@ -380,7 +380,7 @@ export default async function Home() {
         </div>
 
         {/* Featured Franchises */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 px-4 sm:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 px-4 sm:px-6">
           <Link
             href="/franchise-opportunity/ontario/mary-browns-chicken"
             className="group rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
