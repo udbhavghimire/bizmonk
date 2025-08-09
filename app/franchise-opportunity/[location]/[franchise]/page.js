@@ -34,7 +34,14 @@ export default async function FranchiseDetailPage({ params }) {
 
         {/* Contact Form Section */}
         <Suspense fallback={<div>Loading contact form...</div>}>
-          <ContactForm contactImage={franchiseData.contactImage} />
+          {console.log(franchise.image)}
+          <ContactForm
+            contactImage={
+              franchiseData?.contactImage
+                ? franchiseData?.contactImage
+                : franchiseData?.image
+            }
+          />
         </Suspense>
 
         {/* Related Franchises Section */}

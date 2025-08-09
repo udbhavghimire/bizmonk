@@ -61,7 +61,7 @@ export default function CityRestaurants() {
   // Calculate pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredListings.slice(
+  const currentItems = filteredListings?.slice(
     indexOfFirstItem,
     indexOfLastItem
   );

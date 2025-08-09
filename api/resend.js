@@ -19,21 +19,25 @@ export const sendEmail = async ({ content, title = null }) => {
     }
   }
 
-  console.log("sending...");
+  // console.log("sending...");
+  // console.log(
+  //   `</h1><br/><ul>${contentArray
+  //     .map((val) => `<li>${val}</li>`)
+  //     .join("\n")}</ul>`
+  // );
   const { error } = await resend.emails.send({
-    from: "info@bizmonk.ca",
-    to: ["info@bizmonk", "bizmonkcanada@gmail.com", "homes.milan@gmail.com"],
-    subject: "Bizmonk Inquiry from Listing Page",
-    html: `<h1>${
-      title || "Bizmonk Inquiry from Listing Page"
-    }</h1><br/><ul>${contentArray
+    from: "info@homebaba.ca",
+    to: ["info@bizmonk.ca"],
+    subject: "Bizmonk Inquiry",
+    html: `<h1>${title || "Bizmonk Inquiry"}</h1><br/><ul>${contentArray
       .map((val) => `<li>${val}</li>`)
-      .join("")}</ul>`,
+      .join("\n")}</ul>`,
   });
 
   if (error) {
     swal("Message Failed", "Cannot send your message", "error");
   } else {
+    return true;
     swal(
       `Thank You, ${content?.name || ""}`,
       "Please expect an email or call from us shortly",

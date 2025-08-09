@@ -54,7 +54,7 @@ export default function ClientPage({ initialData, cityName }) {
   const getCurrentPageListings = () => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
-    return filteredListings.slice(startIndex, endIndex);
+    return filteredListings?.slice(startIndex, endIndex);
   };
 
   const handleFilterChange = (newFilters) => {

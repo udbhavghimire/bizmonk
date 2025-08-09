@@ -19,10 +19,20 @@ import MortgageCalculator from "./MortgageCalculator";
 // import { houseType } from "@/constant";
 import PropertyDataTable from "./PropertyDataTable";
 import formatCurrency from "@/helpers/formatCurrency";
-import { HeadphonesIcon, FileTextIcon, TrendingUpIcon, DollarSignIcon, ChartBarIcon, ArrowRightIcon } from "lucide-react";
+import {
+  HeadphonesIcon,
+  FileTextIcon,
+  TrendingUpIcon,
+  DollarSignIcon,
+  ChartBarIcon,
+  ArrowRightIcon,
+} from "lucide-react";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { houseType } from "@/constant/businessTypes";
-import { getRestaurantListings, getConvenienceStoreListings } from "@/api/getBusinessListings";
+import {
+  getRestaurantListings,
+  getConvenienceStoreListings,
+} from "@/api/getBusinessListings";
 import ResaleCard from "./ResaleCard";
 
 const PropertyPage = ({ main_data, financialInfo }) => {
@@ -46,7 +56,9 @@ const PropertyPage = ({ main_data, financialInfo }) => {
 
   // Construct complete address for walkscore
   const walkscoreAddress = encodeURIComponent(
-    `${main_data.StreetNumber} ${main_data.StreetName} ${main_data.StreetSuffix || ''}, ${main_data.City}, ${main_data.StateOrProvince}`
+    `${main_data.StreetNumber} ${main_data.StreetName} ${
+      main_data.StreetSuffix || ""
+    }, ${main_data.City}, ${main_data.StateOrProvince}`
   );
 
   const priceDecreased = useMemo(() => {
@@ -97,7 +109,7 @@ const PropertyPage = ({ main_data, financialInfo }) => {
       setIsLoadingSimilar(true);
       try {
         let listings = [];
-        
+
         // Determine which type of listings to fetch based on BusinessType
         if (main_data.BusinessType?.includes("Restaurant")) {
           listings = await getRestaurantListings({
@@ -113,21 +125,25 @@ const PropertyPage = ({ main_data, financialInfo }) => {
 
         // Filter out the current listing
         const filteredListings = listings.filter(
-          listing => listing.ListingKey !== main_data.ListingKey
+          (listing) => listing.ListingKey !== main_data.ListingKey
         );
 
         // Try to get listings within price range first
-        const priceRangeListings = filteredListings.filter(listing => {
+        const priceRangeListings = filteredListings.filter((listing) => {
           const listingPrice = Number(listing.ListPrice);
           const currentPrice = Number(main_data.ListPrice);
-          return listingPrice >= currentPrice * 0.7 && listingPrice <= currentPrice * 1.3;
+          return (
+            listingPrice >= currentPrice * 0.7 &&
+            listingPrice <= currentPrice * 1.3
+          );
         });
 
         // If we have enough listings in price range, use those
         // Otherwise, use any available listings of the same type
-        const finalListings = priceRangeListings.length >= 3 
-          ? priceRangeListings.slice(0, 3)
-          : filteredListings.slice(0, 3);
+        const finalListings =
+          priceRangeListings.length >= 3
+            ? priceRangeListings.slice(0, 3)
+            : filteredListings?.slice(0, 3);
 
         setSimilarListings(finalListings);
       } catch (error) {
@@ -141,12 +157,16 @@ const PropertyPage = ({ main_data, financialInfo }) => {
     if (main_data?.City && main_data?.BusinessType) {
       fetchSimilarListings();
     }
-  }, [main_data.City, main_data.BusinessType, main_data.ListPrice, main_data.ListingKey]);
+  }, [
+    main_data.City,
+    main_data.BusinessType,
+    main_data.ListPrice,
+    main_data.ListingKey,
+  ]);
 
   return (
     <>
       <div className="screenshot col-12 mt-10">
-
         <div
           className={`border-0  rounded-md ${
             isMobileView ? "sm:p-4 pt-3 mt-3" : "mt-5"
@@ -241,7 +261,7 @@ const PropertyPage = ({ main_data, financialInfo }) => {
       <div className="mt-16">
         <h2 className="text-2xl font-bold mb-6 flex items-center justify-between">
           Similar Listings for Sale
-          <Link 
+          <Link
             href={`/${main_data.City.toLowerCase()}`}
             className="text-base font-medium text-blue-600 hover:text-blue-800 flex items-center gap-1"
           >
@@ -253,7 +273,10 @@ const PropertyPage = ({ main_data, financialInfo }) => {
         {isLoadingSimilar ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((_, index) => (
-              <div key={index} className="bg-white rounded-lg overflow-hidden shadow-md animate-pulse">
+              <div
+                key={index}
+                className="bg-white rounded-lg overflow-hidden shadow-md animate-pulse"
+              >
                 <div className="aspect-[4/3] bg-gray-200"></div>
                 <div className="p-4">
                   <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
@@ -277,7 +300,7 @@ const PropertyPage = ({ main_data, financialInfo }) => {
         {/* Mobile view - Show more button */}
         {similarListings.length > 0 && (
           <div className="mt-6 text-center md:hidden">
-            <Link 
+            <Link
               href={`/${main_data.City.toLowerCase()}`}
               className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
             >
@@ -315,7 +338,9 @@ const PropertyPage = ({ main_data, financialInfo }) => {
             {/* Gross Revenue */}
             <div className="bg-white p-4 sm:p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
               <div className="flex items-center justify-between">
-                <h3 className="text-gray-700 text-sm font-medium">Gross Revenue</h3>
+                <h3 className="text-gray-700 text-sm font-medium">
+                  Gross Revenue
+                </h3>
                 <DollarSignIcon className="h-5 w-5 text-green-600" />
               </div>
               <p className="text-xl sm:text-2xl font-bold mt-2 text-gray-900">
@@ -329,7 +354,7 @@ const PropertyPage = ({ main_data, financialInfo }) => {
                     )}
                   </>
                 ) : (
-                  <button 
+                  <button
                     onClick={handleScrollToContactAgent}
                     className="text-base text-blue-600 hover:text-blue-800 transition-colors duration-200"
                   >
@@ -359,7 +384,7 @@ const PropertyPage = ({ main_data, financialInfo }) => {
                     )}
                   </>
                 ) : (
-                  <button 
+                  <button
                     onClick={handleScrollToContactAgent}
                     className="text-base text-blue-600 hover:text-blue-800 transition-colors duration-200"
                   >
@@ -387,7 +412,7 @@ const PropertyPage = ({ main_data, financialInfo }) => {
                     )}
                   </>
                 ) : (
-                  <button 
+                  <button
                     onClick={handleScrollToContactAgent}
                     className="text-base text-blue-600 hover:text-blue-800 transition-colors duration-200"
                   >
@@ -398,19 +423,30 @@ const PropertyPage = ({ main_data, financialInfo }) => {
               <p className="text-sm text-gray-500 mt-1">Operating profit</p>
             </div>
           </div>
-          
+
           <div className="mt-6 bg-blue-50 p-4 rounded-lg border border-blue-100">
             <div className="flex items-start">
               <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                <svg
+                  className="h-5 w-5 text-blue-600"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
               <div className="ml-3">
-                <h4 className="text-sm font-medium text-blue-800">Financial Verification</h4>
+                <h4 className="text-sm font-medium text-blue-800">
+                  Financial Verification
+                </h4>
                 <p className="mt-1 text-sm text-blue-600">
-                  All financial information is subject to verification during due diligence. 
-                  Contact the seller for detailed financial statements and documentation.
+                  All financial information is subject to verification during
+                  due diligence. Contact the seller for detailed financial
+                  statements and documentation.
                 </p>
               </div>
             </div>

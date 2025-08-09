@@ -96,7 +96,7 @@ export const getOfficeListings = async ({
     options
   ).then((response) => response.json());
 
-  let filteredValues = data.value.filter((listing) => {
+  let filteredValues = data?.value?.filter((listing) => {
     const validTypes = [
       "Industrial",
       "Medical/Dental",

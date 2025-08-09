@@ -27,7 +27,7 @@ const baseFranchises = [
         label: "YEARS CONSECUTIVE FRANCHISEES' CHOICE AWARD WINNER",
       },
     ],
-    contactImage: "/contact-marybrown.png",
+    contactImage: null,
     specialities: [
       "Individual or multi-unit operators are welcome",
       "Best-in-class training at our training centre",
@@ -110,7 +110,7 @@ const baseFranchises = [
       marketing: "3%",
     },
 
-    contactImage: "/contact-wingsup.png",
+    contactImage: null,
     video: "https://www.youtube.com/embed/nu6iHiKgzjg?si=6ulmBDnB1kWxbp5p",
   },
   {
@@ -136,7 +136,7 @@ const baseFranchises = [
       "Access to centralized supply chain",
       "Extensive training and onboarding",
     ],
-    contactImage: "/contact-burgerking.png",
+    contactImage: null,
   },
 
   {
@@ -162,7 +162,7 @@ const baseFranchises = [
       "Great for small-footprint urban areas",
       "Efficient kitchen layout and operations",
     ],
-    contactImage: "/contact-burritojax.png",
+    contactImage: null,
   },
 
   {
@@ -188,7 +188,7 @@ const baseFranchises = [
       "Family-friendly menu and sports bar appeal",
       "Support for real estate and construction",
     ],
-    contactImage: "/contact-bostonpizza.png",
+    contactImage: null,
   },
 
   {
@@ -214,7 +214,7 @@ const baseFranchises = [
       "Great for passive or semi-absentee ownership",
       "Full training and coaching included",
     ],
-    contactImage: "/contact-naturals2go.png",
+    contactImage: null,
   },
 
   {
@@ -240,7 +240,7 @@ const baseFranchises = [
       "National advertising support",
       "Strong profitability and unit growth",
     ],
-    contactImage: "/contact-aw.png",
+    contactImage: null,
   },
   {
     name: "Charleys Philly Steak",
@@ -265,7 +265,7 @@ const baseFranchises = [
       "Excellent for mall-based foot traffic",
       "Strong franchise support and training",
     ],
-    contactImage: "/contact-charleys.png",
+    contactImage: null,
   },
 
   {
@@ -291,7 +291,7 @@ const baseFranchises = [
       "Flexible kiosk and dine-in formats",
       "Social media-driven marketing model",
     ],
-    contactImage: "/contact-potikkis.png",
+    contactImage: null,
   },
 
   {
@@ -317,7 +317,7 @@ const baseFranchises = [
       "Flexible retail format (pop-up, store, or café)",
       "Ideal for first-time social entrepreneurs",
     ],
-    contactImage: "/contact-imperfecteats.png",
+    contactImage: null,
   },
 
   {
@@ -343,7 +343,7 @@ const baseFranchises = [
       "Support in location selection and design",
       "Strong operations and culinary training",
     ],
-    contactImage: "/contact-eggsmart.png",
+    contactImage: null,
   },
 
   {
@@ -369,7 +369,7 @@ const baseFranchises = [
       "Perfect for gym-adjacent and wellness hubs",
       "Excellent franchisee training and onboarding",
     ],
-    contactImage: "/contact-qwench.png",
+    contactImage: null,
   },
 ];
 
