@@ -28,14 +28,14 @@ export default function ClientPage({ initialData, cityName }) {
 
     // Apply business type filter if selected
     if (filters.businessType) {
-      filteredListings = filteredListings.filter((listing) =>
+      filteredListings = filteredListings?.filter((listing) =>
         listing.BusinessType.includes(filters.businessType)
       );
     }
 
     // Apply price range filter if selected
     if (filters.priceRange) {
-      filteredListings = filteredListings.filter((listing) => {
+      filteredListings = filteredListings?.filter((listing) => {
         const price = Number(listing.ListPrice);
         return (
           price >= filters.priceRange.min && price <= filters.priceRange.max
@@ -47,7 +47,7 @@ export default function ClientPage({ initialData, cityName }) {
   };
 
   const filteredListings = getFilteredListings();
-  const totalListings = filteredListings.length;
+  const totalListings = filteredListings?.length;
   const totalPages = Math.ceil(totalListings / ITEMS_PER_PAGE);
 
   // Get current page listings

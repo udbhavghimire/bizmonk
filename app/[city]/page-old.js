@@ -106,7 +106,7 @@ export default function CityPage({ params }) {
             Restaurants for Sale
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {filteredListings.restaurants.map((data, index) => (
+            {filteredListings?.restaurants.map((data, index) => (
               <ResaleCard key={data._id || index} curElem={data} />
             ))}
           </div>
@@ -121,7 +121,7 @@ export default function CityPage({ params }) {
             Convenience Stores for Sale
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {filteredListings.convenienceStores.map((data, index) => (
+            {filteredListings?.convenienceStores.map((data, index) => (
               <ResaleCard key={data._id || index} curElem={data} />
             ))}
           </div>
@@ -136,7 +136,7 @@ export default function CityPage({ params }) {
             Retail Lease
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {filteredListings.offices.map((data, index) => (
+            {filteredListings?.offices.map((data, index) => (
               <ResaleCard key={data._id || index} curElem={data} />
             ))}
           </div>
@@ -160,7 +160,7 @@ export default function CityPage({ params }) {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {filteredListings.restaurants.map((data, index) => (
+            {filteredListings?.restaurants.map((data, index) => (
               <ResaleCard key={data._id || index} curElem={data} />
             ))}
           </div>
@@ -180,7 +180,7 @@ export default function CityPage({ params }) {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {filteredListings.convenienceStores.map((data, index) => (
+            {filteredListings?.convenienceStores.map((data, index) => (
               <ResaleCard key={data._id || index} curElem={data} />
             ))}
           </div>
@@ -198,7 +198,7 @@ export default function CityPage({ params }) {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {filteredListings.offices.map((data, index) => (
+            {filteredListings?.offices.map((data, index) => (
               <ResaleCard key={data._id || index} curElem={data} />
             ))}
           </div>

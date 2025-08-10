@@ -129,7 +129,7 @@ const PropertyPage = ({ main_data, financialInfo }) => {
         );
 
         // Try to get listings within price range first
-        const priceRangeListings = filteredListings.filter((listing) => {
+        const priceRangeListings = filteredListings?.filter((listing) => {
           const listingPrice = Number(listing.ListPrice);
           const currentPrice = Number(main_data.ListPrice);
           return (

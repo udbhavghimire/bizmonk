@@ -60,11 +60,11 @@ export default function ConvenienceStores() {
   // Calculate pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredListings.slice(
+  const currentItems = filteredListings?.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
-  const totalPages = Math.ceil(filteredListings.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredListings?.length / itemsPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -86,13 +86,13 @@ export default function ConvenienceStores() {
           ))}
         </div>
 
-        {filteredListings.length === 0 && !isLoading && (
+        {filteredListings?.length === 0 && !isLoading && (
           <div className="text-center py-8 text-gray-500">
             No listings found in this price range
           </div>
         )}
 
-        {filteredListings.length > 0 && (
+        {filteredListings?.length > 0 && (
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

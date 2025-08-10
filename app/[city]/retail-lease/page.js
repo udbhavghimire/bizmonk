@@ -68,11 +68,11 @@ export default async function CityOffices({ params, searchParams }) {
   const itemsPerPage = 20;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredListings.slice(
+  const currentItems = filteredListings?.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
-  const totalPages = Math.ceil(filteredListings.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredListings?.length / itemsPerPage);
 
   const breadcrumbItems = [
     {
@@ -96,7 +96,7 @@ export default async function CityOffices({ params, searchParams }) {
           in {cityExists}
         </h1>
         <p className="text-sm mb-4">
-          {filteredListings.length}+ {cityExists} properties for lease.
+          {filteredListings?.length}+ {cityExists} properties for lease.
           {propertyType ? ` Filtered by ${propertyType}.` : ""}
           Prices from $1 to $5,000,000. Open houses available.
         </p>
@@ -110,7 +110,7 @@ export default async function CityOffices({ params, searchParams }) {
           ))}
         </div>
 
-        {filteredListings.length === 0 && (
+        {filteredListings?.length === 0 && (
           <div className="text-center py-8 text-gray-500">
             {propertyType
               ? `No ${propertyType} properties found in this area.`
@@ -118,7 +118,7 @@ export default async function CityOffices({ params, searchParams }) {
           </div>
         )}
 
-        {filteredListings.length > 0 && (
+        {filteredListings?.length > 0 && (
           <ClientPagination
             currentPage={currentPage}
             totalPages={totalPages}

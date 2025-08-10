@@ -145,13 +145,13 @@ function RetailLeaseContent() {
           ))}
         </div>
 
-        {filteredListings.length === 0 && !isLoading && (
+        {filteredListings?.length === 0 && !isLoading && (
           <div className="text-center py-8 text-gray-500">
             No listings found
           </div>
         )}
 
-        {filteredListings.length > 0 && (
+        {filteredListings?.length > 0 && (
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
