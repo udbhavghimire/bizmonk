@@ -60,7 +60,7 @@ const ContactForm = ({ contactImage }) => {
   return (
     <div
       id="contact"
-      className="relative max-w-6xl mx-4 lg:mx-8 xl:mx-auto mb-20"
+      className="relative md:mx-auto md:max-w-5xl md:px-4 mx-4 mb-20"
     >
       {/* Notification */}
       {notification.message && (

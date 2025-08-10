@@ -1,8 +1,8 @@
 const VideoSection = ({ videoUrl }) => {
   if (!videoUrl) return null;
-  
+
   return (
-    <div className="w-full max-w-4xl mx-auto my-20">
+    <div className="md:max-w-4xl mx-4 md:mx-auto my-20">
       <div className="relative pb-[56.25%] h-0">
         <iframe
           src={videoUrl}
@@ -15,4 +15,4 @@ const VideoSection = ({ videoUrl }) => {
   );
 };
 
-export default VideoSection; 
+export default VideoSection;
