@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
 const ContactForm = ({ contactImage }) => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -24,13 +25,13 @@ const ContactForm = ({ contactImage }) => {
     setIsLoading(true);
 
     try {
-      console.log("Submitting form...");
       const response = await sendEmail({
-        content: [
-          `Email: ${email}`,
-          `Phone: ${phone}`,
-          `Source Page: https://bizmonk.ca/${pathname}`,
-        ],
+        content: {
+          name,
+          email,
+          phone,
+          "Source Page": `https://bizmonk.ca/${pathname}`,
+        },
         title: "Info from Bizmonk",
       });
 
@@ -129,6 +130,42 @@ const ContactForm = ({ contactImage }) => {
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Email Field */}
+                <div className="group">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-semibold text-gray-700 mb-2"
+                  >
+                    Name
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      disabled={isLoading}
+                      placeholder="Your Name"
+                      className="w-full px-4 py-4 text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 focus:bg-white"
+                      onChange={(e) => setName(e.target.value)}
+                      value={name}
+                    />
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                      <svg
+                        className="w-5 h-5 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
                 <div className="group">
                   <label
                     htmlFor="email"

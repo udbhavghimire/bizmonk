@@ -20,6 +20,7 @@ export const sendEmail = async ({ content, title = null }) => {
   }
 
   // console.log("sending...");
+  // console.log(contentArray)
   // console.log(
   //   `</h1><br/><ul>${contentArray
   //     .map((val) => `<li>${val}</li>`)
@@ -27,7 +28,7 @@ export const sendEmail = async ({ content, title = null }) => {
   // );
   const { error } = await resend.emails.send({
     from: "info@homebaba.ca",
-    to: ["info@bizmonk.ca"],
+    to: ["apargtm@gmail.com"],
     subject: "Bizmonk Inquiry",
     html: `<h1>${title || "Bizmonk Inquiry"}</h1><br/><ul>${contentArray
       .map((val) => `<li>${val}</li>`)
