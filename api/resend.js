@@ -28,7 +28,7 @@ export const sendEmail = async ({ content, title = null }) => {
   // );
   const { error } = await resend.emails.send({
     from: "info@homebaba.ca",
-    to: ["apargtm@gmail.com"],
+    to: ["info@bizmonk.ca"],
     subject: "Bizmonk Inquiry",
     html: `<h1>${title || "Bizmonk Inquiry"}</h1><br/><ul>${contentArray
       .map((val) => `<li>${val}</li>`)
