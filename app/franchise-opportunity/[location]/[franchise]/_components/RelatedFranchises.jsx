@@ -4,9 +4,9 @@ import Link from "next/link";
 
 const RelatedFranchises = ({ franchiseData, locationData, location }) => {
   return (
-    <div className="py-24 bg-gray-50">
+    <div className="py-8 bg-gray-50 md:max-w-5xl mx-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold mb-16 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center">
           Other Franchise Opportunities in{" "}
           {location.charAt(0).toUpperCase() + location.slice(1)}
         </h2>
@@ -32,22 +32,21 @@ const RelatedFranchises = ({ franchiseData, locationData, location }) => {
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                   )}
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-xl">
+                </div>
+                <div className="p-6">
+                  <div className="">
+                    <h3 className="text-2xl font-bold text-black mb-2 drop-shadow-xl">
                       {franchise.name}
                     </h3>
-                    <p className="text-white drop-shadow-xl">
+                    <p className="text-black drop-shadow-xl font-semibold ">
                       {franchise.type}
                     </p>
                   </div>
-                </div>
-                <div className="p-8">
                   <p className="text-gray-600 mb-4">
                     Join one of Canada's fastest-growing franchise networks
                   </p>
                   <p className="text-primary font-semibold inline-flex items-center">
                     Learn More
-                    <span className="ml-2 text-lg">→</span>
                   </p>
                 </div>
               </Link>

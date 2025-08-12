@@ -72,7 +72,7 @@ export default function ClientPage({ initialData, cityName }) {
   return (
     <>
       {isLoading && <LoadingBar />}
-      <div className={`${isWidePage ? "sm:mx-20" : "max-w-7xl mx-auto"}`}>
+      <div className={`${isWidePage ? "sm:mx-20" : "max-w-5xl mx-auto"}`}>
         <h1 className="md:text-4xl text-3xl font-bold text-gray-900">
           {totalListings}+ Business Opportunities in {cityName}
         </h1>

@@ -41,6 +41,7 @@ export default async function FranchiseDetailPage({ params }) {
                 ? franchiseData?.contactImage
                 : franchiseData?.image
             }
+            pageName={franchiseData.name}
           />
         </Suspense>
 

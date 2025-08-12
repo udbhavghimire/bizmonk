@@ -127,7 +127,7 @@ function RetailLeaseContent() {
 
   return (
     <div className="">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-5xl mx-auto px-6">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
           Commercial Space for Lease in Ontario
         </h1>

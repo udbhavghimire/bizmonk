@@ -81,7 +81,7 @@ export default function CityRestaurants() {
   return (
     <>
       {isLoading && <LoadingBar />}
-      <div className={`${isWidePage ? "sm:mx-20" : "max-w-7xl mx-auto"}`}>
+      <div className={`${isWidePage ? "sm:mx-20" : "max-w-5xl mx-auto"}`}>
         {/* <Breadcrumb items={breadcrumbItems} /> */}
 
         <h1 className="text-3xl font-bold text-gray-900">

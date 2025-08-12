@@ -10,12 +10,15 @@ import {
 } from "@heroicons/react/24/outline";
 import { useWidePage } from "@/hooks/useWidePage";
 import SearchBar from "@/components/SearchBar";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSellingOpen, setIsSellingOpen] = useState(false);
   const [isFranchiseOpen, setIsFranchiseOpen] = useState(false);
   const [isWidePage] = useWidePage();
+  const pathname = usePathname();
+  const isHomepage = pathname == "/";
   const navigation = [
     {
       name: "Home",
@@ -75,22 +78,26 @@ export default function Navbar() {
         { name: "Advertise a Franchise", href: "/advertise-franchise" },
       ],
     },
-    { name: "Buying", href: "/buying" },
-    { name: "Valuation", href: "/valuation" },
+    // { name: "Buying", href: "/buying" },
+    // { name: "Valuation", href: "/valuation" },
     { name: "About Us", href: "/about" },
     { name: "Resources", href: "/resources" },
   ];
 
   return (
-    <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
+    <nav className="bg-white border-b border-gray-100 sticky top-0 z-50 ">
       <div
         className={`${
-          isWidePage ? "sm:mx-20" : "max-w-7xl mx-auto"
-        } px-2 sm:px-2 lg:px-2`}
+          isWidePage
+            ? "sm:mx-20 px-2 sm:px-2 lg:px-2"
+            : `${
+                !isHomepage ? "md:max-w-5xl px-4 md:px-6" : "md:max-w-5xl"
+              }  mx-auto`
+        }`}
       >
         <div className="flex justify-between h-16">
           {/* Logo and Search Bar */}
-          <div className="flex items-center ">
+          <div className="flex items-center gap-x-3">
             <div className="flex-shrink-0 flex items-center">
               <Link href="/" className="flex items-center">
                 <span className="text-2xl font-bold bg-gradient-to-r from-teal-500 to-blue-600 text-transparent bg-clip-text">

@@ -33,7 +33,6 @@ const HeroSection = ({ franchiseData, location }) => {
             >
               {location === "ontario" ? "Ontario" : locationText}
             </Link>
-            <span>→</span>
             <span className="text-primary font-medium">
               {franchiseData.name}
             </span>
@@ -41,27 +40,31 @@ const HeroSection = ({ franchiseData, location }) => {
         </div>
 
         {/* Main Content */}
-        <div className="max-w-5xl mx-auto">
+        <div className="md:max-w-5xl mx-auto">
           <div className="bg-white rounded-2xl overflow-hidden shadow-xl">
             {/* Hero Image */}
-            <div className="relative h-[600px]">
-              {franchiseData.image && (
-                <Image
-                  src={franchiseData.image}
-                  alt={franchiseData.name}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 1024px"
-                />
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/30 to-transparent" />
-              <div className="absolute bottom-8 left-8 right-8">
-                <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-xl">
+            <div className="relative flex h-[400px] w-full">
+              {/* <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/30 to-transparent" /> */}
+              <div className="w-[50%] p-10">
+                <h1 className="text-4xl font-bold mb-4 drop-shadow-xl">
                   {franchiseData.name}
+                  <p className="text-lg drop-shadow-xl text-semibold">
+                    Franchise Opportunity in {locationText}
+                  </p>
                 </h1>
-                <p className="text-lg text-white drop-shadow-xl">
-                  Franchise Opportunity in {locationText}
+                <p className="text-gray-600 leading-relaxed mt-8">
+                  {franchiseData.description}
                 </p>
+              </div>
+              <div className="w-[50%] relative rounded-md overflow-hidden m-3 h-full">
+                {franchiseData.image && (
+                  <Image
+                    src={franchiseData.image}
+                    alt={franchiseData.name}
+                    fill
+                    className="object-cover"
+                  />
+                )}
               </div>
             </div>
 
@@ -70,14 +73,11 @@ const HeroSection = ({ franchiseData, location }) => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Main Info */}
                 <div className="col-span-1 md:col-span-2 space-y-6">
-                  <div>
+                  {/* <div>
                     <h2 className="text-2xl font-bold mb-4">
                       About the Franchise
                     </h2>
-                    <p className="text-gray-600 leading-relaxed">
-                      {franchiseData.description}
-                    </p>
-                  </div>
+                  </div> */}
 
                   <div>
                     <h2 className="text-2xl font-bold mb-4">
@@ -135,18 +135,6 @@ const HeroSection = ({ franchiseData, location }) => {
                       </div>
                     </div>
                   </div>
-
-                  <div className="space-y-4">
-                    <Link
-                      href="#contact"
-                      className="block text-center w-full px-6 py-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors font-medium"
-                    >
-                      Request Information
-                    </Link>
-                    <button className="w-full px-6 py-3 border-2 border-primary text-primary rounded-full hover:bg-primary/5 transition-colors font-medium">
-                      Schedule Call
-                    </button>
-                  </div>
                 </div>
 
                 {franchiseData.financing && (
@@ -198,14 +186,14 @@ const HeroSection = ({ franchiseData, location }) => {
                   </section>
                 )}
 
-                <div className="w-full flex justify-center md:col-span-3 my-10">
+                {/* <div className="w-full flex justify-center md:col-span-3 my-10">
                   <Link
                     href="#contact"
                     className="max-w-2xl mx-auto px-6 py-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors font-medium"
                   >
                     Contact Us!
                   </Link>
-                </div>
+                </div> */}
 
                 {franchiseData?.storeModels && (
                   <div className="md:col-span-3">
@@ -236,6 +224,21 @@ const HeroSection = ({ franchiseData, location }) => {
                     </div>
                   </div>
                 )}
+              </div>
+              <div className="flex w-full justify-center">
+                <div></div>
+                <div className="flex flex-col gap-y-3">
+                  <Link
+                    href="#contact"
+                    className="block text-center w-full px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap"
+                  >
+                    Request Information
+                  </Link>
+                  <button className="w-full px-6 py-3 border-2 border-primary text-primary rounded-full hover:bg-primary/5 transition-colors font-medium text-nowrap">
+                    Schedule Call
+                  </button>
+                </div>
+                <div></div>
               </div>
             </div>
           </div>

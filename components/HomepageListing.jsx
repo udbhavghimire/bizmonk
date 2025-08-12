@@ -3,9 +3,13 @@ import React from "react";
 import ResaleCard from "./ResaleCard";
 import Link from "next/link";
 
-const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercial }) => {
+const HomepageListing = ({
+  bramptonRestaurants,
+  bramptonStores,
+  torontoCommercial,
+}) => {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
       {/* Brampton Restaurants Section */}
       <div className="mb-32">
         <div className="text-center mb-12">
@@ -13,7 +17,7 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
             Restaurants for Sale Under $300k in Brampton
           </h2>
           <p className="text-gray-600 text-lg">
-             Affordable restaurant opportunities under $300,000 in Brampton
+            Affordable restaurant opportunities under $300,000 in Brampton
           </p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -21,13 +25,15 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
             <ResaleCard key={listing.ListingKey} curElem={listing} />
           ))}
         </div>
-        <div className="text-center mt-8">
-          <Link 
-            href="/brampton/restaurant-for-sale" 
-            className="text-blue-600 hover:text-primary/80 font-semibold text-lg"
+        <div className="text-center mt-8 w-full flex justify-center">
+          <button
+            asChild
+            className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
           >
-            View All Brampton Restaurants →
-          </Link>
+            <Link href="/brampton/restaurant-for-sale" className="">
+              View All Brampton Restaurants
+            </Link>
+          </button>
         </div>
       </div>
 
@@ -46,18 +52,20 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
             <ResaleCard key={listing.ListingKey} curElem={listing} />
           ))}
         </div>
-        <div className="text-center mt-8">
-          <Link 
-            href="/brampton/convenience-store-for-sale" 
-            className="text-blue-600 hover:text-primary/80 font-semibold text-lg"
+        <div className="text-center mt-8 flex w-full justify-center">
+          <button
+            asChild
+            className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
           >
-            View All Brampton Convenience Stores →
-          </Link>
+            <Link href="/brampton/convenience-store-for-sale" className="">
+              View All Brampton Convenience Stores
+            </Link>
+          </button>
         </div>
       </div>
 
       {/* Toronto Commercial Space Section */}
-      <div>
+      {/* <div>
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
             Commercial Space for Lease in Toronto
@@ -79,7 +87,7 @@ const HomepageListing = ({ bramptonRestaurants, bramptonStores, torontoCommercia
             View All Toronto Commercial Spaces →
           </Link>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

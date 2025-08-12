@@ -74,7 +74,7 @@ export default function CityRestaurants() {
 
   return (
     <div className="">
-      <div className="max-w-7xl mx-auto">
+      <div className="md:max-w-5xl px-6 mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
           Restaurants for Sale in Ontario
         </h1>

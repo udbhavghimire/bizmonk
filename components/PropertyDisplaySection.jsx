@@ -13,13 +13,13 @@ const PropertyDisplaySection = ({
       {/* Background with gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="mb-3">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <div className="flex flex-row sm:flex-row sm:items-center justify-between gap-6">
             <div className="space-y-2">
               <h2 className="text-3xl sm:text-4xl font-bold">
-                <span className="text-primary">{title}</span>
+                <span className="text-black">{title}</span>
               </h2>
               {subtitle && <p className="text-gray-600 text-lg">{subtitle}</p>}
             </div>

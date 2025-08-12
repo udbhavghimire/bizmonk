@@ -36,7 +36,7 @@ export default async function Home() {
 
   return (
     <>
-      <div className="min-h-screen gradient-bg parallax-bg relative">
+      <div className="min-h-[80vh] gradient-bg parallax-bg relative">
         {/* Floating Shapes */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-32 h-32 bg-white bg-opacity-10 rounded-full floating-animation"></div>
@@ -46,18 +46,17 @@ export default async function Home() {
           <div className="absolute bottom-20 right-1/4 w-28 h-28 bg-indigo-300 bg-opacity-20 rounded-lg floating-animation"></div>
         </div>
 
-        <div className="relative z-10 container mx-auto px-6 pt-20 pb-32">
+        <div className="relative z-10 container mx-auto px-6 pt-32 pb-32">
           <div className="max-w-4xl mx-auto text-center mb-16">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-black mb-8 fade-in-up">
-              Never too late to{" "}
-              <span className="text-gradient">start your business</span>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-black mb-8 leading-10">
+              Canada’s leading franchise platform
             </h1>
 
             <p className="text-sm md:text-xl text-black text-opacity-90 mb-12 max-w-4xl mx-auto leading-relaxed fade-in-up-delayed">
               Restaurants, Convenience Store, Franchise and Commercial Space in
               Ontario
             </p>
-            <div className="mt-16 max-w-4xl mx-auto">
+            <div className="mt-16 max-w-3xl mx-auto">
               <SearchBar variant="hero" />
             </div>
           </div>
@@ -76,7 +75,7 @@ export default async function Home() {
         {/* Introduction to BizMonk */}
 
         {/* Franchise Opportunities Section */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 bg-gray-50">
+        <div className="md:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 bg-gray-50">
           <div className="text-center mb-8 sm:mb-8">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2 sm:mb-2 px-4">
               Looking for{" "}
@@ -91,15 +90,19 @@ export default async function Home() {
           {/* Featured Franchises */}
           <FeaturedFranchises />
 
-          <div className="text-center mt-6 sm:mt-8">
-            <Link
-              href="/franchise-opportunity/ontario"
-              className="inline-flex items-center gap-2 text-sm sm:text-base text-blue-600  hover:underline transition-colors font-bold"
+          <div className="text-center mt-6 sm:mt-8 w-full flex justify-center">
+            <button
+              asChild
+              className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
             >
-              View All Franchises in Ontario
-            </Link>
+              <Link
+                href="/franchise-opportunity/ontario"
+                className="inline-flex items-center gap-2 text-sm sm:text-base hover:underline transition-colors font-bold"
+              >
+                View All Franchises in Ontario
+              </Link>
+            </button>
           </div>
-
           {/* FranchisesList component here */}
           <FranchisesList />
 
@@ -129,28 +132,28 @@ export default async function Home() {
                     </div>
                   </div>
                 </Link>
-                <div className="mt-4 flex flex-col space-y-2 px-4">
+                <div className="mt-4 flex flex-col space-y-2 px-1">
                   <Link
                     href="/brampton/restaurant-for-sale"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Brampton Restaurants for Sale
                   </Link>
                   <Link
                     href="/mississauga/restaurant-for-sale"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Mississauga Restaurants for Sale
                   </Link>
                   <Link
                     href="/toronto/restaurant-for-sale"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Toronto Restaurants for Sale
                   </Link>
                   <Link
                     href="/vaughan/restaurant-for-sale"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Vaughan Restaurants for Sale
                   </Link>
@@ -177,28 +180,28 @@ export default async function Home() {
                     </div>
                   </div>
                 </Link>
-                <div className="mt-4 flex flex-col space-y-2 px-4">
+                <div className="mt-4 flex flex-col space-y-2 px-1">
                   <Link
                     href="/franchise-opportunity/brampton"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Brampton Franchises
                   </Link>
                   <Link
                     href="/franchise-opportunity/mississauga"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Mississauga Franchises
                   </Link>
                   <Link
                     href="/franchise-opportunity/toronto"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Toronto Franchises
                   </Link>
                   <Link
                     href="/franchise-opportunity/vaughan"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Vaughan Franchises
                   </Link>
@@ -225,28 +228,28 @@ export default async function Home() {
                     </div>
                   </div>
                 </Link>
-                <div className="mt-4 flex flex-col space-y-2 px-4">
+                <div className="mt-4 flex flex-col space-y-2 px-1">
                   <Link
                     href="/brampton/convenience-store-for-sale"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Brampton Convenience Stores
                   </Link>
                   <Link
                     href="/mississauga/convenience-store-for-sale"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Mississauga Convenience Stores
                   </Link>
                   <Link
                     href="/toronto/convenience-store-for-sale"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Toronto Convenience Stores
                   </Link>
                   <Link
                     href="/vaughan/convenience-store-for-sale"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Vaughan Convenience Stores
                   </Link>
@@ -273,41 +276,43 @@ export default async function Home() {
                     </div>
                   </div>
                 </Link>
-                <div className="mt-4 flex flex-col space-y-2 px-4">
+                <div className="mt-4 flex flex-col space-y-2 px-1">
                   <Link
                     href="/brampton/retail-lease"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Brampton Retail Lease
                   </Link>
                   <Link
                     href="/mississauga/retail-lease"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Mississauga Retail Lease
                   </Link>
                   <Link
                     href="/toronto/retail-lease"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Toronto Retail Lease
                   </Link>
                   <Link
                     href="/vaughan/retail-lease"
-                    className="text-sm text-gray-600 hover:text-primary"
+                    className="text-xs text-gray-600 hover:text-primary"
                   >
                     Vaughan Retail Lease
                   </Link>
                 </div>
               </div>
             </div>
-            <div className="text-center mt-12">
-              <Link
-                href="commercial/ontario"
-                className="text-blue-600 hover:text-primary/80 font-semibold text-lg"
+            <div className="text-center mt-12 w-full flex justify-center">
+              <button
+                asChild
+                className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
               >
-                View All Commercial Properties in Ontario →
-              </Link>
+                <Link href="commercial/ontario" className="">
+                  View All Commercial Properties in Ontario
+                </Link>
+              </button>
             </div>
           </div>
 
@@ -369,7 +374,7 @@ export default async function Home() {
       /> */}
 
         {/* Cities Section */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Business Properties for sale in your city
@@ -419,7 +424,7 @@ export default async function Home() {
 
         <div
           id="categories"
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24"
+          className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24"
         >
           <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
             Browse by Category
@@ -491,6 +496,16 @@ export default async function Home() {
                 </div>
               </div>
             </Link>
+          </div>
+          <div className="text-center mt-8 flex w-full justify-center">
+            <button
+              asChild
+              className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
+            >
+              <Link href="/restaurant-for-sale" className="">
+                View Restaurant Listings
+              </Link>
+            </button>
           </div>
         </div>
 

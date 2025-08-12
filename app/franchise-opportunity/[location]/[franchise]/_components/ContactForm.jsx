@@ -4,7 +4,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
-const ContactForm = ({ contactImage }) => {
+const ContactForm = ({ contactImage, pageName }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -61,7 +61,7 @@ const ContactForm = ({ contactImage }) => {
   return (
     <div
       id="contact"
-      className="relative md:mx-auto md:max-w-5xl md:px-4 mx-4 mb-20"
+      className="relative md:mx-auto md:max-w-5xl md:px-6 mx-4 mb-20"
     >
       {/* Notification */}
       {notification.message && (
@@ -119,11 +119,12 @@ const ContactForm = ({ contactImage }) => {
             <div className="max-w-md mx-auto w-full lg:mx-0">
               {/* Header */}
               <div className="mb-10 text-center lg:text-left">
-                <h2 className="text-3xl md:text-4xl xl:text-5xl font-bold text-gray-900 mb-3 leading-tight">
-                  Get In Touch
+                <h2 className="text-3xl md:text-4xl xl:text-3xl font-bold text-gray-900 mb-3 leading-tight">
+                  {pageName ? pageName : "Get information"}
                 </h2>
                 <p className="text-gray-600 text-lg">
-                  Ready to take your business to the next level?
+                  Contact to get more information{" "}
+                  {pageName ? "on " + pageName : ""}
                 </p>
               </div>
 
@@ -185,7 +186,7 @@ const ContactForm = ({ contactImage }) => {
                       onChange={(e) => setEmail(e.target.value)}
                       value={email}
                     />
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                    {/* <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
                       <svg
                         className="w-5 h-5 text-gray-400"
                         fill="none"
@@ -199,7 +200,7 @@ const ContactForm = ({ contactImage }) => {
                           d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
                         />
                       </svg>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
@@ -223,7 +224,7 @@ const ContactForm = ({ contactImage }) => {
                       onChange={(e) => setPhone(e.target.value)}
                       value={phone}
                     />
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                    {/* <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
                       <svg
                         className="w-5 h-5 text-gray-400"
                         fill="none"
@@ -237,7 +238,7 @@ const ContactForm = ({ contactImage }) => {
                           d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                         />
                       </svg>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
@@ -245,7 +246,7 @@ const ContactForm = ({ contactImage }) => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+                  className="w-full py-4 px-6 bg-gradient-to-r bg-black text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
                 >
                   {isLoading ? (
                     <div className="flex items-center justify-center">
@@ -274,27 +275,24 @@ const ContactForm = ({ contactImage }) => {
                   ) : (
                     <div className="flex items-center justify-center">
                       <span>Send Message</span>
-                      <svg
-                        className="ml-2 w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                        />
-                      </svg>
                     </div>
                   )}
                 </button>
 
                 {/* Privacy Note */}
-                <p className="text-xs text-gray-500 text-center mt-4">
-                  We respect your privacy. Your information will only be used to
-                  contact you.
+                <p className="text-[0.4rem] text-gray-500 text-center mt-4">
+                  By submitting this form, you give express written consent to
+                  Bizmonk and its authorized representatives to contact you via
+                  email, telephone, text message, and other forms of electronic
+                  communication, including through automated systems, AI
+                  assistants, or prerecorded messages. Communications may
+                  include information about real estate services, property
+                  listings, market updates, or promotions related to your
+                  inquiry or expressed interests. You may withdraw your consent
+                  at any time by replying “STOP” to text messages or clicking
+                  “unsubscribe” in emails. Message and data rates may apply. For
+                  more details, please review our Privacy Policy & Terms of
+                  Service.
                 </p>
               </form>
             </div>
