@@ -281,18 +281,13 @@ const ContactForm = ({ contactImage, pageName }) => {
 
                 {/* Privacy Note */}
                 <p className="text-[0.4rem] text-gray-500 text-center mt-4">
-                  By submitting this form, you give express written consent to
-                  Bizmonk and its authorized representatives to contact you via
-                  email, telephone, text message, and other forms of electronic
-                  communication, including through automated systems, AI
-                  assistants, or prerecorded messages. Communications may
-                  include information about real estate services, property
-                  listings, market updates, or promotions related to your
-                  inquiry or expressed interests. You may withdraw your consent
-                  at any time by replying “STOP” to text messages or clicking
-                  “unsubscribe” in emails. Message and data rates may apply. For
-                  more details, please review our Privacy Policy & Terms of
-                  Service.
+                  By submitting this form, I agree to be contacted by Elixir
+                  Real Estate Inc., Brokerage* via email, phone, and text about
+                  real estate services. Message and data rates may apply.
+                  Message frequency may vary. Consent is not a condition of
+                  purchase. Reply STOP to unsubscribe from calls and texts. To
+                  stop receiving emails, click Unsubscribe in any email. See our
+                  Privacy Policy and Terms of Service for more information.
                 </p>
               </form>
             </div>

@@ -74,3 +74,28 @@ export async function generateStaticParams() {
     }))
   );
 }
+
+export async function generateMetadata({ params }, parent) {
+  const { location, franchise } = await params;
+
+  try {
+    const locationData = getLocationContent(location);
+    const franchiseData = locationData.franchises.find(
+      (f) =>
+        f.name.toLowerCase().replace(/\s+/g, "-").replace(/'/g, "") ===
+        franchise
+    );
+
+    const metadata = {
+      title: franchiseData.name + " Franchise Opportunity",
+      description: `Join ${franchiseData.name}'s proven franchise opportunity.`,
+    };
+    return metadata;
+
+    if (!franchiseData) {
+      notFound();
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}

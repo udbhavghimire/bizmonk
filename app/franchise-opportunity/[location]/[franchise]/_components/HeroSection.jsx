@@ -46,17 +46,14 @@ const HeroSection = ({ franchiseData, location }) => {
             <div className="relative flex h-[400px] w-full">
               {/* <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/30 to-transparent" /> */}
               <div className="w-[50%] p-10">
-                <h1 className="text-4xl font-bold mb-4 drop-shadow-xl">
-                  {franchiseData.name}
-                  <p className="text-lg drop-shadow-xl text-semibold">
-                    Franchise Opportunity in {locationText}
-                  </p>
+                <h1 className="text-4xl font-bold mb-4 drop-shadow-xl leading-[3.3rem] open-sans">
+                  {franchiseData.name} Franchise Opportunity in {locationText}
                 </h1>
                 <p className="text-gray-600 leading-relaxed mt-8">
                   {franchiseData.description}
                 </p>
               </div>
-              <div className="w-[50%] relative rounded-md overflow-hidden m-3 h-full">
+              <div className="w-[50%] relative rounded-3xl overflow-hidden m-3 h-full">
                 {franchiseData.image && (
                   <Image
                     src={franchiseData.image}
@@ -72,48 +69,56 @@ const HeroSection = ({ franchiseData, location }) => {
             <div className="p-2 md:p-8">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Main Info */}
-                <div className="col-span-1 md:col-span-2 space-y-6">
-                  {/* <div>
+
+                {/* <div>
                     <h2 className="text-2xl font-bold mb-4">
                       About the Franchise
                     </h2>
                   </div> */}
 
-                  <div>
-                    <h2 className="text-2xl font-bold mb-4">
-                      Why Choose This Franchise
-                    </h2>
-                    <ul className="space-y-3">
-                      {franchiseData.specialities?.map((point, index) => (
-                        <li key={index} className="flex items-center gap-3">
-                          <span className="text-primary">✓</span>
-                          <span className="text-gray-600">{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {franchiseData.brochure && (
-                    <div>
-                      <a
-                        href={franchiseData.brochure}
-                        className="w-full px-6 py-3 mt-4 bg-black text-white rounded-full hover:bg-gray-800 transition-colors font-medium"
-                        download
+                <div className="col-span-full flex flex-col items-center justify-center md:my-20">
+                  <h2 className="text-2xl font-bold mb-4">
+                    Why Choose This Franchise
+                  </h2>
+                  <ul className="grid md:grid-cols-2 my-4">
+                    {franchiseData.specialities?.map((point, index) => (
+                      <li
+                        key={index}
+                        className="w-full flex justify-start items-start gap-x-3 mb-2 text-sm"
                       >
-                        Download Brochure PDF
-                      </a>
-                    </div>
-                  )}
+                        <span className="text-primary">✓</span>
+                        <span className="text-gray-600">{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="#contact"
+                    className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap"
+                  >
+                    Learn More
+                  </Link>
                 </div>
 
+                {franchiseData.brochure && (
+                  <div>
+                    <a
+                      href={franchiseData.brochure}
+                      className="w-full px-6 py-3 mt-4 bg-black text-white rounded-full hover:bg-gray-800 transition-colors font-medium"
+                      download
+                    >
+                      Download Brochure PDF
+                    </a>
+                  </div>
+                )}
+
                 {/* Sidebar */}
-                <div className="col-span-1 sm:space-y-6">
+                <div className="col-span-full sm:space-y-0">
                   <div className="bg-gray-50 p-6 rounded-xl">
-                    <h3 className="text-lg font-semibold mb-4">
+                    <h3 className="text-2xl text-center font-semibold mb-4">
                       Investment Details
                     </h3>
-                    <div className="space-y-4">
-                      <div>
+                    <div className="flex flex-col sm:flex-row sm:space-x-8 space-y-4 sm:space-y-0">
+                      <div className="flex-1">
                         <p className="text-sm text-gray-500">
                           Investment Range
                         </p>
@@ -121,13 +126,13 @@ const HeroSection = ({ franchiseData, location }) => {
                           {franchiseData.investment}
                         </p>
                       </div>
-                      <div>
+                      <div className="flex-1">
                         <p className="text-sm text-gray-500">Type</p>
                         <p className="font-semibold text-gray-900">
                           {franchiseData.type}
                         </p>
                       </div>
-                      <div>
+                      <div className="flex-1">
                         <p className="text-sm text-gray-500">Location</p>
                         <p className="font-semibold text-gray-900">
                           {franchiseData.locations}
@@ -142,7 +147,7 @@ const HeroSection = ({ franchiseData, location }) => {
                     <span className="text-center uppercase text-2xl font-bold text-primary">
                       Financial Requirements
                     </span>
-                    <div className="flex justify-center mt-4 flex-wrap gap-2 sm:gap-4">
+                    <div className="flex justify-center mt-4 flex-wrap gap-2 sm:gap-4 my-6">
                       {Object.keys(franchiseData.financing).map((key, idx) => (
                         <div
                           className="flex flex-col w-2/5 md:w-1/3 border-b border-gray-300 pb-2 items-center"
@@ -225,7 +230,7 @@ const HeroSection = ({ franchiseData, location }) => {
                   </div>
                 )}
               </div>
-              <div className="flex w-full justify-center">
+              <div className="flex w-full justify-center mt-3">
                 <div></div>
                 <div className="flex flex-col gap-y-3">
                   <Link
@@ -234,9 +239,9 @@ const HeroSection = ({ franchiseData, location }) => {
                   >
                     Request Information
                   </Link>
-                  <button className="w-full px-6 py-3 border-2 border-primary text-primary rounded-full hover:bg-primary/5 transition-colors font-medium text-nowrap">
+                  {/* <button className="w-full px-6 py-3 border-2 border-primary text-primary rounded-full hover:bg-primary/5 transition-colors font-medium text-nowrap">
                     Schedule Call
-                  </button>
+                  </button> */}
                 </div>
                 <div></div>
               </div>
