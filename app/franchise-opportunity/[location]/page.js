@@ -24,10 +24,10 @@ export default function FranchiseOpportunityPage({ params }) {
         {/* Hero Section */}
         <div className="relative py-24 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5" />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <h1 className="text-4xl font-bold sm:text-5xl lg:text-6xl mb-6">
-                <span className="text-primary">{locationData.title}</span>
+          <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-5xl mx-auto mb-16">
+              <h1 className="text-4xl font-bold sm:text-5xl lg:text-5xl mb-3">
+                <span className="text-black">{locationData.title}</span>
               </h1>
               <p className="text-xl text-gray-600">
                 {locationData.description}
@@ -49,18 +49,18 @@ export default function FranchiseOpportunityPage({ params }) {
                       className="object-cover group-hover:scale-105 transition-transform duration-500 w-full h-full absolute inset-0"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-black/20 to-transparent" />
-                    <div className="absolute bottom-6 left-6 right-6 text-center">
-                      <h3 className="text-2xl font-bold mb-2 text-white">
-                        {franchise.name}
-                      </h3>
-                      <p className="text-sm text-gray-200 bg-black/30 inline-block px-3 py-1 rounded-full">
-                        {franchise.type}
-                      </p>
-                    </div>
                   </div>
 
                   {/* Content Section */}
                   <div className="p-4 text-center">
+                    <div className=" text-center">
+                      <h3 className="text-2xl font-bold mb-1 text-black">
+                        {franchise.name}
+                      </h3>
+                      <p className="text-sm text-black inline-block px-3 py-1 rounded-full mb-3">
+                        {franchise.type}
+                      </p>
+                    </div>
                     <p className="text-gray-600 mb-6 leading-relaxed text-xs ">
                       {franchise.description}
                     </p>
@@ -72,11 +72,11 @@ export default function FranchiseOpportunityPage({ params }) {
                           .toLowerCase()
                           .replace(/\s+/g, "-")
                           .replace(/'/g, "")}`}
-                        className="px-2 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-xs"
+                        className="px-3 py-2 bg-black text-white rounded-full hover:bg-black/90 transition-colors font-medium text-xs"
                       >
                         Learn More
                       </Link>
-                      <button className="px-2 py-1 border-2 border-primary text-primary rounded-full hover:bg-primary/5 transition-colors font-medium text-xs">
+                      <button className="px-3 py-1 border-2 border-black text-black rounded-full hover:bg-black/5 transition-colors font-medium text-xs">
                         Contact
                       </button>
                     </div>
@@ -91,7 +91,7 @@ export default function FranchiseOpportunityPage({ params }) {
 
         {/* City Navigation Section */}
         <div className="py-24 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-12">
               <h2 className="text-3xl font-bold mb-4">
                 Explore Business Opportunities
@@ -107,7 +107,7 @@ export default function FranchiseOpportunityPage({ params }) {
               <h3 className="text-xl font-semibold mb-6 text-center">
                 Popular Locations
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-7xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
                 {cities.map((city) => (
                   <Link
                     key={city}
@@ -170,7 +170,7 @@ export default function FranchiseOpportunityPage({ params }) {
 
         {/* CTA Section */}
         <div className="py-24  bg-gradient-to-r from-teal-500 to-blue-600">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-gray-200 rounded-2xl p-12 text-center text-white max-w-5xl mx-auto">
               <h2 className="text-3xl text-black font-bold mb-4">
                 Ready to Start Your Franchise Journey?

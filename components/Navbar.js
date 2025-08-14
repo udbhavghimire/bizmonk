@@ -55,10 +55,10 @@ export default function Navbar() {
           name: "Naturals2Go",
           href: "/franchise-opportunity/ontario/naturals2go",
         },
-        {
-          name: "A&W Restaurant",
-          href: "/franchise-opportunity/ontario/a&w-restaurant",
-        },
+        // {
+        //   name: "A&W Restaurant",
+        //   href: "/franchise-opportunity/ontario/a&w-restaurant",
+        // },
         {
           name: "Charleys Philly Steak",
           href: "/franchise-opportunity/ontario/charleys-philly-steak",

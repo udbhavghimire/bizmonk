@@ -217,31 +217,31 @@ const baseFranchises = [
     contactImage: null,
   },
 
-  {
-    name: "A&W Restaurant",
-    type: "Fast Food Restaurant",
-    investment: "$500K - $1M",
-    locations: "Available in select Canadian markets",
-    image: "/A&W.jpg",
-    description:
-      "A&W is one of Canada’s most iconic fast food brands known for its root beer, Teen Burgers, and commitment to natural ingredients. It offers a strong, community-based brand with innovative restaurant formats.",
-    financing: {
-      "Restaurant Model": "Urban & Drive-Thru: 1,200 - 2,400 sq. ft.",
-      "startUp Costs": "$500,000+",
-      "liquid Capital": "$250,000",
-      "franchisee Fee": "$40,000",
-      royalties: "5%",
-      marketing: "3%",
-    },
-    specialities: [
-      "Strong Canadian brand loyalty",
-      "Commitment to hormone-free meats and natural sourcing",
-      "Modern design with multiple layout options",
-      "National advertising support",
-      "Strong profitability and unit growth",
-    ],
-    contactImage: null,
-  },
+  // {
+  //   name: "A&W Restaurant",
+  //   type: "Fast Food Restaurant",
+  //   investment: "$500K - $1M",
+  //   locations: "Available in select Canadian markets",
+  //   image: "/A&W.jpg",
+  //   description:
+  //     "A&W is one of Canada’s most iconic fast food brands known for its root beer, Teen Burgers, and commitment to natural ingredients. It offers a strong, community-based brand with innovative restaurant formats.",
+  //   financing: {
+  //     "Restaurant Model": "Urban & Drive-Thru: 1,200 - 2,400 sq. ft.",
+  //     "startUp Costs": "$500,000+",
+  //     "liquid Capital": "$250,000",
+  //     "franchisee Fee": "$40,000",
+  //     royalties: "5%",
+  //     marketing: "3%",
+  //   },
+  //   specialities: [
+  //     "Strong Canadian brand loyalty",
+  //     "Commitment to hormone-free meats and natural sourcing",
+  //     "Modern design with multiple layout options",
+  //     "National advertising support",
+  //     "Strong profitability and unit growth",
+  //   ],
+  //   contactImage: null,
+  // },
   {
     name: "Charleys Philly Steak",
     type: "Quick Service Restaurant",

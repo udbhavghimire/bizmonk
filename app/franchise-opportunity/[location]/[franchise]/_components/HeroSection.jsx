@@ -80,7 +80,7 @@ const HeroSection = ({ franchiseData, location }) => {
                   <h2 className="text-2xl font-bold mb-4">
                     Why Choose This Franchise
                   </h2>
-                  <ul className="grid md:grid-cols-2 my-4">
+                  <ul className="grid md:grid-cols-2 my-4 gap-x-5">
                     {franchiseData.specialities?.map((point, index) => (
                       <li
                         key={index}
