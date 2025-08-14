@@ -37,51 +37,54 @@ export default function FranchiseOpportunityPage({ params }) {
             {/* Franchise Cards */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-6xl mx-auto">
               {locationData.franchises.map((franchise) => (
-                <div
-                  key={franchise.name}
-                  className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
+                <Link
+                  href={`/franchise-opportunity/${location}/${franchise.name
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")
+                    .replace(/'/g, "")}`}
+                  className="px-3 py-2  text-white rounded-full font-medium text-xs"
                 >
-                  {/* Image Section */}
-                  <div className="relative h-64">
-                    <img
-                      src={franchise.image}
-                      alt={franchise.name}
-                      className="object-cover group-hover:scale-105 transition-transform duration-500 w-full h-full absolute inset-0"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-black/20 to-transparent" />
-                  </div>
+                  <div
+                    key={franchise.name}
+                    className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
+                  >
+                    {/* Image Section */}
+                    <div className="relative h-64">
+                      <img
+                        src={franchise.image}
+                        alt={franchise.name}
+                        className="object-cover group-hover:scale-105 transition-transform duration-500 w-full h-full absolute inset-0"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-black/20 to-transparent" />
+                    </div>
 
-                  {/* Content Section */}
-                  <div className="p-4 text-center">
-                    <div className=" text-center">
-                      <h3 className="text-2xl font-bold mb-1 text-black">
-                        {franchise.name}
-                      </h3>
-                      <p className="text-sm text-black inline-block px-3 py-1 rounded-full mb-3">
-                        {franchise.type}
+                    {/* Content Section */}
+                    <div className="p-4 text-center">
+                      <div className=" text-center">
+                        <h3 className="text-2xl font-bold mb-1 text-black">
+                          {franchise.name}
+                        </h3>
+                        <p className="text-sm text-black inline-block px-3 py-1 rounded-full mb-3">
+                          {franchise.type}
+                        </p>
+                      </div>
+                      <p className="text-gray-600 mb-6 leading-relaxed text-xs ">
+                        {franchise.description}
                       </p>
-                    </div>
-                    <p className="text-gray-600 mb-6 leading-relaxed text-xs ">
-                      {franchise.description}
-                    </p>
 
-                    {/* Action Buttons */}
-                    <div className="flex gap-3 justify-center">
-                      <Link
-                        href={`/franchise-opportunity/${location}/${franchise.name
-                          .toLowerCase()
-                          .replace(/\s+/g, "-")
-                          .replace(/'/g, "")}`}
-                        className="px-3 py-2 bg-black text-white rounded-full hover:bg-black/90 transition-colors font-medium text-xs"
-                      >
-                        Learn More
-                      </Link>
-                      <button className="px-3 py-1 border-2 border-black text-black rounded-full hover:bg-black/5 transition-colors font-medium text-xs">
-                        Contact
-                      </button>
+                      {/* Action Buttons */}
+                      <div className="flex gap-3 justify-center">
+                        '
+                        <button className="px-3 py-2 bg-black text-white rounded-full hover:bg-black/90 transition-colors font-medium text-xs">
+                          Learn More
+                        </button>
+                        <button className="px-3 py-1 border-2 border-black text-black rounded-full hover:bg-black/5 transition-colors font-medium text-xs">
+                          Contact
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
