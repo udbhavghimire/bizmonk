@@ -43,23 +43,33 @@ const HeroSection = ({ franchiseData, location }) => {
         <div className="md:max-w-5xl mx-auto">
           <div className="bg-white rounded-2xl overflow-hidden shadow-xl">
             {/* Hero Image */}
-            <div className="relative flex h-[400px] w-full">
+            <div className="relative md:flex md:h-[400px] w-full flex-col">
               {/* <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/30 to-transparent" /> */}
-              <div className="w-[50%] p-10">
+              <div className="w-full md:w-[50%] p-4 md:p-10">
                 <h1 className="text-4xl font-bold mb-4 drop-shadow-xl leading-[3.3rem] open-sans">
                   {franchiseData.name} Franchise Opportunity in {locationText}
                 </h1>
+                <div className="h-[300px] relative block md:hidden ">
+                  {franchiseData.image && (
+                    <Image
+                      src={franchiseData.image}
+                      alt={franchiseData.name}
+                      fill
+                      className="object-cover rounded-3xl"
+                    />
+                  )}
+                </div>
                 <p className="text-gray-600 leading-relaxed mt-8">
                   {franchiseData.description}
                 </p>
               </div>
-              <div className="w-[50%] relative rounded-3xl overflow-hidden m-3 h-full">
+              <div className="w-full md:w-[50%] relative rounded-3xl overflow-hidden m-3 h-full">
                 {franchiseData.image && (
                   <Image
                     src={franchiseData.image}
                     alt={franchiseData.name}
                     fill
-                    className="object-cover"
+                    className="object-cover hidden md:block"
                   />
                 )}
               </div>
@@ -78,9 +88,9 @@ const HeroSection = ({ franchiseData, location }) => {
 
                 <div className="col-span-full flex flex-col items-center justify-center md:my-20">
                   <h2 className="text-2xl font-bold mb-4">
-                    Why Choose This Franchise
+                    Why Choose {franchiseData?.name}
                   </h2>
-                  <ul className="grid md:grid-cols-2 my-4 gap-x-5">
+                  <ul className="grid md:grid-cols-2 my-4 md:gap-x-5">
                     {franchiseData.specialities?.map((point, index) => (
                       <li
                         key={index}

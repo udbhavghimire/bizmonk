@@ -91,7 +91,7 @@ export async function generateMetadata({ params }, parent) {
 
     const metadata = {
       title: franchiseData.name + " Franchise Opportunity in " + locationText,
-      description: `Join ${franchiseData.name}'s proven franchise opportunity.`,
+      description: `Join ${franchiseData.name}'s proven franchise opportunity in ${locationText}.`,
     };
     return metadata;
 
