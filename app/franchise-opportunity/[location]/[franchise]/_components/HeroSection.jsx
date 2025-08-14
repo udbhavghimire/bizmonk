@@ -43,7 +43,7 @@ const HeroSection = ({ franchiseData, location }) => {
         <div className="md:max-w-5xl mx-auto">
           <div className="bg-white rounded-2xl overflow-hidden shadow-xl">
             {/* Hero Image */}
-            <div className="relative md:flex md:h-[400px] w-full flex-col">
+            <div className="relative flex md:h-[400px] w-full flex-col md:flex-row">
               {/* <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/30 to-transparent" /> */}
               <div className="w-full md:w-[50%] p-4 md:p-10">
                 <h1 className="text-4xl font-bold mb-4 drop-shadow-xl leading-[3.3rem] open-sans">
@@ -63,13 +63,13 @@ const HeroSection = ({ franchiseData, location }) => {
                   {franchiseData.description}
                 </p>
               </div>
-              <div className="w-full md:w-[50%] relative rounded-3xl overflow-hidden m-3 h-full">
+              <div className="w-[50%]  hidden md:block relative rounded-3xl overflow-hidden m-3 h-full">
                 {franchiseData.image && (
                   <Image
                     src={franchiseData.image}
                     alt={franchiseData.name}
                     fill
-                    className="object-cover hidden md:block"
+                    className="object-cover"
                   />
                 )}
               </div>
