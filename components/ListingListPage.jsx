@@ -13,17 +13,14 @@ import { getConvenienceStoreListings } from "@/api/getBusinessListings";
 import Breadcrumb from "@/components/Breadcrumb";
 import ResaleCard from "@/components/ResaleCard";
 import citiesData from "@/data/gta-cities.json";
-const ListingListPage = ({ getListings, city, title, subtitle }) => {
+const ListingListPage = ({ getListings, city = null, title, subtitle }) => {
   const [filteredListings, setFilteredListings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isWidePage] = useWidePage();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
 
-  if (!city) {
-    notFound();
-  }
-  const cityUrl = city.toLowerCase();
+  const cityUrl = city?.toLowerCase() || "";
   //
   // const breadcrumbItems = [
   //   {
