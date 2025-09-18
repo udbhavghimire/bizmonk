@@ -1,57 +1,70 @@
 "use client";
+import React from "react";
+import Filter from "@/components/Filter";
+import LoadingBar from "@/components/LoadingBar";
+import { notFound, useParams } from "next/navigation";
+import { useWidePage } from "@/hooks/useWidePage";
+import Image from "next/image";
+import Link from "next/link";
+import { cities } from "@/constant/cities";
+import Pagination from "@/components/Pagination";
 import { useState, useEffect } from "react";
 import { getConvenienceStoreListings } from "@/api/getBusinessListings";
 import Breadcrumb from "@/components/Breadcrumb";
 import ResaleCard from "@/components/ResaleCard";
-import Filter from "@/components/Filter";
-import Pagination from "@/components/Pagination";
-import { businessDescriptions } from "@/data/business-descriptions";
-import Image from "next/image";
-import Link from "next/link";
-import { cities } from "@/constant/cities";
-
-export default function ConvenienceStores() {
-  const [listings, setListings] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+import citiesData from "@/data/gta-cities.json";
+const ListingListPage = ({ getListings, city, title, subtitle }) => {
   const [filteredListings, setFilteredListings] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isWidePage] = useWidePage();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
 
-  useEffect(() => {
-    fetchListings();
-  }, []);
+  if (!city) {
+    notFound();
+  }
+  const cityUrl = city.toLowerCase();
+  //
+  // const breadcrumbItems = [
+  //   {
+  //     label: cityExists,
+  //     href: `/${cityUrl}`,
+  //   },
+  //   {
+  //     label: "Convenience Stores for Sale",
+  //   },
+  // ];
 
-  const fetchListings = async () => {
-    setIsLoading(true);
-    try {
-      const data = await getConvenienceStoreListings();
-      setListings(data);
-      setFilteredListings(data);
-    } catch (error) {
-      console.error("Error fetching listings:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // Fetch initial data when component mounts
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      setIsLoading(true);
+      try {
+        const listings = await getListings({
+          city: city,
+        });
+        setFilteredListings(listings);
+      } catch (error) {
+        console.error("Error fetching initial listings:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchInitialData();
+  }, [city]);
 
   const handleFilterChange = async (filters) => {
     setIsLoading(true);
     setCurrentPage(1); // Reset to first page when filter changes
     try {
-      let filtered = [...listings];
-
-      if (filters.priceRange) {
-        filtered = filtered.filter((listing) => {
-          const price = Number(listing.ListPrice);
-          return (
-            price >= filters.priceRange.min && price <= filters.priceRange.max
-          );
-        });
-      }
-
-      setFilteredListings(filtered);
+      const listings = await getListings({
+        city: city,
+        priceRange: filters.priceRange,
+      });
+      setFilteredListings(listings);
     } catch (error) {
-      console.error("Error applying filters:", error);
+      console.error("Error fetching filtered listings:", error);
     } finally {
       setIsLoading(false);
     }
@@ -72,13 +85,14 @@ export default function ConvenienceStores() {
   };
 
   return (
-    <div className="">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          Convenience Stores for Sale in Ontario
-        </h1>
+    <>
+      {isLoading && <LoadingBar />}
+      <div className={`${isWidePage ? "sm:mx-20" : "max-w-5xl mx-auto"}`}>
+        {/* <Breadcrumb items={breadcrumbItems} /> */}
 
-        <Filter onFilterChange={handleFilterChange} isLoading={isLoading} />
+        <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
+        <p className="text-sm mb-4">{subtitle}</p>
+        <Filter onFilterChange={handleFilterChange} cityUrl={cityUrl} />
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {currentItems.map((listing) => (
@@ -133,29 +147,9 @@ export default function ConvenienceStores() {
             ))}
           </div>
         </div>
-
-        {/* Content Section */}
-        <div className="mt-16 bg-gray-50 p-8 rounded-lg">
-          <h2 className="text-2xl font-semibold mb-6">
-            {businessDescriptions.convenience.title}
-          </h2>
-          {businessDescriptions.convenience.paragraphs.map(
-            (paragraph, index) => (
-              <p
-                key={index}
-                className="mb-4 text-gray-700 whitespace-pre-line"
-                dangerouslySetInnerHTML={{ __html: paragraph }}
-              />
-            )
-          )}
-        </div>
       </div>
-    </div>
+    </>
   );
-}
-
-export const metadata = {
-  title: "Convenience Stores in Ontario",
-  description:
-    "Looking for convenience stores in Greater Toronto Area? Bizmonk is the best place to find your business space.",
 };
+
+export default ListingListPage;

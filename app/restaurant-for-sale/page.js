@@ -158,3 +158,9 @@ export default function CityRestaurants() {
     </div>
   );
 }
+
+export const metadata = {
+  title: "Restaurants in Ontario",
+  description:
+    "Looking for restaurants in Greater Toronto Area? Bizmonk is the best place to find your business space.",
+};

@@ -34,8 +34,6 @@ const fetchData = async (listingID) => {
     // Use the correct OData syntax with quotes around the ListingKey
     const urlToFetchMLSDetail = `${commercial.properties}?$filter=ListingKey eq '${listingKey}'`;
 
-    console.log("Fetching from URL:", urlToFetchMLSDetail); // Debug log
-
     const response = await fetch(urlToFetchMLSDetail, options);
 
     if (!response.ok) {

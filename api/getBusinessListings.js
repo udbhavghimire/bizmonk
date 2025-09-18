@@ -23,7 +23,7 @@ export const getSaleOfBusinessListings = async (
     const response = await fetch(
       `https://query.ampre.ca/odata/Property?$filter=PropertySubType eq 'Sale Of Business'${
         city ? ` and contains(City,'${capitalizeFirstLetter(city)}')` : ""
-      }&$top=60&$skip=${skip}&$orderby=OriginalEntryTimestamp desc`,
+      }&$top=500&$skip=${skip}&$orderby=OriginalEntryTimestamp desc`,
       options
     );
 
