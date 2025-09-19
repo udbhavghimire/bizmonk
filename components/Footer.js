@@ -3,6 +3,7 @@ import cities from "@/data/gta-cities.json";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaTiktok } from "react-icons/fa6";
 import Image from "next/image";
+import { Building2, MapPin, Phone, User } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -154,7 +155,82 @@ export default function Footer() {
             </div>
           </div>
         </div>
+        <div className="w-full bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-2xl border border-gray-200 p-8 relative overflow-hidden">
+          {/* Background decorative elements */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(156,163,175,0.08),transparent)] pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(107,114,128,0.08),transparent)] pointer-events-none"></div>
 
+          <div className="relative z-10">
+            {/* Header */}
+            <div className="mb-8">
+              <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2">
+                Ravi Singh Godara
+              </h2>
+              <p className="text-gray-500 font-medium text-xl">
+                Real Estate Sales Person
+              </p>
+              <div className="w-24 h-1 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full mt-3"></div>
+            </div>
+
+            {/* Content Grid */}
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Company Info */}
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-gray-200/50 hover:border-gray-300/50 transition-all duration-300 shadow-lg">
+                <div className="flex items-start space-x-4">
+                  <div className="bg-gradient-to-br from-gray-500 to-gray-600 p-3 rounded-lg shadow-lg">
+                    <Building2 className="h-6 w-6 text-white" />
+                  </div>
+                  <div className="text-gray-500">
+                    <p className="font-semibold text-gray-700 mb-1">Company</p>
+                    <p className="font-medium">
+                      ELIXIR Real Estate INC. Brokerage
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Address */}
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-gray-200/50 hover:border-gray-300/50 transition-all duration-300 shadow-lg">
+                <div className="flex items-start space-x-4">
+                  <div className="bg-gradient-to-br from-gray-500 to-gray-600 p-3 rounded-lg shadow-lg">
+                    <MapPin className="h-6 w-6 text-white" />
+                  </div>
+                  <div className="text-gray-500">
+                    <p className="font-semibold text-gray-700 mb-1">Address</p>
+                    <p>1065 Canadian Place #207</p>
+                    <p>Mississauga, Ontario L4W 0C2</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Phone Numbers */}
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-gray-200/50 hover:border-gray-300/50 transition-all duration-300 shadow-lg">
+                <div className="flex items-start space-x-4">
+                  <div className="bg-gradient-to-br from-gray-500 to-gray-600 p-3 rounded-lg shadow-lg">
+                    <Phone className="h-6 w-6 text-white" />
+                  </div>
+                  <div className="text-gray-500">
+                    <p className="font-semibold text-gray-700 mb-2">Contact</p>
+                    <div className="space-y-2">
+                      <a
+                        href="tel:416-816-6001"
+                        className="block hover:text-gray-700 transition-colors duration-200 font-medium"
+                      >
+                        416-816-6001
+                      </a>
+                      <a
+                        href="tel:416-352-7547"
+                        className="block hover:text-gray-700 transition-colors duration-200 font-medium"
+                      >
+                        416-352-7547
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* Logo and copyright */}
         <div className="mt-16 pt-8 pb-5">
           <div className="grid grid-cols-1 md:grid-cols-2 items-center space-y-4 gap-4">
