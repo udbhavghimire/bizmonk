@@ -16,6 +16,6 @@ export default function ConvenienceStores() {
 export async function generateMetadata({ params }) {
   return {
     title: `Convenience Stores for Sale in Ontario`,
-    description: `Looking for convenience stores for sale in Ontario? Bizmonk is the best place to find your business space.`,
+    description: `100+ convenience stores for sale in Ontario, priced from $1 to $5,000,000. Book a showing for Ontario convenience store listings and contact Bizmonk to check out top opportunities in Ontario's growing convenience store market.`,
   };
 }

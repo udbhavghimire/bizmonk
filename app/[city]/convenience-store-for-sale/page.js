@@ -31,6 +31,6 @@ export async function generateMetadata({ params }) {
 
   return {
     title: `Convenience Stores for Sale in ${capitalizedCity}`,
-    description: `Looking for convenience stores for sale in ${capitalizedCity}? Bizmonk is the best place to find your business space.`,
+    description: `100+ convenience stores for sale in ${capitalizedCity}, Ontario, priced from $1 to $5,000,000. Book a showing for ${capitalizedCity} convenience store listings and contact Bizmonk to check out top opportunities in ${capitalizedCity}’s growing convenience store market.`,
   };
 }
