@@ -7,8 +7,11 @@ import { Heart } from "lucide-react";
 import { slugGenerator } from "@/helpers/slugGenerator";
 
 const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
-  const [loadingImage, setLoadingImage] = useState(true);
-  const [imgUrl, setImgUrl] = useState(null);
+  const [loadingImage, setLoadingImage] = useState(false);
+  const [imgSrc, setImgSrc] = useState(
+    `https://pillar9.homebaba.ca/images/${curElem.ListingKey}-0.jpg?cardImage=true`
+  );
+  const [hasImageError, setHasImageError] = useState(false);
 
   const price = Number(curElem.ListPrice).toLocaleString("en-US", {
     style: "currency",
@@ -21,33 +24,34 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
     lease: { name: "For Lease", value: "Lease" },
   };
 
-  const handleImageError = (e) => {
-    e.target.onerror = null;
-    e.target.src = `/icons/no-photo.png`;
+  const handleImageError = () => {
+    setHasImageError(true);
   };
 
-  useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        setLoadingImage(true);
-        const urls = await getImageUrls({ 
-          ResourceRecordKey: curElem.ListingKey, 
-          size: 'medium'
-        });
-        if (urls?.length > 0) {
-          setImgUrl(urls[0]);
-        }
-      } catch (error) {
-        console.error('Error fetching image:', error);
-      } finally {
-        setLoadingImage(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchImage = async () => {
+  //     try {
+  //       setLoadingImage(true);
+  //       const urls = await getImageUrls({
+  //         ResourceRecordKey: curElem.ListingKey,
+  //         size: "medium",
+  //       });
+  //       if (urls?.length > 0) {
+  //         setImgUrl(
+  //           `https://pillar9.homebaba.ca/images/${curElem.ListingKey}-0.jpg?cardImage=true`
+  //         );
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching image:", error);
+  //     } finally {
+  //       setLoadingImage(false);
+  //     }
+  //   };
 
-    if (curElem.ListingKey) {
-      fetchImage();
-    }
-  }, [curElem.ListingKey]);
+  //   if (curElem.ListingKey) {
+  //     fetchImage();
+  //   }
+  // }, [curElem.ListingKey]);
 
   const aboutProperty = () => {
     let description;
@@ -64,7 +68,10 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
     return description;
   };
 
-  const listingUrl = `/${curElem.City.toLowerCase().replace(/\s+/g, "-")}/${slugGenerator({
+  const listingUrl = `/${curElem.City.toLowerCase().replace(
+    /\s+/g,
+    "-"
+  )}/${slugGenerator({
     Street: curElem.StreetNumber || "",
     StreetName: curElem.StreetName || "",
     StreetAbbreviation: curElem.StreetSuffix || "",
@@ -82,15 +89,23 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
               <div className="w-full h-full flex items-center justify-center">
                 <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
               </div>
-            ) : imgUrl ? (
+            ) : hasImageError ? (
+              <div className="w-full h-full flex flex-col justify-center items-center">
+                <img
+                  src="/icons/no-photo.png"
+                  className="w-6 h-6 opacity-40"
+                  alt="No photo"
+                />
+              </div>
+            ) : (
               <div className="relative w-full h-full">
                 <img
-                  src={imgUrl}
+                  src={imgSrc}
                   alt={`${curElem.StreetNumber} ${curElem.StreetName}`}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   onError={handleImageError}
                 />
-              
+
                 {/* Heart Icon */}
                 <button className="absolute top-3 right-3 bg-white rounded-full p-1.5 hover:bg-gray-100 z-10">
                   <Heart className="w-5 h-5" />
@@ -101,15 +116,13 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
                     {curElem.BusinessType}
                   </span>
                   <span className="bg-white rounded px-2.5 py-1 text-xs font-medium">
-                    <TimeAgo modificationTimestamp={curElem.OriginalEntryTimestamp} />
+                    <TimeAgo
+                      modificationTimestamp={curElem.OriginalEntryTimestamp}
+                    />
                   </span>
                 </div>
                 {/* Dark Overlay on Hover */}
                 <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-            ) : (
-              <div className="w-full h-full flex flex-col justify-center items-center">
-                <img src="/icons/no-photo.png" className="w-6 h-6 opacity-40" alt="No photo" />
               </div>
             )}
           </div>
@@ -117,26 +130,27 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
           {/* Content */}
           <div className="pt-3 flex flex-col px-1">
             {/* Price */}
-            <div className="text-[24px] font-bold text-gray-900">
-              {price}
-            </div>
+            <div className="text-[24px] font-bold text-gray-900">{price}</div>
 
             {/* Property Details */}
             <div className="flex items-center gap-2 mt-1 text-sm">
               {curElem.BedroomsTotal && (
-                <span className="text-gray-700">{curElem.BedroomsTotal} Bed</span>
+                <span className="text-gray-700">
+                  {curElem.BedroomsTotal} Bed
+                </span>
               )}
               {curElem.BathroomsTotalInteger && (
                 <>
-                 
-                  <span className="text-gray-700">{curElem.BathroomsTotalInteger} Bath</span>
+                  <span className="text-gray-700">
+                    {curElem.BathroomsTotalInteger} Bath
+                  </span>
                 </>
               )}
               {curElem.BuildingAreaTotal && (
                 <>
-               
                   <span className="text-gray-700">
-                    {Math.floor(curElem.BuildingAreaTotal).toLocaleString()} Sq.Ft.
+                    {Math.floor(curElem.BuildingAreaTotal).toLocaleString()}{" "}
+                    Sq.Ft.
                   </span>
                 </>
               )}
@@ -146,8 +160,11 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
             <div className="mt-1">
               <div className="text-[15px] text-gray-700 line-clamp-1">
                 {curElem.StreetName
-                  ? `${curElem.StreetNumber} ${curElem.StreetName} ${curElem.StreetSuffix || ""}`
-                  : ""}, {curElem.City}, ON
+                  ? `${curElem.StreetNumber} ${curElem.StreetName} ${
+                      curElem.StreetSuffix || ""
+                    }`
+                  : ""}
+                , {curElem.City}, ON
               </div>
             </div>
 
