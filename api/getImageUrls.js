@@ -3,50 +3,42 @@ import { commercial } from "./routes/fetchRoutes";
 
 export const getImageUrls = async ({
   ResourceRecordKey,
-  size = "medium", // Can be 'thumbnail', 'medium', or 'large'
+  thumbnailOnly = false,
+  soldData = false,
 }) => {
-  if (!ResourceRecordKey) return [];
-
   const options = {
     method: "GET",
     headers: {
-      Authorization: process.env.BEARER_TOKEN_FOR_API,
-      "Content-Type": "application/json",
+      Authorization: !soldData
+        ? process.env.BEARER_TOKEN_FOR_API
+        : process.env.BEARER_TOKEN_FOR_VOW,
     },
+    // cache: "no-store",
   };
+  // 1. Fetch the photo count for the listing
+  const apiBase = "https://pillar9.homebaba.ca";
+  const countRes = await fetch(
+    `https://query.ampre.ca/odata/Media?$select = MediaKey&$filter=ResourceRecordKey eq '${ResourceRecordKey}' and ImageSizeDescription eq 'Large' and MediaStatus eq 'Active'`,
+    options
+  );
+  const response = await countRes.json();
+  const countData = response?.value?.length;
 
-  try {
-    // Using the photos endpoint from our routes configuration
-    let imageLink = `${
-      commercial.photos
-    }?$filter=ResourceRecordKey eq '${ResourceRecordKey}' and ResourceName eq 'Property' and MediaCategory eq 'Photo' and MediaStatus eq 'Active' and ImageSizeDescription eq '${
-      size.charAt(0).toUpperCase() + size.slice(1)
-    }'`;
-
-    // Add ordering to ensure consistent image order
-    imageLink += "&$orderby=Order";
-
-    const response = await fetch(imageLink, options);
-
-    if (!response.ok) {
-      console.error("Failed to fetch images:", response.status);
-      return [];
-    }
-
-    const jsonResponse = await response.json();
-
-    if (!jsonResponse.value || jsonResponse.value.length === 0) {
-      return [];
-    }
-
-    // Extract MediaURL from each media record and filter out any nulls
-    const urls = jsonResponse.value
-      .map((data) => data.MediaURL)
-      .filter((url) => url != null);
-
-    return urls;
-  } catch (error) {
-    console.error("Error fetching images:", error);
+  // 2. If there are no photos, return an empty array
+  if (!countData || countData === 0) {
     return [];
   }
+
+  // 3. Build the array of image URLs
+  // If thumbnailOnly, just return the first image
+  if (thumbnailOnly) {
+    return [`${apiBase}/images/${ResourceRecordKey}-0.jpg`];
+  }
+
+  // Otherwise, return all images
+  const urls = [];
+  for (let i = 0; i <= countData; i++) {
+    urls.push(`${apiBase}/images/${ResourceRecordKey}-${i}.jpg`);
+  }
+  return urls;
 };

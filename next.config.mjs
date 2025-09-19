@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["trreb-image.ampre.ca", "query.ampre.ca", "images.unsplash.com"],
+    domains: [
+      "trreb-image.ampre.ca",
+      "query.ampre.ca",
+      "images.unsplash.com",
+      "pillar9.homebaba.ca",
+    ],
     remotePatterns: [
       {
         protocol: "https",
