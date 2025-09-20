@@ -7,7 +7,9 @@ export default function ConvenienceStores() {
       <ListingListPage
         getListings={getConvenienceStoreListings}
         title={"Convenience Stores for Sale in Ontario"}
-        subtitle={""}
+        subtitle={
+          "500+ Ontario convenience stores for sale. Book a showing for convenience stores. Prices from $1 to $5,000,000. Open houses available"
+        }
       />
     </>
   );

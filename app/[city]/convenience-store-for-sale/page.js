@@ -18,7 +18,7 @@ export default function CityConvenienceStores({ params }) {
       <ListingListPage
         getListings={getConvenienceStoreListings}
         city={params?.city}
-        subtitle={`500+ ${cityExists} businesses for sale. Book a showing for convenience stores. Prices from $1 to $5,000,000. Open houses available.`}
+        subtitle={`500+ ${cityExists} convenience stores for sale. Book a showing for convenience stores. Prices from $1 to $5,000,000. Open houses available.`}
         title={`Convenience Stores for Sale in ${cityExists}`}
       />
     </>

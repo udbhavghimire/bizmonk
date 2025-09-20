@@ -6,7 +6,7 @@ export default function CityRestaurants() {
     <ListingListPage
       getListings={getRestaurantListings}
       title={"Restaurants for Sale in Ontario"}
-      subtitle={""}
+      subtitle={`500+ Ontario restaurants for sale. Book a showing for restaurants. Prices from $1 to $5,000,000. Open houses available`}
     />
   );
 }

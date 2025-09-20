@@ -20,7 +20,7 @@ export default function CityRestaurants({ params }) {
       <ListingListPage
         getListings={getRestaurantListings}
         city={params?.city}
-        subtitle={` 500+ ${cityExists} businesses for sale. Book a showing for restaurants.
+        subtitle={` 500+ ${cityExists} restaurants for sale. Book a showing for restaurants.
           Prices from $1 to $5,000,000. Open houses available.`}
         title={` Restaurants for Sale in ${cityExists}`}
       />
