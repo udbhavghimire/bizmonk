@@ -12,7 +12,7 @@ const HeroSection = ({ franchiseData, location }) => {
   return (
     <div className="relative pb-24 pt-10 overflow-hidden">
       <div className="absolute inset-0" />
-      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto  sm:px-6 lg:px-8">
         {/* Enhanced Breadcrumb */}
         <div className="mb-8">
           <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -40,13 +40,13 @@ const HeroSection = ({ franchiseData, location }) => {
         </div>
 
         {/* Main Content */}
-        <div className="md:max-w-5xl mx-auto">
+        <div className="md:max-w-7xl mx-auto">
           <div className="bg-white rounded-2xl overflow-hidden shadow-xl">
             {/* Hero Image */}
             <div className="relative flex md:h-[400px] w-full flex-col md:flex-row">
               {/* <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/30 to-transparent" /> */}
-              <div className="w-full md:w-[50%] p-4 md:p-10">
-                <h1 className="text-4xl font-bold mb-4 drop-shadow-xl leading-[3.3rem] open-sans">
+              <div className="w-full md:w-[50%] py-4 md:p-10">
+                <h1 className="text-3xl font-bold mb-4 drop-shadow-xl leading-[2.5rem] open-sans">
                   {franchiseData.name} Franchise Opportunity in {locationText}
                 </h1>
                 <div className="h-[300px] relative block md:hidden ">
@@ -76,7 +76,7 @@ const HeroSection = ({ franchiseData, location }) => {
             </div>
 
             {/* Content */}
-            <div className="p-2 md:p-8">
+            <div className="p-2 md:py-8">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Main Info */}
 
@@ -190,7 +190,7 @@ const HeroSection = ({ franchiseData, location }) => {
                               "border-b-2 md:border-b-0 md:border-r-2"
                             }`}
                           >
-                            <p className="text-5xl font-bold text-black">
+                            <p className="text-2xl font-bold text-black">
                               {stat.value}
                             </p>
                             <p className="text-sm">{stat.label}</p>

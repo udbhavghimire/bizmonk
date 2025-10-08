@@ -112,206 +112,160 @@ const ContactForm = ({ contactImage, pageName }) => {
       )}
 
       {/* Main Form Container */}
-      <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border border-gray-100 backdrop-blur-sm">
-        <div className="grid grid-cols-1 lg:grid-cols-5 min-h-[600px]">
-          {/* Form Section */}
-          <div className="lg:col-span-3 p-8 md:p-12 flex flex-col justify-center">
-            <div className="max-w-md mx-auto w-full lg:mx-0">
-              {/* Header */}
-              <div className="mb-10 text-center lg:text-left">
-                <h2 className="text-3xl md:text-4xl xl:text-3xl font-bold text-gray-900 mb-3 leading-tight">
-                  {pageName ? pageName : "Get information"}
-                </h2>
-                <p className="text-gray-600 text-lg">
-                  Contact to get more information{" "}
-                  {pageName ? "on " + pageName : ""}
-                </p>
-              </div>
+      <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border border-gray-100 backdrop-blur-sm max-w-md mx-auto">
+        {/* Image Section - Top */}
+        <div className="relative h-48 bg-gradient-to-br from-blue-50 to-indigo-100">
+          <Image
+            src={contactImage}
+            className="object-cover"
+            alt="Contact us"
+            fill
+            sizes="(max-width: 768px) 100vw, 400px"
+            priority
+          />
+          {/* Overlay gradient for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+          
+          {/* Decorative elements */}
+          <div className="absolute top-4 right-4 w-16 h-16 bg-white/20 rounded-full blur-xl"></div>
+          <div className="absolute bottom-4 left-4 w-12 h-12 bg-white/10 rounded-full blur-lg"></div>
+        </div>
 
-              {/* Form */}
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Email Field */}
-                <div className="group">
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-semibold text-gray-700 mb-2"
-                  >
-                    Name
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      required
-                      disabled={isLoading}
-                      placeholder="Your Name"
-                      className="w-full px-4 py-4 text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 focus:bg-white"
-                      onChange={(e) => setName(e.target.value)}
-                      value={name}
-                    />
-                    {/* <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-                      <svg
-                        className="w-5 h-5 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                        />
-                      </svg>
-                    </div> */}
-                  </div>
-                </div>
-                <div className="group">
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-semibold text-gray-700 mb-2"
-                  >
-                    Email Address
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      disabled={isLoading}
-                      placeholder="your@email.com"
-                      className="w-full px-4 py-4 text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 focus:bg-white"
-                      onChange={(e) => setEmail(e.target.value)}
-                      value={email}
-                    />
-                    {/* <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-                      <svg
-                        className="w-5 h-5 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                        />
-                      </svg>
-                    </div> */}
-                  </div>
-                </div>
+        {/* Form Section */}
+        <div className="p-6">
+          {/* Header */}
+          <div className="text-center mb-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-1">
+              {pageName || "Get Information"}
+            </h2>
+            <p className="text-gray-600 text-xs leading-relaxed">
+              Contact to get more information{" "}
+              {pageName ? "on " + pageName : ""}
+            </p>
+          </div>
 
-                {/* Phone Field */}
-                <div className="group">
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-semibold text-gray-700 mb-2"
-                  >
-                    Phone Number
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      required
-                      disabled={isLoading}
-                      placeholder="+1 (555) 123-4567"
-                      className="w-full px-4 py-4 text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 focus:bg-white"
-                      onChange={(e) => setPhone(e.target.value)}
-                      value={phone}
-                    />
-                    {/* <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-                      <svg
-                        className="w-5 h-5 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                        />
-                      </svg>
-                    </div> */}
-                  </div>
-                </div>
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-3">
+            {/* Name Field */}
+            <div className="group">
+              <label className="block text-xs font-semibold text-gray-700 mb-1">
+                Name
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
                   disabled={isLoading}
-                  className="w-full py-4 px-6 bg-gradient-to-r bg-black text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
-                >
-                  {isLoading ? (
-                    <div className="flex items-center justify-center">
-                      <svg
-                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      <span>Sending Message...</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center">
-                      <span>Send Message</span>
-                    </div>
-                  )}
-                </button>
-
-                {/* Privacy Note */}
-                <p className="text-[0.4rem] text-gray-500 text-center mt-4">
-                  By submitting this form, I agree to be contacted by Elixir
-                  Real Estate Inc., Brokerage* via email, phone, and text about
-                  real estate services. Message and data rates may apply.
-                  Message frequency may vary. Consent is not a condition of
-                  purchase. Reply STOP to unsubscribe from calls and texts. To
-                  stop receiving emails, click Unsubscribe in any email. See our
-                  Privacy Policy and Terms of Service for more information.
-                </p>
-              </form>
-            </div>
-          </div>
-
-          {/* Image Section */}
-          <div className="lg:col-span-2 relative bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-8">
-            <div className="relative w-full h-64 lg:h-full min-h-[300px] lg:min-h-[500px]">
-              <Image
-                src={contactImage}
-                className="object-cover rounded-2xl shadow-lg"
-                alt="Contact us"
-                fill
-                sizes="(max-width: 768px) 100vw, 40vw"
-                priority
-              />
-              {/* Overlay for better contrast on mobile */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-2xl lg:hidden"></div>
+                  placeholder="Your Name"
+                  className="w-full px-3 py-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 focus:bg-white group-hover:border-gray-300"
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+              </div>
             </div>
 
-            {/* Decorative elements */}
-            <div className="absolute top-4 right-4 w-20 h-20 bg-blue-200/30 rounded-full blur-xl"></div>
-            <div className="absolute bottom-4 left-4 w-16 h-16 bg-indigo-200/30 rounded-full blur-lg"></div>
-          </div>
+            {/* Email Field */}
+            <div className="group">
+              <label className="block text-xs font-semibold text-gray-700 mb-1">
+                Email Address
+              </label>
+              <div className="relative">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  disabled={isLoading}
+                  placeholder="your@email.com"
+                  className="w-full px-3 py-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 focus:bg-white group-hover:border-gray-300"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Phone Field */}
+            <div className="group">
+              <label className="block text-xs font-semibold text-gray-700 mb-1">
+                Phone Number
+              </label>
+              <div className="relative">
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  required
+                  disabled={isLoading}
+                  placeholder="+1 (555) 123-4567"
+                  className="w-full px-3 py-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 focus:bg-white group-hover:border-gray-300"
+                  onChange={(e) => setPhone(e.target.value)}
+                  value={phone}
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold text-sm rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <svg
+                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  <span>Sending...</span>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center">
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                  <span>Send Message</span>
+                </div>
+              )}
+            </button>
+
+            {/* Privacy Note */}
+            <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed px-1">
+              By submitting this form, I agree to be contacted by Elixir Real Estate Inc., Brokerage* via email, phone, and text about real estate services.
+            </p>
+          </form>
         </div>
       </div>
     </div>

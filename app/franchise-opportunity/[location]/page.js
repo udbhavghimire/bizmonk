@@ -29,13 +29,13 @@ export default function FranchiseOpportunityPage({ params }) {
               <h1 className="text-4xl font-bold sm:text-5xl lg:text-5xl mb-3">
                 <span className="text-black">{locationData.title}</span>
               </h1>
-              <p className="text-xl text-gray-600">
+              <p className="text-lg text-gray-600">
                 {locationData.description}
               </p>
             </div>
 
             {/* Franchise Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 md:gap-3 gap-2 max-w-6xl mx-auto">
               {locationData.franchises.map((franchise) => (
                 <Link
                   href={`/franchise-opportunity/${location}/${franchise.name

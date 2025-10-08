@@ -86,23 +86,18 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white border-b border-gray-100 sticky top-0 z-50 ">
-      <div
-        className={`${
-          isWidePage
-            ? "sm:mx-20 px-2 sm:px-2 lg:px-2"
-            : `${
-                !isHomepage ? "md:max-w-5xl px-4 md:px-6" : "md:max-w-5xl"
-              }  mx-auto`
-        }`}
-      >
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex justify-between h-16">
           {/* Logo and Search Bar */}
           <div className="flex items-center gap-x-3">
             <div className="flex-shrink-0 flex items-center">
               <Link href="/" className="flex items-center">
-                <span className="text-2xl font-bold bg-gradient-to-r from-teal-500 to-blue-600 text-transparent bg-clip-text">
-                  Bizmonk
-                </span>
+                <Image
+                  src="/bizmonk-logo.png"
+                  alt="Bizmonk"
+                  width={100}
+                  height={100}
+                />
               </Link>
             </div>
 

@@ -26,39 +26,57 @@ export default async function FranchiseDetailPage({ params }) {
 
     return (
       <div className="min-h-screen">
-        {/* Hero Section */}
-        <HeroSection franchiseData={franchiseData} location={location} />
+        {/* Main Content Layout with Sticky Contact Form */}
+        <div className="max-w-7xl mx-auto md:px-0 px-4">
+          {/* Hero and Video Section with Sticky Contact Form */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 ">
+            {/* Left Content Area */}
+            <div className="lg:col-span-2 py-8 space-y-8">
+              {/* Hero Section */}
+              <HeroSection franchiseData={franchiseData} location={location} />
 
-        {/* Video Section - Will only show for franchises with video */}
-        <VideoSection videoUrl={franchiseData.video} />
+              {/* Video Section - Will only show for franchises with video */}
+              <div className="mt-8">
+                <VideoSection videoUrl={franchiseData.video} />
+              </div>
+            </div>
 
-        {/* Contact Form Section */}
-        <Suspense fallback={<div>Loading contact form...</div>}>
-          {console.log(franchise.image)}
-          <ContactForm
-            contactImage={
-              franchiseData?.contactImage
-                ? franchiseData?.contactImage
-                : franchiseData?.image
-            }
-            pageName={franchiseData.name}
-          />
-        </Suspense>
+            {/* Right Sticky Contact Form - Only for Hero and Video sections */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-8 pt-10 ">
+                <Suspense fallback={<div>Loading contact form...</div>}>
+                  <ContactForm
+                    contactImage={
+                      franchiseData?.contactImage
+                        ? franchiseData?.contactImage
+                        : franchiseData?.image
+                    }
+                    pageName={franchiseData.name}
+                  />
+                </Suspense>
+              </div>
+            </div>
+          </div>
 
-        {/* Related Franchises Section */}
-        <RelatedFranchises
-          franchiseData={franchiseData}
-          locationData={locationData}
-          location={location}
-        />
+          {/* Full Width Sections Below */}
+          <div className="w-full space-y-12 py-8">
+            {/* Related Franchises Section - Full Width */}
+            <RelatedFranchises
+              franchiseData={franchiseData}
+              locationData={locationData}
+              location={location}
+            />
 
-        {/* Explore More Cities Section */}
-        <ExploreMoreCities
-          franchise={franchise}
-          franchiseData={franchiseData}
-        />
+            {/* Explore More Cities Section - Full Width */}
+            <ExploreMoreCities
+              franchise={franchise}
+              franchiseData={franchiseData}
+            />
 
-        <Newsletter />
+            {/* Newsletter - Full Width */}
+            <Newsletter />
+          </div>
+        </div>
       </div>
     );
   } catch (error) {
