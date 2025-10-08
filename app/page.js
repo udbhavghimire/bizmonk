@@ -96,16 +96,16 @@ export default async function Home() {
 
                     {/* Quick Filters */}
                     <div className="flex flex-wrap gap-2 justify-center">
-                      <button className="px-4 py-2 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-100 transition-all duration-200 text-white">
+                      <button className="px-4 py-2 border border-gray-300 rounded-full text-sm font-medium  transition-all duration-200 text-white">
                         Restaurants
                       </button>
-                      <button className="px-4 py-2 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-100 transition-all duration-200 text-white">
+                      <button className="px-4 py-2 border border-gray-300 rounded-full text-sm font-medium  transition-all duration-200 text-white">
                         Franchises
                       </button>
-                      <button className="px-4 py-2 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-100 transition-all duration-200 text-white">
+                      <button className="px-4 py-2 border border-gray-300 rounded-full text-sm font-medium  transition-all duration-200 text-white">
                         Convenience Stores
                       </button>
-                      <button className="px-4 py-2 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-100 transition-all duration-200 text-white">
+                      <button className="px-4 py-2 border border-gray-300 rounded-full text-sm font-medium  transition-all duration-200 text-white">
                         Retail Lease
                       </button>
                     </div>
@@ -166,7 +166,7 @@ export default async function Home() {
         {/* Introduction to BizMonk */}
 
         {/* Franchise Opportunities Section */}
-        <div className="md:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 bg-gray-50">
+        <div className="md:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="text-center mb-8 sm:mb-8">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2 sm:mb-2 px-4">
               Looking for{" "}

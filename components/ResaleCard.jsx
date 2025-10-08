@@ -93,7 +93,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
               <div className="w-full h-full flex flex-col justify-center items-center">
                 <img
                   src="/icons/no-photo.png"
-                  className="w-6 h-6 opacity-40"
+                  className="w-32 h-32 "
                   alt="No photo"
                 />
               </div>
