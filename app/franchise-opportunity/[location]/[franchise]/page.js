@@ -6,6 +6,7 @@ import HeroSection from "./_components/HeroSection";
 import RelatedFranchises from "./_components/RelatedFranchises";
 import ExploreMoreCities from "./_components/ExploreMoreCities";
 import ContactForm from "./_components/ContactForm";
+import FloatingFranchise from "./_components/FloatingFranchise";
 import { Suspense } from "react";
 import VideoSection from "./_components/VideoSection";
 
@@ -77,6 +78,9 @@ export default async function FranchiseDetailPage({ params }) {
             <Newsletter />
           </div>
         </div>
+
+        {/* Floating Franchise Button */}
+        <FloatingFranchise franchiseName={franchiseData.name} />
       </div>
     );
   } catch (error) {

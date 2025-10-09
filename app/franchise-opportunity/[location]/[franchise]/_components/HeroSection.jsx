@@ -101,25 +101,25 @@ const HeroSection = ({ franchiseData, location }) => {
                       </li>
                     ))}
                   </ul>
-                  <Link
-                    href="#contact"
-                    className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap"
-                  >
-                    Learn More
-                  </Link>
-                </div>
-
-                {franchiseData.brochure && (
-                  <div>
-                    <a
-                      href={franchiseData.brochure}
-                      className="w-full px-6 py-3 mt-4 bg-black text-white rounded-full hover:bg-gray-800 transition-colors font-medium"
-                      download
+                  <div className="flex flex-row gap-4">
+                    <Link
+                      href="#contact"
+                      className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap"
                     >
-                      Download Brochure PDF
-                    </a>
+                      Learn More
+                    </Link>
+
+                    {franchiseData.brochure && (
+                      <a
+                        href={franchiseData.brochure}
+                        className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-gray-800 transition-colors font-medium text-nowrap"
+                        download
+                      >
+                        Download Brochure PDF
+                      </a>
+                    )}
                   </div>
-                )}
+                </div>
 
                 {/* Sidebar */}
                 <div className="col-span-full sm:space-y-0">
