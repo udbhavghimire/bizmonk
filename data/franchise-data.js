@@ -85,6 +85,39 @@ const baseFranchises = [
       "Established supply chain and operations systems",
     ],
   },
+  {
+    name: "Infinity Mart",
+    type: "Convenience & Retail Store",
+    investment: "$185K - $485.5K",
+    locations: "High-traffic and high-visibility areas",
+    image: "/infinity-mart.jpeg",
+    description:
+      "Infinity Mart offers a modern, low-overhead convenience retail model designed for maximum profitability and scalability. With comprehensive training, strategic site selection, and ongoing support, Infinity Mart empowers franchisees to build a lean and profitable retail business.",
+    financing: {
+      "Restaurant Model": "Retail Convenience Store: 300–3,000 sq. ft.",
+      "startUp Costs": "$185,000 – $485,500",
+      "liquid Capital": "$100,000+",
+      "franchisee Fee": "$30,000",
+      royalties: "Not disclosed",
+      marketing: "Not disclosed",
+    },
+    specialities: [
+      "Low-overhead and high-efficiency business model",
+      "Hands-on training in real store environment",
+      "Comprehensive site selection and lease negotiation support",
+      "Ongoing operational guidance and performance coaching",
+      "Flexible store formats for malls, transit hubs, and residential areas",
+    ],
+    storeModels: [
+      {
+        type: "Retail Convenience Model",
+        description:
+          "Compact retail format (300–3,000 sq. ft.) designed for high-traffic environments such as transit hubs, office towers, or residential plazas. Emphasizes efficient layout, clear signage, and easy operations.",
+        image: "/franchises/infinitymart-store.webp",
+      },
+    ],
+    contactImage: null,
+  },
 
   {
     name: "WingsUp",
