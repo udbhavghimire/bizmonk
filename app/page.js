@@ -36,45 +36,59 @@ export default async function Home() {
 
   return (
     <>
-      {/* Dark Theme ChatGPT-Inspired Hero Section */}
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-slate-900 relative overflow-hidden">
-        {/* Subtle Animated Background Elements */}
+      {/* ChatGPT-Style Black Hero Section */}
+      <div className="min-h-screen bg-black relative overflow-hidden">
+        {/* Subtle ChatGPT-style background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-br from-emerald-500/10 to-blue-500/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
-          <div className="absolute bottom-40 left-1/4 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-xl animate-pulse delay-500"></div>
-          <div className="absolute top-60 right-1/3 w-40 h-40 bg-gradient-to-br from-amber-500/10 to-orange-500/10 rounded-full blur-2xl animate-pulse delay-700"></div>
+          {/* Minimal floating orbs */}
+          <div className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-br from-gray-800/20 to-gray-700/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-br from-gray-700/15 to-gray-600/15 rounded-full blur-2xl"></div>
+          <div className="absolute bottom-40 left-1/4 w-32 h-32 bg-gradient-to-br from-gray-600/10 to-gray-500/10 rounded-full blur-xl"></div>
+        </div>
+
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)`,
+              backgroundSize: "20px 20px",
+            }}
+          ></div>
         </div>
 
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             {/* Main Heading */}
             <div className="mb-12">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent mb-6 leading-tight">
-                Find Your Perfect
-                <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  Business Opportunity
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                Canada's One of Leading
+                <span className="block bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+                  AI Powered Business Platform
                 </span>
               </h1>
 
-              <p className="text-lg md:text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
                 Discover restaurants, franchises, convenience stores, and
-                commercial spaces across Ontario. Your next business venture
-                starts here.
+                commercial spaces across Ontario with our intelligent AI-powered
+                matching system. Your next business venture starts here.
               </p>
             </div>
 
-            {/* Enhanced Search Interface */}
+            {/* AI-Powered Search Interface */}
             <div className="max-w-4xl mx-auto mb-12">
               <div className="relative">
                 {/* Main Search Container */}
-                <div className="bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-700/50 p-6">
-                  <div className="flex flex-col space-y-4">
+                <div className="bg-gray-900/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-700/50 p-8 relative overflow-hidden">
+                  {/* Subtle glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-gray-800/20 via-gray-700/20 to-gray-800/20 rounded-2xl"></div>
+
+                  <div className="relative z-10 flex flex-col space-y-6">
                     {/* Search Input */}
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
                         <svg
-                          className="h-5 w-5 text-gray-400"
+                          className="h-6 w-6 text-gray-400"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -89,24 +103,29 @@ export default async function Home() {
                       </div>
                       <input
                         type="text"
-                        placeholder="Search for restaurants, franchises, or commercial spaces..."
-                        className="w-full pl-12 pr-4 py-4 text-lg bg-gray-700/50 border-2 border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 outline-none"
+                        placeholder="Tell us what kind of business you're looking for..."
+                        className="w-full pl-16 pr-6 py-5 text-lg bg-gray-800/50 border-2 border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:border-gray-500 focus:ring-2 focus:ring-gray-500/30 transition-all duration-300 outline-none"
                       />
+                      <div className="absolute inset-y-0 right-0 pr-4 flex items-center">
+                        <button className="px-6 py-2 bg-white text-black rounded-lg font-medium hover:bg-gray-100 transition-all duration-200 shadow-lg">
+                          Search
+                        </button>
+                      </div>
                     </div>
 
                     {/* Quick Filters */}
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      <button className="px-4 py-2 border border-gray-300 rounded-full text-sm font-medium  transition-all duration-200 text-white">
-                        Restaurants
+                    <div className="flex flex-wrap gap-3 justify-center">
+                      <button className="px-5 py-2.5 bg-gray-800/60 border border-gray-600/50 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-700/60 hover:border-gray-500/50 hover:text-white transition-all duration-200">
+                        🍽️ Restaurants
                       </button>
-                      <button className="px-4 py-2 border border-gray-300 rounded-full text-sm font-medium  transition-all duration-200 text-white">
-                        Franchises
+                      <button className="px-5 py-2.5 bg-gray-800/60 border border-gray-600/50 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-700/60 hover:border-gray-500/50 hover:text-white transition-all duration-200">
+                        🏢 Franchises
                       </button>
-                      <button className="px-4 py-2 border border-gray-300 rounded-full text-sm font-medium  transition-all duration-200 text-white">
-                        Convenience Stores
+                      <button className="px-5 py-2.5 bg-gray-800/60 border border-gray-600/50 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-700/60 hover:border-gray-500/50 hover:text-white transition-all duration-200">
+                        🏪 Convenience Stores
                       </button>
-                      <button className="px-4 py-2 border border-gray-300 rounded-full text-sm font-medium  transition-all duration-200 text-white">
-                        Retail Lease
+                      <button className="px-5 py-2.5 bg-gray-800/60 border border-gray-600/50 rounded-full text-sm font-medium text-gray-300 hover:bg-gray-700/60 hover:border-gray-500/50 hover:text-white transition-all duration-200">
+                        🏬 Retail Lease
                       </button>
                     </div>
                   </div>
@@ -136,18 +155,24 @@ export default async function Home() {
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-gray-400">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                <span>1000+ Active Listings</span>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm">
+              <div className="flex items-center gap-3 px-4 py-2 bg-gray-800/30 rounded-full border border-gray-700/30">
+                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-gray-300 font-medium">
+                  1000+ Active Listings
+                </span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                <span>Verified Properties</span>
+              <div className="flex items-center gap-3 px-4 py-2 bg-gray-800/30 rounded-full border border-gray-700/30">
+                <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+                <span className="text-gray-300 font-medium">
+                  AI-Verified Properties
+                </span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-                <span>Expert Support</span>
+              <div className="flex items-center gap-3 px-4 py-2 bg-gray-800/30 rounded-full border border-gray-700/30">
+                <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
+                <span className="text-gray-300 font-medium">
+                  24/7 AI Support
+                </span>
               </div>
             </div>
           </div>
@@ -155,7 +180,7 @@ export default async function Home() {
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-gray-500 rounded-full flex justify-center">
+          <div className="w-6 h-10 border-2 border-gray-600 rounded-full flex justify-center">
             <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>

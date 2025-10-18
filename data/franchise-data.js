@@ -113,7 +113,7 @@ const baseFranchises = [
         type: "Retail Convenience Model",
         description:
           "Compact retail format (300–3,000 sq. ft.) designed for high-traffic environments such as transit hubs, office towers, or residential plazas. Emphasizes efficient layout, clear signage, and easy operations.",
-        image: "/franchises/infinitymart-store.webp",
+        image: "/infinity-mart-1.jpeg",
       },
     ],
     contactImage: null,
