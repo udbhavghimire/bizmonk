@@ -9,7 +9,7 @@ import { slugGenerator } from "@/helpers/slugGenerator";
 const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
   const [loadingImage, setLoadingImage] = useState(false);
   const [imgSrc, setImgSrc] = useState(
-    `https://pillar9.homebaba.ca/images/${curElem.ListingKey}-0.jpg?cardImage=true`
+    `https://pillar9.homebaba.ca/images/${curElem.ListingKey}-0.jpg?cardImage=true`,
   );
   const [hasImageError, setHasImageError] = useState(false);
 
@@ -70,7 +70,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
 
   const listingUrl = `/${curElem.City.toLowerCase().replace(
     /\s+/g,
-    "-"
+    "-",
   )}/${slugGenerator({
     Street: curElem.StreetNumber || "",
     StreetName: curElem.StreetName || "",
@@ -85,48 +85,45 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
         <div className="group relative flex flex-col rounded-lg transition-all duration-300 hover:shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
           {/* Image Container */}
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-gray-50">
-            {loadingImage ? (
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-              </div>
-            ) : hasImageError ? (
-              <div className="w-full h-full flex flex-col justify-center items-center">
+            {curElem.Media && curElem.Media.length > 0 ? (
+              <img
+                src={curElem.Media[0].MediaURL}
+                alt={`${curElem.StreetNumber} ${curElem.StreetName}`}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                onError={(e) => {
+                  e.currentTarget.src = "/icons/no-photo.png";
+                }}
+              />
+            ) : (
+              <div className="w-full h-full flex flex-col justify-center items-center bg-gray-100">
                 <img
                   src="/icons/no-photo.png"
-                  className="w-32 h-32 "
-                  alt="No photo"
+                  className="w-32 h-32"
+                  alt="No photo available"
                 />
-              </div>
-            ) : (
-              <div className="relative w-full h-full">
-                <img
-                  src={imgSrc}
-                  alt={`${curElem.StreetNumber} ${curElem.StreetName}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  onError={handleImageError}
-                />
-
-                {/* Heart Icon */}
-                <button className="absolute top-3 right-3 bg-white rounded-full p-1.5 hover:bg-gray-100 z-10">
-                  <Heart className="w-5 h-5" />
-                </button>
-                {/* Property Type & Time Badge */}
-                <div className="absolute bottom-3 left-3 flex gap-2 z-10">
-                  <span className="bg-white rounded px-2.5 py-1 text-xs font-medium">
-                    {curElem.BusinessType}
-                  </span>
-                  <span className="bg-white rounded px-2.5 py-1 text-xs font-medium">
-                    <TimeAgo
-                      modificationTimestamp={curElem.OriginalEntryTimestamp}
-                    />
-                  </span>
-                </div>
-                {/* Dark Overlay on Hover */}
-                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             )}
-          </div>
 
+            {/* Heart Icon */}
+            <button className="absolute top-3 right-3 bg-white rounded-full p-1.5 hover:bg-gray-100 z-10">
+              <Heart className="w-5 h-5" />
+            </button>
+
+            {/* Property Type & Time Badge */}
+            <div className="absolute bottom-3 left-3 flex gap-2 z-10">
+              <span className="bg-white rounded px-2.5 py-1 text-xs font-medium">
+                {curElem.BusinessType}
+              </span>
+              <span className="bg-white rounded px-2.5 py-1 text-xs font-medium">
+                <TimeAgo
+                  modificationTimestamp={curElem.OriginalEntryTimestamp}
+                />
+              </span>
+            </div>
+
+            {/* Dark Overlay on Hover */}
+            <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
           {/* Content */}
           <div className="pt-3 flex flex-col px-1">
             {/* Price */}

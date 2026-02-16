@@ -1,19 +1,33 @@
 "use server";
 
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+import { fetchMedia } from "./getImageUrls";
 const options = {
   method: "GET",
   headers: {
-    Authorization: process.env.BEARER_TOKEN_FOR_API,
+    Authorization: `Bearer ${process.env.BEARER_TOKEN_FOR_API}`,
+    Accept: "application/json",
   },
-  next: {
-    revalidate: 3600,
-  },
+  next: { revalidate: 3600 },
+};
+// Helper to attach media to listings
+const attachMedia = async (listings, mediaCount = 1) => {
+  return await Promise.all(
+    (listings || []).map(async (listing) => {
+      try {
+        const media = await fetchMedia(listing.ListingKey, mediaCount);
+        return { ...listing, Media: media };
+      } catch (err) {
+        console.error("Failed to fetch media for", listing.ListingKey, err);
+        return { ...listing, Media: [] };
+      }
+    }),
+  );
 };
 
 export const getSaleOfBusinessListings = async (
   city = null,
-  searchParams = {}
+  searchParams = {},
 ) => {
   const pageSize = 60;
   const page = Number(searchParams?.page) || 1;
@@ -24,14 +38,18 @@ export const getSaleOfBusinessListings = async (
       `https://query.ampre.ca/odata/Property?$filter=PropertySubType eq 'Sale Of Business'${
         city ? ` and contains(City,'${capitalizeFirstLetter(city)}')` : ""
       }&$top=500&$skip=${skip}&$orderby=OriginalEntryTimestamp desc`,
-      options
+      options,
     );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    const data = await response.json();
 
-    return await response.json();
+    // Attach media before returning
+    data.value = await attachMedia(data.value);
+
+    return data;
   } catch (error) {
     console.error("Error fetching business listings:", error);
     return { value: [] };
@@ -45,7 +63,7 @@ export const getRestaurantListings = async ({
 } = {}) => {
   const SALEOFBUSINESSLISTINGS = await getSaleOfBusinessListings(city);
   let filteredValues = SALEOFBUSINESSLISTINGS.value.filter((listing) =>
-    listing.BusinessType.includes("Restaurant")
+    listing.BusinessType.includes("Restaurant"),
   );
 
   // Apply price filter if provided
@@ -56,9 +74,10 @@ export const getRestaurantListings = async ({
     });
   }
 
-  return !numberOfListings
-    ? filteredValues
-    : filteredValues.slice(0, numberOfListings);
+  if (numberOfListings)
+    filteredValues = filteredValues.slice(0, numberOfListings);
+
+  return attachMedia(filteredValues);
 };
 
 export const getConvenienceStoreListings = async ({
@@ -68,7 +87,7 @@ export const getConvenienceStoreListings = async ({
 } = {}) => {
   const SALEOFBUSINESSLISTINGS = await getSaleOfBusinessListings(city);
   let filteredValues = SALEOFBUSINESSLISTINGS.value.filter((listing) =>
-    listing.BusinessType.includes("Convenience/Variety")
+    listing.BusinessType.includes("Convenience/Variety"),
   );
 
   // Apply price filter if provided
@@ -79,9 +98,10 @@ export const getConvenienceStoreListings = async ({
     });
   }
 
-  return !numberOfListings
-    ? filteredValues
-    : filteredValues.slice(0, numberOfListings);
+  if (numberOfListings)
+    filteredValues = filteredValues.slice(0, numberOfListings);
+
+  return attachMedia(filteredValues);
 };
 
 export const getOfficeListings = async ({
@@ -93,7 +113,7 @@ export const getOfficeListings = async ({
     `https://query.ampre.ca/odata/Property?$filter=PropertyType eq 'Commercial' and TransactionType eq 'For Lease'${
       city ? ` and contains(City,'${capitalizeFirstLetter(city)}')` : ""
     }&$top=${numberOfListings || 200}&$orderby=OriginalEntryTimestamp desc`,
-    options
+    options,
   ).then((response) => response.json());
 
   let filteredValues = data?.value?.filter((listing) => {
@@ -115,7 +135,7 @@ export const getOfficeListings = async ({
     });
   }
 
-  return filteredValues;
+  return attachMedia(filteredValues);
 };
 
 export async function getBramptonRestaurantsUnder300k() {
