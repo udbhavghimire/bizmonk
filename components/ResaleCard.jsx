@@ -110,7 +110,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
             </button>
 
             {/* Property Type & Time Badge */}
-            <div className="absolute bottom-3 left-3 flex gap-2 z-10">
+            <div className="absolute bottom-3 left-3 hidden  sm:flex gap-2 z-10">
               <span className="bg-white rounded px-2.5 py-1 text-xs font-medium">
                 {curElem.BusinessType}
               </span>
