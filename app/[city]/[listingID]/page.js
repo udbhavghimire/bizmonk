@@ -13,7 +13,7 @@ import formatCurrency from "@/helpers/formatCurrency";
 import TimeAgo from "@/helpers/TimeAgo";
 import cities from "@/data/gta-cities.json";
 import StickyContactForm from "@/components/StickyContactForm";
-
+import { fetchMedia } from "@/api/getImageUrls";
 const INITIAL_OFFSET = 0;
 const INITIAL_LIMIT = 3;
 
@@ -22,8 +22,8 @@ const fetchData = async (listingID) => {
     const options = {
       method: "GET",
       headers: {
-        Authorization: process.env.BEARER_TOKEN_FOR_API,
-        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.BEARER_TOKEN_FOR_API}`,
+        Accept: "application/json",
       },
       cache: "no-store", // Disable caching to get fresh data
     };
@@ -64,15 +64,19 @@ const page = async ({ params }) => {
     const cityName = await Promise.resolve(city.split("-")[0]);
     const properCityName = await Promise.resolve(
       cities.cities.find((c) => c.toLowerCase() === cityName.toLowerCase()) ||
-        cityName
+        cityName,
     );
 
     const listingKey = await Promise.resolve(listingID.split("-").pop());
     const main_data = await fetchData(listingKey);
-
     if (!main_data) {
       throw new Error("Listing not found");
     }
+    // Fetch media images for this listing
+    const mediaImages = await fetchMedia(main_data.ListingKey, 20);
+
+    // Add them to main_data so client can use them
+    main_data.media = mediaImages;
 
     const breadcrumbItems = [
       { label: "Home", href: "/" },
@@ -109,9 +113,7 @@ const page = async ({ params }) => {
                 </div>
                 <section className="padding-top w-full text-sm flex flex-col items-center justify-center gy-2 relative">
                   <div className="w-full relative">
-                    <Gallery
-                      ResourceRecordKey={main_data?.ListingKey || null}
-                    />
+                    <Gallery mediaImages={mediaImages} />
                     <div className="space-x-2 order-2 sm:order-1 absolute bottom-2 left-2">
                       <button className="bg-green-900 p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
                         <TimeAgo
@@ -131,7 +133,10 @@ const page = async ({ params }) => {
                     {/* Left Content */}
                     <div className="lg:col-span-2 col">
                       <PropertyPage {...{ main_data }} />
-                      <BookingDate listingId={main_data.ListingKey} />
+                      <BookingDate
+                        listingId={main_data.ListingKey}
+                        image={mediaImages?.[0].MediaURL}
+                      />
                       <MapSection main_data={main_data} />
                       <div className="mt-24 mb-10">
                         <FAQ main_data={main_data} />
@@ -203,7 +208,7 @@ export async function generateMetadata({ params }, parent) {
           : "Property Listing Details",
       alternates: {
         canonical: `https://commercialspot.ca/${city}/${slugGenerator(
-          main_data
+          main_data,
         )}`,
       },
     };
