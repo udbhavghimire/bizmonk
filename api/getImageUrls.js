@@ -64,28 +64,39 @@ const buildMediaUrl = (listingKey, mediaKey, mediaType) => {
 
 export async function fetchMedia(listingKey, mediaCount = 20) {
   if (!listingKey) return [];
-  const params = [`$select=MediaKey,MediaType`, `$top=${mediaCount}`];
-  const filter =
-    "ImageSizeDescription eq 'Medium' and MediaStatus eq 'Active' and ResourceRecordKey eq '" +
-    listingKey +
-    "'";
-  params.push(`$filter=${encodeURIComponent(filter)}`);
-  params.push(`$orderby=${encodeURIComponent("Order asc")}`);
-  const url = `https://query.ampre.ca/odata/Media?${params.join("&")}`;
 
-  const res = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${process.env.BEARER_TOKEN_FOR_API}`,
-      Accept: "application/json",
-    },
-    next: { revalidate: 60 },
-  });
+  try {
+    const params = [`$select=MediaKey,MediaType`, `$top=${mediaCount}`];
+    const filter =
+      "ImageSizeDescription eq 'Medium' and MediaStatus eq 'Active' and ResourceRecordKey eq '" +
+      listingKey +
+      "'";
+    params.push(`$filter=${encodeURIComponent(filter)}`);
+    params.push(`$orderby=${encodeURIComponent("Order asc")}`);
+    const url = `https://query.ampre.ca/odata/Media?${params.join("&")}`;
 
-  const data = await res.json();
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${process.env.BEARER_TOKEN_FOR_API}`,
+        Accept: "application/json",
+      },
+      next: { revalidate: 60 },
+    });
 
-  const media = data.value || [];
-  return media.map((item) => ({
-    ...item,
-    MediaURL: buildMediaUrl(listingKey, item.MediaKey, item.MediaType),
-  }));
+    if (!res.ok) {
+      console.error(`Failed to fetch media for ${listingKey}: ${res.status}`);
+      return [];
+    }
+
+    const data = await res.json();
+
+    const media = data.value || [];
+    return media.map((item) => ({
+      ...item,
+      MediaURL: buildMediaUrl(listingKey, item.MediaKey, item.MediaType),
+    }));
+  } catch (err) {
+    console.error(`fetchMedia error for listing ${listingKey}`, err);
+    return [];
+  }
 }

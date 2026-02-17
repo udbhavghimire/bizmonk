@@ -2,13 +2,30 @@
 
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { fetchMedia } from "./getImageUrls";
-const options = {
+
+const buildFetchOptions = (revalidate = 3600) => ({
   method: "GET",
   headers: {
     Authorization: `Bearer ${process.env.BEARER_TOKEN_FOR_API}`,
     Accept: "application/json",
   },
-  next: { revalidate: 3600 },
+  next: { revalidate },
+});
+
+const isConsumedBodyError = (error) => {
+  return (
+    error instanceof TypeError &&
+    typeof error.message === "string" &&
+    error.message.includes("Body has already been consumed")
+  );
+};
+
+const fetchJson = async (url, options) => {
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return response.json();
 };
 // Helper to attach media to listings
 const attachMedia = async (listings, mediaCount = 1) => {
@@ -33,18 +50,28 @@ export const getSaleOfBusinessListings = async (
   const page = Number(searchParams?.page) || 1;
   const skip = (page - 1) * pageSize;
 
-  try {
-    const response = await fetch(
-      `https://query.ampre.ca/odata/Property?$filter=PropertySubType eq 'Sale Of Business'${
-        city ? ` and contains(City,'${capitalizeFirstLetter(city)}')` : ""
-      }&$top=500&$skip=${skip}&$orderby=OriginalEntryTimestamp desc`,
-      options,
-    );
+  const url = `https://query.ampre.ca/odata/Property?$filter=PropertySubType eq 'Sale Of Business'${
+    city ? ` and contains(City,'${capitalizeFirstLetter(city)}')` : ""
+  }&$top=500&$skip=${skip}&$orderby=OriginalEntryTimestamp desc`;
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+  try {
+    let data;
+    try {
+      data = await fetchJson(url, buildFetchOptions());
+    } catch (error) {
+      if (!isConsumedBodyError(error)) {
+        throw error;
+      }
+
+      const retryOptions = {
+        ...buildFetchOptions(),
+        headers: {
+          ...buildFetchOptions().headers,
+          "x-fetch-retry": "1",
+        },
+      };
+      data = await fetchJson(url, retryOptions);
     }
-    const data = await response.json();
 
     // Attach media before returning
     data.value = await attachMedia(data.value);
@@ -113,8 +140,13 @@ export const getOfficeListings = async ({
     `https://query.ampre.ca/odata/Property?$filter=PropertyType eq 'Commercial' and TransactionType eq 'For Lease'${
       city ? ` and contains(City,'${capitalizeFirstLetter(city)}')` : ""
     }&$top=${numberOfListings || 200}&$orderby=OriginalEntryTimestamp desc`,
-    options,
-  ).then((response) => response.json());
+    buildFetchOptions(),
+  ).then(async (response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  });
 
   let filteredValues = data?.value?.filter((listing) => {
     const validTypes = [
