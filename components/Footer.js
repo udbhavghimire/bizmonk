@@ -2,7 +2,7 @@ import Link from "next/link";
 import cities from "@/data/gta-cities.json";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaTiktok } from "react-icons/fa6";
-import Image from "next/image";
+
 import { Building2, MapPin, Phone, User } from "lucide-react";
 
 export default function Footer() {
@@ -285,7 +285,7 @@ export default function Footer() {
               and lease of real estate as part of a cooperative selling system.
             </div>
             <div className="flex justify-center">
-              <Image src="/crea.svg" alt="CREA Logo" width={64} height={64} />
+              <img src="/crea.svg" alt="CREA Logo" width="64" height="64" />
             </div>
             <p className="text-center text-gray-600 text-sm">
               © {new Date().getFullYear()} BizMonk. All rights reserved.

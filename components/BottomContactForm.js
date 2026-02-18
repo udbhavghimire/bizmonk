@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+
 import { useState } from "react";
 import { sendEmail } from "@/api/resend";
 import { usePathname } from "next/navigation";
@@ -80,11 +80,10 @@ const BottomContactForm = ({ proj_name, city }) => {
         <div className="flex items-center justify-center gap-5 mb-8">
           <div className="flex flex-col items-center">
             <div className="w-[90px] h-[90px] overflow-hidden relative rounded-2xl shadow-md">
-              <Image
+              <img
                 src="/ravi-godara.png"
                 alt="Agent"
-                fill
-                className="object-cover object-top"
+                className="absolute inset-0 w-full h-full object-cover object-top"
               />
             </div>
             <div className="text-center pt-2">

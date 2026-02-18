@@ -1,6 +1,5 @@
 "use client";
 import { sendEmail } from "@/api/resend";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
@@ -115,13 +114,11 @@ const ContactForm = ({ contactImage, pageName }) => {
       <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border border-gray-100 backdrop-blur-sm max-w-md mx-auto">
         {/* Image Section - Top */}
         <div className="relative h-48 bg-gradient-to-br from-blue-50 to-indigo-100">
-          <Image
+          <img
             src={contactImage}
             className="object-cover"
             alt="Contact us"
-            fill
-            sizes="(max-width: 768px) 100vw, 400px"
-            priority
+            
           />
           {/* Overlay gradient for better text readability */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>

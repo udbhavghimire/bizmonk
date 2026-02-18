@@ -3,12 +3,10 @@ import citiesData from "@/data/gta-cities.json";
 import { notFound } from "next/navigation";
 import { getSaleOfBusinessListings } from "@/api/getBusinessListings";
 import ClientPage from "./ClientPage";
-import Image from "next/image";
 import Link from "next/link";
 import { cities } from "@/constant/cities";
 import CityContent from "@/data/CityContent";
 
-const ITEMS_PER_PAGE = 20;
 
 // Helper function to convert city names to URL-friendly format
 const toUrlFormat = (cityName) => cityName.toLowerCase().replace(/\s+/g, "-");
@@ -109,11 +107,9 @@ export default async function Page({ params, searchParams }) {
               href={`/${city.name.toLowerCase()}`}
               className="group relative rounded-lg overflow-hidden aspect-[4/3]"
             >
-              <Image
+              <img
                 src={city.image}
                 alt={`${city.name} cityscape`}
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 className="object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />

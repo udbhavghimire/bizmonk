@@ -57,16 +57,22 @@ export const getSaleOfBusinessListings = async (
   try {
     let data;
     try {
-      data = await fetchJson(url, buildFetchOptions());
+      const { next, ...options } = buildFetchOptions();
+      data = await fetchJson(url, {
+        ...options,
+        cache: "no-store",
+      });
     } catch (error) {
       if (!isConsumedBodyError(error)) {
         throw error;
       }
 
+      const { next: retryNext, ...retryBaseOptions } = buildFetchOptions();
       const retryOptions = {
-        ...buildFetchOptions(),
+        ...retryBaseOptions,
+        cache: "no-store",
         headers: {
-          ...buildFetchOptions().headers,
+          ...retryBaseOptions.headers,
           "x-fetch-retry": "1",
         },
       };

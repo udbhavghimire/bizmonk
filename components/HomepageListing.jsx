@@ -26,14 +26,14 @@ const HomepageListing = ({
           ))}
         </div>
         <div className="text-center mt-8 w-full flex justify-center">
-          <button
-            asChild
-            className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
-          >
-            <Link href="/brampton/restaurant-for-sale" className="">
+          <div className="text-center mt-8 w-full flex justify-center">
+            <Link
+              href="/brampton/restaurant-for-sale"
+              className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
+            >
               View All Brampton Restaurants
             </Link>
-          </button>
+          </div>
         </div>
       </div>
 
@@ -53,14 +53,14 @@ const HomepageListing = ({
           ))}
         </div>
         <div className="text-center mt-8 flex w-full justify-center">
-          <button
-            asChild
+        <div className="text-center mt-8 flex w-full justify-center">
+          <Link
+            href="/brampton/convenience-store-for-sale"
             className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
           >
-            <Link href="/brampton/convenience-store-for-sale" className="">
-              View All Brampton Convenience Stores
-            </Link>
-          </button>
+            View All Brampton Convenience Stores
+          </Link>
+        </div>
         </div>
       </div>
 

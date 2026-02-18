@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import Link from "next/link";
 import { franchiseList } from "@/data/franchise-data";
 
@@ -25,12 +25,10 @@ const FranchisesList = () => {
             className="group flex flex-col items-center justify-center text-center"
           >
             <div className="relative w-24 h-24 rounded-xl overflow-hidden bg-white/50">
-              <Image
+              <img
                 src={partner.logo}
                 alt={`${partner.name} logo`}
-                fill
-                className="object-contain p-2"
-                sizes="(max-width: 768px) 33vw, (max-width: 1024px) 20vw, 15vw"
+                className="absolute inset-0 w-full h-full object-contain p-2"
               />
             </div>
             <p className="text-sm font-medium text-gray-900 mb-3 group-hover:text-primary transition-colors">

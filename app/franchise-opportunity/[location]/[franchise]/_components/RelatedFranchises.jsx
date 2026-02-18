@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 
 const RelatedFranchises = ({ franchiseData, locationData, location }) => {
@@ -24,11 +23,9 @@ const RelatedFranchises = ({ franchiseData, locationData, location }) => {
               >
                 <div className="relative h-72 sm:h-80">
                   {franchise.image && (
-                    <Image
+                    <img
                       src={franchise.image}
                       alt={franchise.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                   )}

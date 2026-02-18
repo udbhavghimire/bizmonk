@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+
 import { useState } from "react";
 import {
   Bars3Icon,
@@ -92,11 +92,11 @@ export default function Navbar() {
           <div className="flex items-center gap-x-3">
             <div className="flex-shrink-0 flex items-center">
               <Link href="/" className="flex items-center">
-                <Image
+                <img
                   src="/bizmonk-logo.png"
                   alt="Bizmonk"
-                  width={100}
-                  height={100}
+                  width="100"
+                  height="100"
                 />
               </Link>
             </div>

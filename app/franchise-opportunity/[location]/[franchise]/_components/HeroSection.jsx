@@ -1,7 +1,7 @@
 import React from "react";
-import Image from "next/image";
+
 import Link from "next/link";
-import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+
 
 const HeroSection = ({ franchiseData, location }) => {
   const locationText = location
@@ -51,11 +51,10 @@ const HeroSection = ({ franchiseData, location }) => {
                 </h1>
                 <div className="h-[300px] relative block md:hidden ">
                   {franchiseData.image && (
-                    <Image
+                    <img
                       src={franchiseData.image}
                       alt={franchiseData.name}
-                      fill
-                      className="object-cover rounded-3xl"
+                      className="absolute inset-0 w-full h-full object-cover rounded-3xl"
                     />
                   )}
                 </div>
@@ -65,11 +64,10 @@ const HeroSection = ({ franchiseData, location }) => {
               </div>
               <div className="w-[50%]  hidden md:block relative rounded-3xl overflow-hidden m-3 h-full">
                 {franchiseData.image && (
-                  <Image
+                  <img
                     src={franchiseData.image}
                     alt={franchiseData.name}
-                    fill
-                    className="object-cover"
+                    className="absolute inset-0 w-full h-full object-cover"
                   />
                 )}
               </div>
@@ -222,9 +220,9 @@ const HeroSection = ({ franchiseData, location }) => {
                           className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-2 hover:bg-gray-100 p-4 rounded-md"
                         >
                           {model.image && (
-                            <Image
-                              height={200}
-                              width={300}
+                            <img
+                              height="200"
+                              width="300"
                               src={model.image}
                               alt={model.type}
                               className="rounded-md"

@@ -1,8 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-import SearchBar from "@/components/SearchBar";
 import Newsletter from "@/components/Newsletter";
-import TextWithContactButton from "@/components/TextWithContactButton";
 import PropertyDisplaySection from "@/components/PropertyDisplaySection";
 import Slider from "@/components/Slider";
 import HomepageListing from "@/components/HomepageListing.jsx";
@@ -19,20 +16,21 @@ import { cities } from "@/constant/cities";
 import FranchisesList from "@/components/FranchisesList";
 
 export default async function Home() {
-  const convenienceStoreListings = await getConvenienceStoreListings({
-    numberOfListings: 4,
-  });
-  const restaurantListings = await getRestaurantListings({
-    numberOfListings: 4,
-  });
-  const officeListings = await getOfficeListings({
-    numberOfListings: 4,
-  });
-
-  // Fetch data for HomepageListing component
-  const bramptonRestaurants = await getBramptonRestaurantsUnder300k();
-  const bramptonStores = await getBramptonStoresUnder500k();
-  const torontoCommercial = await getTorontoCommercialSpace();
+  const [
+    convenienceStoreListings,
+    restaurantListings,
+    officeListings,
+    bramptonRestaurants,
+    bramptonStores,
+    torontoCommercial,
+  ] = await Promise.all([
+    getConvenienceStoreListings({ numberOfListings: 4 }),
+    getRestaurantListings({ numberOfListings: 4 }),
+    getOfficeListings({ numberOfListings: 4 }),
+    getBramptonRestaurantsUnder300k(),
+    getBramptonStoresUnder500k(),
+    getTorontoCommercialSpace(),
+  ]);
 
   return (
     <>
@@ -206,19 +204,14 @@ export default async function Home() {
           {/* Featured Franchises */}
           <FeaturedFranchises />
 
-          <div className="text-center mt-6 sm:mt-8 w-full flex justify-center">
-            <button
-              asChild
-              className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
-            >
+            <div className="text-center mt-6 sm:mt-8 w-full flex justify-center">
               <Link
                 href="/franchise-opportunity/ontario"
-                className="inline-flex items-center gap-2 text-sm sm:text-base hover:underline transition-colors font-bold"
+                className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg inline-flex items-center gap-2 text-sm sm:text-base font-bold"
               >
                 View All Franchises in Ontario
               </Link>
-            </button>
-          </div>
+            </div>
           {/* FranchisesList component here */}
           <FranchisesList />
 
@@ -421,14 +414,12 @@ export default async function Home() {
               </div>
             </div>
             <div className="text-center mt-12 w-full flex justify-center">
-              <button
-                asChild
+              <Link
+                href="/commercial/ontario"
                 className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
               >
-                <Link href="commercial/ontario" className="">
-                  View All Commercial Properties in Ontario
-                </Link>
-              </button>
+                View All Commercial Properties in Ontario
+              </Link>
             </div>
           </div>
 
@@ -614,14 +605,12 @@ export default async function Home() {
             </Link>
           </div>
           <div className="text-center mt-8 flex w-full justify-center">
-            <button
-              asChild
+            <Link
+              href="/restaurant-for-sale"
               className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
             >
-              <Link href="/restaurant-for-sale" className="">
-                View Restaurant Listings
-              </Link>
-            </button>
+              View Restaurant Listings
+            </Link>
           </div>
         </div>
 

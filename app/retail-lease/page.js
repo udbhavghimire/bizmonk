@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, Suspense } from "react";
 import { notFound } from "next/navigation";
-import Image from "next/image";
+
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
@@ -177,12 +177,10 @@ function RetailLeaseContent() {
                 href={`/${city.name.toLowerCase()}`}
                 className="group relative rounded-lg overflow-hidden aspect-[4/3]"
               >
-                <Image
+                <img
                   src={city.image}
                   alt={`${city.name} cityscape`}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                 <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">

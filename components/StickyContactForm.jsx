@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+
 import { useState } from "react";
 import { sendEmail } from "@/api/resend";
 import { usePathname } from 'next/navigation';
@@ -69,11 +69,10 @@ const StickyContactForm = ({ listingData }) => {
         <div className="flex items-center gap-5 mb-8">
           <div className="relative">
             <div className="w-[70px] h-[70px] overflow-hidden relative rounded-2xl shadow-md">
-              <Image
+              <img
                 src="/ravi-godara.png"
                 alt="Agent"
-                fill
-                className="object-cover object-top"
+                className="w-full h-full object-cover object-top"
               />
             </div>
           </div>

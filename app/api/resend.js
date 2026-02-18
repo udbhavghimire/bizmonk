@@ -11,7 +11,7 @@ export const sendEmail = async ({ content, page = null, title = null }) => {
   for (const [key, value] of Object.entries(content)) {
     contentArray.push(`${capitalizeFirstLetter(key)} : ${value}`);
   }
-  console.log("sending...");
+  
   const { data, error } = await resend.emails.send({
     from: "info@bizmonk.ca",
     to: ["vishaldhakal96@gmail.com"],
