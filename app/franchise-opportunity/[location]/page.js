@@ -18,7 +18,9 @@ export default function FranchiseOpportunityPage({ params }) {
 
   try {
     const locationData = getLocationContent(location);
-
+    if (!locationData?.franchises?.length) {
+      notFound();
+    }
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
         {/* Hero Section */}
@@ -27,16 +29,16 @@ export default function FranchiseOpportunityPage({ params }) {
           <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-5xl mx-auto mb-16">
               <h1 className="text-4xl font-bold sm:text-5xl lg:text-5xl mb-3">
-                <span className="text-black">{locationData.title}</span>
+                <span className="text-black">{locationData?.title}</span>
               </h1>
               <p className="text-lg text-gray-600">
-                {locationData.description}
+                {locationData?.description}
               </p>
             </div>
 
             {/* Franchise Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 md:gap-3 gap-2 max-w-6xl mx-auto">
-              {locationData.franchises.map((franchise) => (
+              {locationData?.franchises.map((franchise) => (
                 <Link
                   href={`/franchise-opportunity/${location}/${franchise.name
                     .toLowerCase()
@@ -45,14 +47,14 @@ export default function FranchiseOpportunityPage({ params }) {
                   className="px-3 py-2  text-white rounded-full font-medium text-xs"
                 >
                   <div
-                    key={franchise.name}
+                    key={franchise?.name}
                     className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
                   >
                     {/* Image Section */}
                     <div className="relative h-64">
                       <img
-                        src={franchise.image}
-                        alt={franchise.name}
+                        src={franchise?.image}
+                        alt={franchise?.name}
                         className="object-cover group-hover:scale-105 transition-transform duration-500 w-full h-full absolute inset-0"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-black/20 to-transparent" />
@@ -62,14 +64,14 @@ export default function FranchiseOpportunityPage({ params }) {
                     <div className="p-4 text-center">
                       <div className=" text-center">
                         <h3 className="text-2xl font-bold mb-1 text-black">
-                          {franchise.name}
+                          {franchise?.name}
                         </h3>
                         <p className="text-sm text-black inline-block px-3 py-1 rounded-full mb-3">
-                          {franchise.type}
+                          {franchise?.type}
                         </p>
                       </div>
                       <p className="text-gray-600 mb-6 leading-relaxed text-xs ">
-                        {franchise.description}
+                        {franchise?.description}
                       </p>
 
                       {/* Action Buttons */}

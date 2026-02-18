@@ -15,10 +15,13 @@ export default async function FranchiseDetailPage({ params }) {
 
   try {
     const locationData = getLocationContent(location);
+    if (!locationData?.franchises?.length) {
+      notFound();
+    }
     const franchiseData = locationData.franchises.find(
       (f) =>
         f.name.toLowerCase().replace(/\s+/g, "-").replace(/'/g, "") ===
-        franchise
+        franchise,
     );
 
     if (!franchiseData) {
@@ -52,7 +55,7 @@ export default async function FranchiseDetailPage({ params }) {
                         ? franchiseData?.contactImage
                         : franchiseData?.image
                     }
-                    pageName={franchiseData.name}
+                    pageName={franchiseData?.name}
                   />
                 </Suspense>
               </div>
@@ -90,10 +93,12 @@ export default async function FranchiseDetailPage({ params }) {
 
 export async function generateStaticParams() {
   return Object.entries(franchiseLocations).flatMap(([location, data]) =>
-    data.franchises.map((franchise) => ({
-      location,
-      franchise: franchise.name.toLowerCase().replace(/['\s]+/g, "-"),
-    }))
+    (data?.franchises || [])
+      .filter((f) => f && f.name) // skip undefined or missing name
+      .map((franchise) => ({
+        location,
+        franchise: franchise.name.toLowerCase().replace(/['\s]+/g, "-"),
+      })),
   );
 }
 export async function generateMetadata({ params }, parent) {
@@ -108,12 +113,12 @@ export async function generateMetadata({ params }, parent) {
     const franchiseData = locationData.franchises.find(
       (f) =>
         f.name.toLowerCase().replace(/\s+/g, "-").replace(/'/g, "") ===
-        franchise
+        franchise,
     );
 
     const metadata = {
-      title: franchiseData.name + " Franchise Opportunity in " + locationText,
-      description: `${franchiseData.name} franchise opportunities now available in ${locationText}. Start your own successful business with expert guidance and a trusted brand.
+      title: franchiseData?.name + " Franchise Opportunity in " + locationText,
+      description: `${franchiseData?.name} franchise opportunities now available in ${locationText}. Start your own successful business with expert guidance and a trusted brand.
 `,
     };
     return metadata;
