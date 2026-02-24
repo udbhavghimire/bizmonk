@@ -204,3 +204,72 @@ export async function getTorontoCommercialSpace() {
     numberOfListings: 8,
   });
 }
+
+const formatCityName = (str) => {
+  if (!str) return "";
+  return str
+    .trim()
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
+const BUSINESS_TYPE_API_MAP = {
+  restaurant: "Restaurant",
+  "convenience-store": "Convenience/Variety",
+  industrial: "Industrial",
+  "medical-dental": "Medical/Dental",
+  warehouse: "Warehouse",
+  "retail-store-related": "Retail Store Related",
+  "professional-office": "Professional Office",
+};
+
+export async function fetchProperties({
+  city,
+  top = 20,
+  skip = 0,
+  minPrice,
+  maxPrice,
+  businessType,
+}) {
+  const params = [`$top=${top}`, `$skip=${skip}`, `$count=true`];
+  params.push(
+    `$orderby=${encodeURIComponent("OriginalEntryTimestamp desc")}`,
+  );
+
+  const filters = [`PropertySubType eq 'Sale Of Business'`];
+
+  if (city) {
+    const formattedCity = formatCityName(city);
+    filters.push(`contains(City, '${formattedCity}')`);
+  }
+
+  if (businessType) {
+    const apiBusinessType = BUSINESS_TYPE_API_MAP[businessType];
+    if (apiBusinessType) {
+      filters.push(`BusinessType/any(bt:bt eq '${apiBusinessType}')`);
+    }
+  }
+
+  if (Number.isFinite(minPrice)) filters.push(`ListPrice ge ${minPrice}`);
+  if (Number.isFinite(maxPrice)) filters.push(`ListPrice le ${maxPrice}`);
+
+  if (filters.length > 0) {
+    params.push(`$filter=${encodeURIComponent(filters.join(" and "))}`);
+  }
+
+  const url = `https://query.ampre.ca/odata/Property?${params.join("&")}`;
+  const data = await fetchJson(url, buildFetchOptions());
+
+  const totalCount = data["@odata.count"] || 0;
+
+  return {
+    items: data.value || [],
+    totalCount,
+    totalPages: Math.ceil(totalCount / top),
+    currentPage: Math.floor(skip / top) + 1,
+    top,
+    skip,
+  };
+}

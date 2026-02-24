@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 import citiesData from "@/data/gta-cities.json";
 import { notFound } from "next/navigation";
-import { getSaleOfBusinessListings } from "@/api/getBusinessListings";
+import { fetchProperties, getSaleOfBusinessListings } from "@/api/getBusinessListings";
+import { fetchMedia } from "@/api/getImageUrls";
 import ClientPage from "./ClientPage";
 import Link from "next/link";
 import { cities } from "@/constant/cities";
 import CityContent from "@/data/CityContent";
-
 
 // Helper function to convert city names to URL-friendly format
 const toUrlFormat = (cityName) => cityName.toLowerCase().replace(/\s+/g, "-");
@@ -14,7 +14,7 @@ const toUrlFormat = (cityName) => cityName.toLowerCase().replace(/\s+/g, "-");
 // Helper function to find city by URL format
 const findCityByUrlFormat = (urlFormat) => {
   return citiesData.cities.find(
-    (city) => toUrlFormat(city) === urlFormat.toLowerCase()
+    (city) => toUrlFormat(city) === urlFormat.toLowerCase(),
   );
 };
 
@@ -64,16 +64,54 @@ async function getCityData(city, searchParams) {
   if (!cityExists) return null;
 
   try {
-    const data = await getSaleOfBusinessListings(cityExists, searchParams);
+    const currentPage = Number(searchParams?.page) || 1;
+    const limit = 20;
+    const skip = (currentPage - 1) * limit;
+    const businessType = searchParams?.businessType || undefined;
+    const minPrice = searchParams?.minPrice
+      ? Number(searchParams.minPrice)
+      : undefined;
+    const maxPrice = searchParams?.maxPrice
+      ? Number(searchParams.maxPrice)
+      : searchParams?.priceMax
+        ? Number(searchParams.priceMax)
+        : undefined;
+
+    const data = await fetchProperties({
+      city: cityExists,
+      top: limit,
+      skip,
+      minPrice,
+      maxPrice,
+      businessType,
+    });
+
+    const listings = await Promise.all(
+      (data.items || []).map(async (property) => {
+        const media = await fetchMedia(property.ListingKey, 1);
+        return { ...property, Media: media };
+      }),
+    );
+
     return {
       cityName: cityExists,
-      listings: data?.value || [],
+      listings,
+      pagination: {
+        currentPage: data.currentPage,
+        totalPages: data.totalPages,
+        totalCount: data.totalCount,
+      },
     };
   } catch (error) {
     console.error("Error fetching listings:", error);
     return {
       cityName: cityExists,
       listings: [],
+      pagination: {
+        currentPage: 1,
+        totalPages: 0,
+        totalCount: 0,
+      },
     };
   }
 }
@@ -87,7 +125,11 @@ export default async function Page({ params, searchParams }) {
 
   return (
     <Suspense fallback={<div className="text-center py-8">Loading...</div>}>
-      <ClientPage initialData={data.listings} cityName={data.cityName} />
+      <ClientPage
+        listings={data.listings}
+        cityName={data.cityName}
+        pagination={data.pagination}
+      />
 
       {/* Cities Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
