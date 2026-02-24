@@ -1,109 +1,117 @@
 "use client";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Filter from "@/components/Filter";
 import ResaleCard from "@/components/ResaleCard";
-import LoadingBar from "@/components/LoadingBar";
-import { useWidePage } from "@/hooks/useWidePage";
-import Pagination from "@/components/Pagination";
+import { useRouter, useSearchParams } from "next/navigation";
 
-// Add this constant at the top of the file
-const ITEMS_PER_PAGE = 12; // or whatever number you want to show per page
+export default function ClientPage({ listings, cityName, pagination }) {
+  console.log(cityName);
+  const { currentPage, totalPages, totalCount } = pagination;
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
+  const navigate = (url, options) =>
+    startTransition(() => router.push(url, options));
 
-// Helper function to convert city names to URL-friendly format
-const toUrlFormat = (cityName) => cityName.toLowerCase().replace(/\s+/g, "-");
-
-export default function ClientPage({ initialData, cityName }) {
-  const [listings, setListings] = useState(initialData);
-  const [isLoading, setIsLoading] = useState(false);
-  const [filters, setFilters] = useState({
-    businessType: "",
-    priceRange: "",
-  });
-  const [currentPage, setCurrentPage] = useState(1);
-  const [isWidePage] = useWidePage();
-
-  // Filter and paginate the listings
-  const getFilteredListings = () => {
-    let filteredListings = [...listings];
-
-    // Apply business type filter if selected
-    if (filters.businessType) {
-      filteredListings = filteredListings?.filter((listing) =>
-        listing.BusinessType.includes(filters.businessType)
-      );
+  const goToPage = (page) => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     }
-
-    // Apply price range filter if selected
-    if (filters.priceRange) {
-      filteredListings = filteredListings?.filter((listing) => {
-        const price = Number(listing.ListPrice);
-        return (
-          price >= filters.priceRange.min && price <= filters.priceRange.max
-        );
-      });
-    }
-
-    return filteredListings;
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", page);
+    navigate(`/${cityName}?${params.toString()}`, { scroll: true });
   };
-
-  const filteredListings = getFilteredListings();
-  const totalListings = filteredListings?.length;
-  const totalPages = Math.ceil(totalListings / ITEMS_PER_PAGE);
-
-  // Get current page listings
-  const getCurrentPageListings = () => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    return filteredListings?.slice(startIndex, endIndex);
-  };
-
-  const handleFilterChange = (newFilters) => {
-    setFilters(newFilters);
-    setCurrentPage(1); // Reset to first page when filters change
-  };
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const currentListings = getCurrentPageListings();
 
   return (
     <>
-      {isLoading && <LoadingBar />}
-      <div className={`${isWidePage ? "sm:mx-20" : "max-w-5xl mx-auto"}`}>
+      <div className="sm:mx-20">
         <h1 className="md:text-4xl text-3xl font-bold text-gray-900">
-          {totalListings}+ Business Opportunities in {cityName}
+          {totalCount}+ Business Opportunities in {cityName}
         </h1>
         <p className="md:text-sm text-[13px] mb-4">
-          {totalListings}+ {cityName} businesses for sale. Book a showing for
-          gas stations, restaurants, motels, convenience stores and lands.
-          Prices from $1 to $5,000,000. Open houses available.
+          {totalCount}+ {cityName} businesses for sale. Book a showing for gas
+          stations, restaurants, motels, convenience stores and lands. Prices
+          from $1 to $5,000,000. Open houses available.
         </p>
-        <Filter
-          onFilterChange={handleFilterChange}
-          cityUrl={toUrlFormat(cityName)}
-        />
+        <Filter />
 
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2">
-          {currentListings.map((data) => (
+          {listings.map((data) => (
             <ResaleCard key={data.ListingKey} curElem={data} />
           ))}
         </div>
 
-        {currentListings.length === 0 && !isLoading && (
+        {listings.length === 0 && (
           <div className="text-center py-8 text-gray-500">
             No listings found matching your criteria
           </div>
         )}
 
-        {totalPages > 1 && !isLoading && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-1 sm:gap-2 mt-12 mb-20 w-full px-2">
+            <button
+              onClick={() => goToPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`px-2 py-2 sm:px-4 text-xs sm:text-sm border rounded transition-colors ${
+                currentPage === 1
+                  ? "pointer-events-none opacity-30"
+                  : "hover:bg-gray-50"
+              }`}
+            >
+              Prev
+            </button>
+
+            <div className="flex items-center gap-1 sm:gap-2">
+              {[...Array(totalPages)].map((_, i) => {
+                const pageNum = i + 1;
+                const isNeighbor = Math.abs(currentPage - pageNum) <= 1;
+
+                if (pageNum === 1 || pageNum === totalPages || isNeighbor) {
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => goToPage(pageNum)}
+                      className={`w-8 h-8 sm:w-10 sm:h-10 text-xs sm:text-sm flex items-center justify-center rounded border transition-colors ${
+                        currentPage === pageNum
+                          ? "bg-slate-800 text-white border-slate-800"
+                          : "hover:bg-gray-50 text-slate-600"
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                }
+
+                if (
+                  pageNum === currentPage - 2 ||
+                  pageNum === currentPage + 2
+                ) {
+                  return (
+                    <span
+                      key={pageNum}
+                      className="text-gray-400 text-xs sm:text-sm px-1"
+                    >
+                      ...
+                    </span>
+                  );
+                }
+
+                return null;
+              })}
+            </div>
+
+            <button
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={`px-2 py-2 sm:px-4 text-xs sm:text-sm border rounded transition-colors ${
+                currentPage === totalPages
+                  ? "pointer-events-none opacity-30"
+                  : "hover:bg-gray-50"
+              }`}
+            >
+              Next
+            </button>
+          </div>
         )}
       </div>
     </>

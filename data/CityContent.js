@@ -100,7 +100,7 @@ const CityContent = ({ cityName }) => {
     // Add more cities as needed
   };
 
-  const content = cityContent[cityName.toLowerCase()] || {
+  const content = cityContent[cityName?.toLowerCase()] || {
     title: `Investing in ${cityName}'s Commercial Real Estate`,
     description: `${cityName} offers unique opportunities in the Canadian commercial real estate market, with its own distinct advantages and market characteristics. As part of Ontario's growing economy, ${cityName} presents valuable investment potential for commercial property buyers.`,
     pros: [
