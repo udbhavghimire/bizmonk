@@ -2,14 +2,16 @@ import citiesData from "@/data/gta-cities.json";
 
 import { getRestaurantListings } from "@/api/getBusinessListings";
 import ListingListPage from "@/components/ListingListPage";
+import { notFound } from "next/navigation";
 
 const { cities: gtaCities } = citiesData;
 
-export default function CityRestaurants({ params }) {
+export default async function CityRestaurants({ params }) {
+  const resolvedParams = await params;
   const { cities: gtaCities } = citiesData;
 
   const cityExists = gtaCities.find(
-    (c) => c.toLowerCase() === params?.city.toLowerCase()
+    (c) => c.toLowerCase() === resolvedParams?.city.toLowerCase()
   );
 
   if (!cityExists) {
@@ -17,9 +19,9 @@ export default function CityRestaurants({ params }) {
   }
   return (
     <>
-      <ListingListPage
-        getListings={getRestaurantListings}
-        city={params?.city}
+        <ListingListPage
+          getListings={getRestaurantListings}
+          city={resolvedParams?.city}
         subtitle={` 500+ ${cityExists} restaurants for sale. Book a showing for restaurants.
           Prices from $1 to $5,000,000. Open houses available.`}
         title={` Restaurants for Sale in ${cityExists}`}
@@ -29,7 +31,8 @@ export default function CityRestaurants({ params }) {
 }
 
 export async function generateMetadata({ params }) {
-  const city = params.city;
+  const resolvedParams = await params;
+  const city = resolvedParams.city;
   const capitalizedCity = city.charAt(0).toUpperCase() + city.slice(1);
 
   return {
