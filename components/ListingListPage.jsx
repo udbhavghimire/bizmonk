@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import Filter from "@/components/Filter";
 import LoadingBar from "@/components/LoadingBar";
 import { notFound, useParams } from "next/navigation";
@@ -89,7 +89,9 @@ const ListingListPage = ({ getListings, city = null, title, subtitle }) => {
 
         <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
         <p className="text-sm mb-4">{subtitle}</p>
-        <Filter onFilterChange={handleFilterChange} cityUrl={cityUrl} />
+        <Suspense fallback={null}>
+          <Filter onFilterChange={handleFilterChange} cityUrl={cityUrl} />
+        </Suspense>
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {currentItems.map((listing) => (
@@ -148,3 +150,6 @@ const ListingListPage = ({ getListings, city = null, title, subtitle }) => {
 };
 
 export default ListingListPage;
+
+
+
