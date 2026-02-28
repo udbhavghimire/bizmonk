@@ -1,76 +1,86 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { businessTypes } from "@/constant/businessTypes";
 
-const Filter = ({ onFilterChange, cityUrl }) => {
+const MAX_PRICE = 2000000;
+
+const formatPrice = (value) =>
+  `$${Math.round(Number(value || 0)).toLocaleString("en-US")}`;
+
+const clampPrice = (value) => {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return 0;
+  return Math.min(MAX_PRICE, Math.max(0, num));
+};
+
+const Filter = ({ onFilterChange, onPendingChange, cityUrl }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [isRoutePending, startRouteTransition] = useTransition();
+
   const [businessType, setBusinessType] = useState("");
-  const [priceRange, setPriceRange] = useState("");
   const [isFiltering, setIsFiltering] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedPropertyType, setSelectedPropertyType] = useState(null);
-  const dropdownRef = useRef(null);
+  const [showBusinessModal, setShowBusinessModal] = useState(false);
+  const [showPriceModal, setShowPriceModal] = useState(false);
+  const [showSortModal, setShowSortModal] = useState(false);
+  const [sort, setSort] = useState("newest");
+  const [priceMin, setPriceMin] = useState(0);
+  const [priceMax, setPriceMax] = useState(MAX_PRICE);
 
-  const propertyTypes = [
-    "All Properties",
-    "Industrial",
-    "Medical/Dental",
-    "Warehouse",
-    "Retail Store Related",
-    "Professional Office",
+  const businessModalRef = useRef(null);
+  const priceModalRef = useRef(null);
+  const sortModalRef = useRef(null);
+
+  const businessTypeOptions = [
+    { label: "Restaurant", value: "restaurant" },
+    { label: "Convenience Store", value: "convenience-store" },
+    { label: "Medical/Dental", value: "medical-dental" },
   ];
-
-  const priceRanges = [
-    { label: "$0 - 500k", value: "0-500000", min: 0, max: 500000 },
-    {
-      label: "$500k - $999k",
-      value: "500000-999000",
-      min: 500000,
-      max: 999000,
-    },
-    {
-      label: "1mil - 1.5mil",
-      value: "1000000-1500000",
-      min: 1000000,
-      max: 1500000,
-    },
+  const sortOptions = [
+    { label: "Newest", value: "newest" },
+    { label: "Oldest", value: "oldest" },
+    { label: "Lowest Price", value: "price_asc" },
+    { label: "Highest Price", value: "price_desc" },
   ];
-
-  const slugifyPropertyType = (type) => {
-    if (type === "Retail Store Related") return "retail-store-related";
-    return type.toLowerCase().replace(/\s+/g, "-").replace(/\//g, "-");
-  };
-
-  const propertyTypeFromSlug = (slug) => {
-    if (!slug) return null;
-    return propertyTypes.find(
-      (type) => type !== "All Properties" && slugifyPropertyType(type) === slug,
-    );
-  };
 
   useEffect(() => {
     const urlBusinessType = searchParams.get("businessType") || "";
+    const urlSort = searchParams.get("sort") || "newest";
     const urlMinPrice = searchParams.get("minPrice");
     const urlMaxPrice = searchParams.get("maxPrice");
 
-    setBusinessType(urlBusinessType);
-    setSelectedPropertyType(propertyTypeFromSlug(urlBusinessType));
+    const nextMin = clampPrice(urlMinPrice ?? 0);
+    const nextMax = clampPrice(urlMaxPrice ?? MAX_PRICE);
 
-    const matchedPriceRange = priceRanges.find(
-      (range) =>
-        String(range.min) === String(urlMinPrice) &&
-        String(range.max) === String(urlMaxPrice),
-    );
-    setPriceRange(matchedPriceRange?.value || "");
+    setBusinessType(urlBusinessType);
+    setSort(urlSort);
+    setPriceMin(Math.min(nextMin, nextMax));
+    setPriceMax(Math.max(nextMin, nextMax));
   }, [searchParams]);
 
   useEffect(() => {
+    if (typeof onPendingChange === "function") {
+      onPendingChange(isRoutePending);
+    }
+  }, [isRoutePending, onPendingChange]);
+
+  useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowDropdown(false);
+      if (
+        businessModalRef.current &&
+        !businessModalRef.current.contains(event.target)
+      ) {
+        setShowBusinessModal(false);
+      }
+      if (
+        priceModalRef.current &&
+        !priceModalRef.current.contains(event.target)
+      ) {
+        setShowPriceModal(false);
+      }
+      if (sortModalRef.current && !sortModalRef.current.contains(event.target)) {
+        setShowSortModal(false);
       }
     };
 
@@ -114,14 +124,10 @@ const Filter = ({ onFilterChange, cityUrl }) => {
     params.delete("page");
     const query = params.toString();
     const basePath = pathname || (cityUrl ? `/${cityUrl}` : "");
-    router.push(query ? `${basePath}?${query}` : basePath);
+    startRouteTransition(() => {
+      router.push(query ? `${basePath}?${query}` : basePath);
+    });
   };
-
-  const hasActiveFilters = Boolean(
-    searchParams.get("businessType") ||
-    searchParams.get("minPrice") ||
-    searchParams.get("maxPrice"),
-  );
 
   const getCurrentMinPrice = () =>
     searchParams.get("minPrice") ? Number(searchParams.get("minPrice")) : null;
@@ -129,85 +135,96 @@ const Filter = ({ onFilterChange, cityUrl }) => {
   const getCurrentMaxPrice = () =>
     searchParams.get("maxPrice") ? Number(searchParams.get("maxPrice")) : null;
 
+  const hasActiveFilters = Boolean(
+    searchParams.get("businessType") ||
+    searchParams.get("minPrice") ||
+    searchParams.get("maxPrice"),
+  );
+
+  const hasActivePrice =
+    Number(searchParams.get("minPrice") || 0) > 0 ||
+    Number(searchParams.get("maxPrice") || MAX_PRICE) < MAX_PRICE;
+  const minPercent = (priceMin / MAX_PRICE) * 100;
+  const maxPercent = (priceMax / MAX_PRICE) * 100;
+
   const handleFilterChange = async (type, value) => {
     if (type === "business") {
       const nextBusinessType = businessType === value ? "" : value;
       setBusinessType(nextBusinessType);
-      setSelectedPropertyType(propertyTypeFromSlug(nextBusinessType));
       setIsFiltering(true);
       pushSearchParams({ businessType: nextBusinessType });
       debouncedFilterChange({
         businessType: nextBusinessType || null,
+        sort,
         minPrice: getCurrentMinPrice(),
         maxPrice: getCurrentMaxPrice(),
       });
-      return;
-    }
-
-    if (type === "propertyType") {
-      if (value === "All Properties") {
-        setSelectedPropertyType(null);
-        setBusinessType("");
-        setIsFiltering(true);
-        pushSearchParams({ businessType: null });
-        debouncedFilterChange({
-          businessType: null,
-          minPrice: getCurrentMinPrice(),
-          maxPrice: getCurrentMaxPrice(),
-        });
-        setShowDropdown(false);
-        return;
-      }
-
-      const slugifiedValue = slugifyPropertyType(value);
-      setSelectedPropertyType(value);
-      setBusinessType(slugifiedValue);
-      setIsFiltering(true);
-      pushSearchParams({ businessType: slugifiedValue });
-      debouncedFilterChange({
-        businessType: slugifiedValue,
-        minPrice: getCurrentMinPrice(),
-        maxPrice: getCurrentMaxPrice(),
-      });
-      setShowDropdown(false);
       return;
     }
 
     if (type === "price") {
-      setIsFiltering(true);
-      const newPriceRange = priceRange === value ? "" : value;
-      setPriceRange(newPriceRange);
+      const min = clampPrice(value?.min);
+      const max = clampPrice(value?.max);
+      const normalizedMin = Math.min(min, max);
+      const normalizedMax = Math.max(min, max);
 
-      const selectedRange = priceRanges.find(
-        (range) => range.value === newPriceRange,
-      );
+      setPriceMin(normalizedMin);
+      setPriceMax(normalizedMax);
+      setIsFiltering(true);
+
+      const minParam = normalizedMin <= 0 ? null : normalizedMin;
+      const maxParam = normalizedMax >= MAX_PRICE ? null : normalizedMax;
 
       pushSearchParams({
-        minPrice: selectedRange ? selectedRange.min : null,
-        maxPrice: selectedRange ? selectedRange.max : null,
+        minPrice: minParam,
+        maxPrice: maxParam,
       });
 
       debouncedFilterChange({
         businessType: businessType || null,
-        minPrice: selectedRange ? selectedRange.min : null,
-        maxPrice: selectedRange ? selectedRange.max : null,
+        sort,
+        minPrice: minParam,
+        maxPrice: maxParam,
+      });
+      return;
+    }
+
+    if (type === "sort") {
+      const nextSort = value || "newest";
+      setSort(nextSort);
+      setIsFiltering(true);
+      pushSearchParams({ sort: nextSort });
+      debouncedFilterChange({
+        businessType: businessType || null,
+        sort: nextSort,
+        minPrice: getCurrentMinPrice(),
+        maxPrice: getCurrentMaxPrice(),
       });
     }
   };
 
+  const applyCurrentPriceRange = () => {
+    handleFilterChange("price", { min: priceMin, max: priceMax });
+  };
+
   const clearAllFilters = () => {
     setBusinessType("");
-    setPriceRange("");
-    setSelectedPropertyType(null);
-    setShowDropdown(false);
+    setPriceMin(0);
+    setPriceMax(MAX_PRICE);
+    setShowBusinessModal(false);
+    setShowPriceModal(false);
+    setSort("newest");
+    setShowSortModal(false);
     setIsFiltering(true);
     pushSearchParams({
       businessType: null,
+      sort: null,
       minPrice: null,
       maxPrice: null,
     });
     debouncedFilterChange({
       businessType: null,
+      sort: null,
       minPrice: null,
       maxPrice: null,
     });
@@ -217,134 +234,271 @@ const Filter = ({ onFilterChange, cityUrl }) => {
     <div className="rounded-lg mb-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-3">
-          {/* <div className="flex flex-wrap gap-2">
-            {businessTypes
-              .filter((type) => type.value !== "retail-lease")
-              .map((type) => (
-                <button
-                  key={type.value}
-                  className={`px-3 py-1.5 text-sm rounded-full transition-all ${
-                    businessType === type.value
-                      ? "bg-blue-600 text-white shadow-md"
-                      : "bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300"
-                  } ${isFiltering ? "opacity-50 cursor-not-allowed" : ""}`}
-                  onClick={() => handleFilterChange("business", type.value)}
-                  disabled={isFiltering}
+          <div className="flex flex-wrap gap-2">
+            <div ref={businessModalRef} className="relative">
+              <button
+                className={`px-3 py-1.5 text-sm rounded-full transition-all flex items-center gap-1 bg-gray-50 border border-gray-200 text-gray-700 hover:border-gray-500 ${
+                  isFiltering ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                onClick={() => setShowBusinessModal((prev) => !prev)}
+                disabled={isFiltering}
+              >
+                <span>
+                  {businessType
+                    ? `Business Type : ${
+                        businessTypeOptions.find(
+                          (option) => option.value === businessType,
+                        )?.label || ""
+                      }`
+                    : "Business Type"}
+                </span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`h-4 w-4 transition-transform ${
+                    showBusinessModal ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  {type.label.split(" for ")[0]}
-                </button>
-              ))}
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
 
-            <div ref={dropdownRef} className="relative">
-              {selectedPropertyType ? (
-                <button
-                  className="px-3 py-1.5 text-sm rounded-full bg-blue-600 text-white shadow-md flex items-center gap-1"
-                  onClick={() => setShowDropdown(!showDropdown)}
-                  disabled={isFiltering}
-                >
-                  <span>{selectedPropertyType}</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className={`h-4 w-4 transition-transform ${showDropdown ? "rotate-180" : ""}`}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </button>
-              ) : (
-                <button
-                  className={`px-3 py-1.5 text-sm rounded-full transition-all flex items-center gap-1
-                    ${
-                      showDropdown
-                        ? "bg-blue-600 text-white shadow-md"
-                        : "bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300"
-                    }
-                    ${isFiltering ? "opacity-50 cursor-not-allowed" : ""}`}
-                  onClick={() => setShowDropdown(!showDropdown)}
-                  disabled={isFiltering}
-                >
-                  <span>Retail Lease</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className={`h-4 w-4 transition-transform ${showDropdown ? "rotate-180" : ""}`}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </button>
-              )}
-
-              {showDropdown && (
-                <div className="absolute top-full left-0 mt-1 w-52 bg-white border border-gray-200 rounded-md shadow-lg z-50 overflow-hidden">
-                  {propertyTypes.map((type) => (
+              {showBusinessModal && (
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-gray-200 rounded-md shadow-lg z-50 overflow-hidden">
+                  {businessTypeOptions.map((option) => (
                     <button
-                      key={type}
-                      className={`block w-full text-left px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors
-                        ${
-                          type === "All Properties"
-                            ? "font-semibold border-b border-gray-100 bg-gray-50 text-blue-600"
-                            : "text-gray-700"
-                        }`}
-                      onClick={() => handleFilterChange("propertyType", type)}
+                      key={option.value}
+                      className={`block w-full text-left px-4 py-2.5 text-sm transition-colors hover:bg-gray-50 ${
+                        businessType === option.value
+                          ? "bg-blue-50 text-blue-700 font-medium"
+                          : "text-gray-700"
+                      }`}
+                      onClick={() => {
+                        handleFilterChange("business", option.value);
+                        setShowBusinessModal(false);
+                      }}
                     >
-                      {type === "All Properties" && (
-                        <span className="mr-2">•</span>
-                      )}
-                      {type}
+                      {option.label}
                     </button>
                   ))}
                 </div>
               )}
             </div>
-          </div> */}
 
-          <div className="h-8 w-px bg-gray-200 mx-1"></div>
-
-          <div className="flex flex-wrap gap-2">
-            {priceRanges.map((range) => (
+            <div ref={priceModalRef} className="relative">
               <button
-                key={range.value}
-                className={`px-3 py-1.5 text-sm rounded-full transition-all ${
-                  priceRange === range.value
-                    ? "bg-blue-600 text-white shadow-md"
-                    : "bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300"
-                } ${isFiltering ? "opacity-50 cursor-not-allowed" : ""}`}
-                onClick={() => handleFilterChange("price", range.value)}
+                className={`px-3 py-1.5 text-sm rounded-full transition-all flex items-center gap-1 bg-gray-50 border border-gray-200 text-gray-700 hover:border-gray-500 ${
+                  isFiltering ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                onClick={() => setShowPriceModal((prev) => !prev)}
                 disabled={isFiltering}
               >
-                {range.label}
+                <span>
+                  {hasActivePrice
+                    ? `Price : ${formatPrice(priceMin)} - ${formatPrice(priceMax)}`
+                    : "Price"}
+                </span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`h-4 w-4 transition-transform ${
+                    showPriceModal ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
               </button>
-            ))}
+
+              {showPriceModal && (
+                <div className="absolute top-full left-0 mt-2 w-72 bg-white border border-gray-200 rounded-md shadow-lg z-50 p-4">
+                  <p className="text-xs text-gray-500 mb-3">
+                    Select price range
+                  </p>
+
+                  <div className="mb-5">
+                    <div className="relative h-8 flex items-center dual-range">
+                      <div className="absolute left-0 right-0 h-2 bg-gray-200 rounded-full" />
+                      <div
+                        className="absolute h-2 bg-blue-600 rounded-full"
+                        style={{
+                          left: `${minPercent}%`,
+                          width: `${Math.max(maxPercent - minPercent, 0)}%`,
+                        }}
+                      />
+                      <input
+                        type="range"
+                        min={0}
+                        max={MAX_PRICE}
+                        step={10000}
+                        value={priceMin}
+                        onChange={(e) =>
+                          setPriceMin(
+                            Math.min(Number(e.target.value), priceMax),
+                          )
+                        }
+                        onMouseUp={applyCurrentPriceRange}
+                        onTouchEnd={applyCurrentPriceRange}
+                        onKeyUp={applyCurrentPriceRange}
+                        className="dual-thumb"
+                      />
+                      <input
+                        type="range"
+                        min={0}
+                        max={MAX_PRICE}
+                        step={10000}
+                        value={priceMax}
+                        onChange={(e) =>
+                          setPriceMax(
+                            Math.max(Number(e.target.value), priceMin),
+                          )
+                        }
+                        onMouseUp={applyCurrentPriceRange}
+                        onTouchEnd={applyCurrentPriceRange}
+                        onKeyUp={applyCurrentPriceRange}
+                        className="dual-thumb"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs ">
+                    <span className="text-gray-700">
+                      {formatPrice(priceMin)}
+                    </span>
+                    <button
+                      className="text-blue-600 hover:text-blue-700 font-medium"
+                      onClick={() => {
+                        setPriceMin(0);
+                        setPriceMax(MAX_PRICE);
+                        handleFilterChange("price", { min: 0, max: MAX_PRICE });
+                      }}
+                    >
+                      Reset
+                    </button>
+                    <span className="text-gray-700">
+                      {formatPrice(priceMax)}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+
             {hasActiveFilters && (
               <button
-                className={`px-3 py-1.5 text-sm rounded-full transition-all ${
+                className={`px-3 py-1.5 text-sm transition-all underline underline-offset-2 ${
                   isFiltering
                     ? "opacity-50 cursor-not-allowed"
-                    : "bg-gray-50 border border-gray-300 text-gray-700 hover:bg-gray-100"
+                    : "text-red-600 hover:text-red-700"
                 }`}
                 onClick={clearAllFilters}
                 disabled={isFiltering}
               >
-                Clear All
+                ✕ Clear All
               </button>
             )}
           </div>
         </div>
+        <div ref={sortModalRef} className="relative">
+          <button
+            className={`px-3 py-1.5 text-sm rounded-full transition-all flex items-center gap-1 bg-gray-50 border border-gray-200 text-gray-700 hover:border-gray-500 ${
+              isFiltering ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            onClick={() => setShowSortModal((prev) => !prev)}
+            disabled={isFiltering}
+          >
+            <span>
+              {sortOptions.find((option) => option.value === sort)?.label || "Newest"}
+            </span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className={`h-4 w-4 transition-transform ${showSortModal ? "rotate-180" : ""}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          {showSortModal && (
+            <div className="absolute top-full right-0 mt-2 w-44 bg-white border border-gray-200 rounded-md shadow-lg z-50 overflow-hidden">
+              {sortOptions.map((option) => (
+                <button
+                  key={option.value}
+                  className={`block w-full text-left px-4 py-2.5 text-sm transition-colors hover:bg-gray-50 ${
+                    sort === option.value
+                      ? "bg-blue-50 text-blue-700 font-medium"
+                      : "text-gray-700"
+                  }`}
+                  onClick={() => {
+                    handleFilterChange("sort", option.value);
+                    setShowSortModal(false);
+                  }}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
+      <style jsx>{`
+        .dual-range .dual-thumb {
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 100%;
+          height: 24px;
+          margin: 0;
+          background: transparent;
+          pointer-events: none;
+          -webkit-appearance: none;
+          appearance: none;
+        }
+
+        .dual-range .dual-thumb::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 18px;
+          height: 18px;
+          border-radius: 9999px;
+          background: #2563eb;
+          border: 2px solid #ffffff;
+          box-shadow: 0 0 0 1px #2563eb;
+          cursor: pointer;
+          pointer-events: auto;
+        }
+
+        .dual-range .dual-thumb::-moz-range-thumb {
+          width: 18px;
+          height: 18px;
+          border-radius: 9999px;
+          background: #2563eb;
+          border: 2px solid #ffffff;
+          box-shadow: 0 0 0 1px #2563eb;
+          cursor: pointer;
+          pointer-events: auto;
+        }
+      `}</style>
     </div>
   );
 };

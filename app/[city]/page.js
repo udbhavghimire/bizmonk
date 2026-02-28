@@ -1,7 +1,10 @@
 import { Suspense } from "react";
 import citiesData from "@/data/gta-cities.json";
 import { notFound } from "next/navigation";
-import { fetchProperties, getSaleOfBusinessListings } from "@/api/getBusinessListings";
+import {
+  fetchProperties,
+  getSaleOfBusinessListings,
+} from "@/api/getBusinessListings";
 import { fetchMedia } from "@/api/getImageUrls";
 import ClientPage from "./ClientPage";
 import Link from "next/link";
@@ -20,8 +23,8 @@ const findCityByUrlFormat = (urlFormat) => {
 
 // Add metadata export
 export async function generateMetadata({ params }) {
-  const resolvedParams = await params;
-  const cityName = findCityByUrlFormat(resolvedParams.city);
+  const { city } = await params;
+  const cityName = findCityByUrlFormat(city);
 
   if (!cityName) {
     return {
@@ -30,34 +33,14 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  // Get the actual count of listings
-  try {
-    const data = await getSaleOfBusinessListings(cityName);
-    const listingCount = data?.value?.length || 0;
-
-    const title = `${listingCount}+ Business Opportunities in ${cityName}`;
-    const description = `${listingCount}+ ${cityName} businesses for sale. Book a showing for gas stations, restaurants, motels, convenience stores and lands. Prices from $1 to $5,000,000. Open houses available.`;
-
-    return {
-      title,
-      description,
-      openGraph: {
-        title,
-        description,
-      },
-    };
-  } catch (error) {
-    console.error("Error getting listing count:", error);
-    // Fallback if count fetch fails
-    return {
+  return {
+    title: `Business Opportunities in ${cityName}`,
+    description: `${cityName} businesses for sale. Book a showing for gas stations, restaurants, motels, convenience stores and lands. Prices from $1 to $5,000,000. Open houses available.`,
+    openGraph: {
       title: `Business Opportunities in ${cityName}`,
       description: `${cityName} businesses for sale. Book a showing for gas stations, restaurants, motels, convenience stores and lands. Prices from $1 to $5,000,000. Open houses available.`,
-      openGraph: {
-        title: `Business Opportunities in ${cityName}`,
-        description: `${cityName} businesses for sale. Book a showing for gas stations, restaurants, motels, convenience stores and lands. Prices from $1 to $5,000,000. Open houses available.`,
-      },
-    };
-  }
+    },
+  };
 }
 
 async function getCityData(city, searchParams) {
@@ -69,6 +52,7 @@ async function getCityData(city, searchParams) {
     const limit = 20;
     const skip = (currentPage - 1) * limit;
     const businessType = searchParams?.businessType || undefined;
+    const sort = searchParams?.sort || "newest";
     const minPrice = searchParams?.minPrice
       ? Number(searchParams.minPrice)
       : undefined;
@@ -85,6 +69,7 @@ async function getCityData(city, searchParams) {
       minPrice,
       maxPrice,
       businessType,
+      sort,
     });
 
     const listings = await Promise.all(
@@ -118,9 +103,9 @@ async function getCityData(city, searchParams) {
 }
 
 export default async function Page({ params, searchParams }) {
-  const resolvedParams = await params;
+  const { city } = await params;
   const resolvedSearchParams = await searchParams;
-  const data = await getCityData(resolvedParams.city, resolvedSearchParams);
+  const data = await getCityData(city, resolvedSearchParams);
 
   if (!data) {
     notFound();

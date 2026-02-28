@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import TimeAgo from "./TimeAgo";
 import { getImageUrls } from "@/api/getImageUrls";
-import { Heart } from "lucide-react";
+import { Heart, Home } from "lucide-react";
 import { slugGenerator } from "@/helpers/slugGenerator";
 
 const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
@@ -80,7 +80,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
   })}`;
 
   return (
-    <div className="w-full p-0.5">
+    <div className="w-full p-0.5 ">
       <Link href={listingUrl}>
         <div className="group relative flex flex-col rounded-lg transition-all duration-300 hover:shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
           {/* Image Container */}
@@ -112,9 +112,6 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
             {/* Property Type & Time Badge */}
             <div className="absolute bottom-3 left-3 hidden  sm:flex gap-2 z-10">
               <span className="bg-white rounded px-2.5 py-1 text-xs font-medium">
-                {curElem.BusinessType}
-              </span>
-              <span className="bg-white rounded px-2.5 py-1 text-xs font-medium">
                 <TimeAgo
                   modificationTimestamp={curElem.OriginalEntryTimestamp}
                 />
@@ -128,34 +125,9 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
           <div className="pt-3 flex flex-col px-1">
             {/* Price */}
             <div className="text-[24px] font-bold text-gray-900">{price}</div>
-
-            {/* Property Details */}
-            <div className="flex items-center gap-2 mt-1 text-sm">
-              {curElem.BedroomsTotal && (
-                <span className="text-gray-700">
-                  {curElem.BedroomsTotal} Bed
-                </span>
-              )}
-              {curElem.BathroomsTotalInteger && (
-                <>
-                  <span className="text-gray-700">
-                    {curElem.BathroomsTotalInteger} Bath
-                  </span>
-                </>
-              )}
-              {curElem.BuildingAreaTotal && (
-                <>
-                  <span className="text-gray-700">
-                    {Math.floor(curElem.BuildingAreaTotal).toLocaleString()}{" "}
-                    Sq.Ft.
-                  </span>
-                </>
-              )}
-            </div>
-
             {/* Address */}
-            <div className="mt-1">
-              <div className="text-[15px] text-gray-700 line-clamp-1">
+            <div>
+              <div className="text-[15px] text-gray-900 line-clamp-1">
                 {curElem.StreetName
                   ? `${curElem.StreetNumber} ${curElem.StreetName} ${
                       curElem.StreetSuffix || ""
@@ -165,8 +137,13 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
               </div>
             </div>
 
+            <div className="flex items-center text-gray-900 text-sm">
+              <Home className="w-4 h-4 mr-1 "></Home>
+              {curElem.BusinessType}
+            </div>
+
             {/* Listed By */}
-            <div className="mt-1 text-xs text-gray-500">
+            <div className="mt-1 text-sm text-gray-900 mb-2 truncate">
               Listed by: {curElem.ListOfficeName || "Real Estate Office"}
             </div>
           </div>

@@ -2,11 +2,10 @@
 
 import { useEffect, Suspense } from "react";
 import NProgress from "nprogress";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const LoadingBarContent = () => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     NProgress.configure({
@@ -57,7 +56,7 @@ const LoadingBarContent = () => {
       clearTimeout(timer);
       NProgress.done();
     };
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   return null;
 };

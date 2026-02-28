@@ -4,18 +4,35 @@ import PropertyDisplaySection from "@/components/PropertyDisplaySection";
 import Slider from "@/components/Slider";
 import HomepageListing from "@/components/HomepageListing.jsx";
 import FeaturedFranchises from "@/components/FeaturedFranchises";
-import {
-  getConvenienceStoreListings,
-  getOfficeListings,
-  getRestaurantListings,
-  getBramptonRestaurantsUnder300k,
-  getBramptonStoresUnder500k,
-  getTorontoCommercialSpace,
-} from "@/api/getBusinessListings";
+import { fetchProperties } from "@/api/getBusinessListings";
+import { fetchMedia } from "@/api/getImageUrls";
 import { cities } from "@/constant/cities";
 import FranchisesList from "@/components/FranchisesList";
 
 export default async function Home() {
+  const attachMediaToListings = async (listings = [], mediaCount = 1) => {
+    return Promise.all(
+      (listings || []).map(async (property) => {
+        try {
+          const media = await fetchMedia(property.ListingKey, mediaCount);
+          return { ...property, Media: media };
+        } catch (error) {
+          console.error(
+            "Error fetching media for listing:",
+            property.ListingKey,
+            error,
+          );
+          return { ...property, Media: [] };
+        }
+      }),
+    );
+  };
+
+  const fetchHomeListings = async (params) => {
+    const response = await fetchProperties(params);
+    return attachMediaToListings(response?.items || [], 1);
+  };
+
   const [
     convenienceStoreListings,
     restaurantListings,
@@ -24,12 +41,47 @@ export default async function Home() {
     bramptonStores,
     torontoCommercial,
   ] = await Promise.all([
-    getConvenienceStoreListings({ numberOfListings: 4 }),
-    getRestaurantListings({ numberOfListings: 4 }),
-    getOfficeListings({ numberOfListings: 4 }),
-    getBramptonRestaurantsUnder300k(),
-    getBramptonStoresUnder500k(),
-    getTorontoCommercialSpace(),
+    fetchHomeListings({
+      top: 4,
+      skip: 0,
+      businessType: "convenience-store",
+      sort: "newest",
+    }),
+    fetchHomeListings({
+      top: 4,
+      skip: 0,
+      businessType: "restaurant",
+      sort: "newest",
+    }),
+    fetchHomeListings({
+      top: 4,
+      skip: 0,
+      businessType: "professional-office",
+      sort: "newest",
+    }),
+    fetchHomeListings({
+      city: "Brampton",
+      top: 8,
+      skip: 0,
+      businessType: "restaurant",
+      maxPrice: 300000,
+      sort: "newest",
+    }),
+    fetchHomeListings({
+      city: "Brampton",
+      top: 8,
+      skip: 0,
+      businessType: "convenience-store",
+      maxPrice: 500000,
+      sort: "newest",
+    }),
+    fetchHomeListings({
+      city: "Toronto",
+      top: 8,
+      skip: 0,
+      businessType: "professional-office",
+      sort: "newest",
+    }),
   ]);
 
   return (
@@ -204,14 +256,14 @@ export default async function Home() {
           {/* Featured Franchises */}
           <FeaturedFranchises />
 
-            <div className="text-center mt-6 sm:mt-8 w-full flex justify-center">
-              <Link
-                href="/franchise-opportunity/ontario"
-                className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg inline-flex items-center gap-2 text-sm sm:text-base font-bold"
-              >
-                View All Franchises in Ontario
-              </Link>
-            </div>
+          <div className="text-center mt-6 sm:mt-8 w-full flex justify-center">
+            <Link
+              href="/franchise-opportunity/ontario"
+              className="inline-flex w-full max-w-xs items-center justify-center gap-2 rounded-full bg-black px-6 py-3 text-center text-sm font-bold text-white transition-colors hover:bg-primary/90 sm:max-w-lg sm:text-base whitespace-normal"
+            >
+              View All Franchises in Ontario
+            </Link>
+          </div>
           {/* FranchisesList component here */}
           <FranchisesList />
 
@@ -416,7 +468,7 @@ export default async function Home() {
             <div className="text-center mt-12 w-full flex justify-center">
               <Link
                 href="/commercial/ontario"
-                className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
+                className="block w-full max-w-xs rounded-full bg-black px-6 py-3 text-center font-medium text-white transition-colors hover:bg-primary/90 sm:max-w-lg whitespace-normal"
               >
                 View All Commercial Properties in Ontario
               </Link>
@@ -481,7 +533,7 @@ export default async function Home() {
       /> */}
 
         {/* Cities Section */}
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Business Properties for sale in your city
@@ -515,7 +567,7 @@ export default async function Home() {
         <PropertyDisplaySection
           title="Latest Convenience Store Listings"
           subtitle="Discover turnkey convenience store opportunities in prime locations"
-          exploreAllLink="/convenience-store-for-sale"
+          exploreAllLink="/toronto?businessType=convenience-store"
         >
           <Slider data={convenienceStoreListings} />
         </PropertyDisplaySection>
@@ -524,102 +576,9 @@ export default async function Home() {
         <PropertyDisplaySection
           title="Featured Restaurant Listings"
           subtitle="Explore profitable restaurant businesses ready for new ownership"
-          exploreAllLink="/restaurant-for-sale"
+          exploreAllLink="/toronto?businessType=restaurant"
         >
           <Slider data={restaurantListings} />
-        </PropertyDisplaySection>
-
-        <div
-          id="categories"
-          className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24"
-        >
-          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-            Browse by Category
-          </h2>
-
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            <Link
-              href="/restaurant-for-sale"
-              className="group relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
-            >
-              <div className="relative h-64">
-                <img
-                  src="/restaurant.webp"
-                  alt="Restaurant interior"
-                  className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-xl font-semibold text-white">
-                    Restaurants for Sale
-                  </h3>
-                  <p className="mt-2 text-sm text-gray-200">
-                    Browse available restaurant spaces and turnkey operations
-                  </p>
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              href="/convenience-store-for-sale"
-              className="group relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
-            >
-              <div className="relative h-64">
-                <img
-                  src="/store.jpg"
-                  alt="Convenience store"
-                  className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-xl font-semibold text-white">
-                    Convenience Stores for Sale
-                  </h3>
-                  <p className="mt-2 text-sm text-gray-200">
-                    Explore convenience store opportunities
-                  </p>
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              href="/retail-lease"
-              className="group relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
-            >
-              <div className="relative h-64">
-                <img
-                  src="/office.jpeg"
-                  alt="Modern Retail Lease"
-                  className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-xl font-semibold text-white">
-                    Retail Lease
-                  </h3>
-                  <p className="mt-2 text-sm text-gray-200">
-                    Find the perfect Retail Lease for your business
-                  </p>
-                </div>
-              </div>
-            </Link>
-          </div>
-          <div className="text-center mt-8 flex w-full justify-center">
-            <Link
-              href="/restaurant-for-sale"
-              className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
-            >
-              View Restaurant Listings
-            </Link>
-          </div>
-        </div>
-
-        <PropertyDisplaySection
-          title="Premium Retail Leases"
-          subtitle="Find the perfect Retail Lease for your business growth"
-          exploreAllLink="/retail-lease"
-        >
-          <Slider data={officeListings} />
         </PropertyDisplaySection>
 
         <Newsletter />

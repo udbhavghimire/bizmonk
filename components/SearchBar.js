@@ -118,7 +118,7 @@ export default function SearchBar({ variant = "default" }) {
 
   // Default variant (for navbar)
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <div className="relative flex items-center">
         <MagnifyingGlassIcon className="absolute left-3 h-4 w-4 text-gray-400" />
         <input
@@ -126,7 +126,7 @@ export default function SearchBar({ variant = "default" }) {
           value={query}
           onChange={(e) => handleSearch(e.target.value)}
           placeholder="Search by city..."
-          className=" pl-9  py-2 text-sm border border-gray-200 rounded-md
+          className="w-full pl-9 py-2 text-sm border border-gray-200 rounded-md
                      focus:outline-none focus:ring-1 focus:ring-primary/20 focus:border-primary
                      transition-all duration-200 bg-white/90 text-gray-900"
         />

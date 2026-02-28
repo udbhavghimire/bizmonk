@@ -14,6 +14,7 @@ const Slider = ({ data, type }) => {
   const scrollRef = useRef(null); //used to hold scroll value
   const cardRef = useRef(null); //used to hold card width value
   const { isMobileView } = useDeviceView();
+  const sliderData = Array.isArray(data) ? data : [];
   //business is returned as Sale of business so we need to modify it to Business
 
   const slideLeft = () => {
@@ -63,7 +64,7 @@ const Slider = ({ data, type }) => {
         id="slider"
         ref={scrollRef}
       >
-        {data?.map((curElem, index) => {
+        {sliderData.map((curElem, index) => {
           if (
             curElem.ListingKey !== "C8446018" &&
             curElem.ListingKey !== "C8450446"
