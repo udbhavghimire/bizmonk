@@ -20,7 +20,8 @@ const findCityByUrlFormat = (urlFormat) => {
 
 // Add metadata export
 export async function generateMetadata({ params }) {
-  const cityName = findCityByUrlFormat(params.city);
+  const resolvedParams = await params;
+  const cityName = findCityByUrlFormat(resolvedParams.city);
 
   if (!cityName) {
     return {
@@ -117,7 +118,9 @@ async function getCityData(city, searchParams) {
 }
 
 export default async function Page({ params, searchParams }) {
-  const data = await getCityData(params.city, searchParams);
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  const data = await getCityData(resolvedParams.city, resolvedSearchParams);
 
   if (!data) {
     notFound();

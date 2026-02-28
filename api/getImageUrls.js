@@ -1,6 +1,46 @@
 "use server";
 
-import { commercial } from "./routes/fetchRoutes";
+const MEDIA_FALLBACK_URL = "/icons/no-photo.png";
+const FETCH_TIMEOUT_MS = Number(process.env.AMPRE_FETCH_TIMEOUT_MS || 10000);
+const FETCH_RETRY_COUNT = 1;
+
+const getErrorCode = (err) =>
+  err?.code || err?.cause?.code || err?.name || "UNKNOWN_FETCH_ERROR";
+
+const fetchWithTimeout = async (url, options = {}, timeoutMs = FETCH_TIMEOUT_MS) => {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
+};
+
+const fetchJsonWithRetry = async (url, options, retries = FETCH_RETRY_COUNT) => {
+  let lastError;
+
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const response = await fetchWithTimeout(url, options);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      lastError = error;
+      if (attempt === retries) {
+        throw error;
+      }
+    }
+  }
+
+  throw lastError;
+};
 
 export const getImageUrls = async ({
   ResourceRecordKey,
@@ -16,32 +56,37 @@ export const getImageUrls = async ({
     },
     // cache: "no-store",
   };
-  // 1. Fetch the photo count for the listing
   const apiBase = "https://pillar9.homebaba.ca";
-  const countRes = await fetch(
-    `https://query.ampre.ca/odata/Media?$select = MediaKey&$filter=ResourceRecordKey eq '${ResourceRecordKey}' and ImageSizeDescription eq 'Large' and MediaStatus eq 'Active'`,
-    options,
-  );
-  const response = await countRes.json();
-  const countData = response?.value?.length;
 
-  // 2. If there are no photos, return an empty array
-  if (!countData || countData === 0) {
-    return [];
-  }
+  try {
+    // 1. Fetch the photo count for the listing
+    const response = await fetchJsonWithRetry(
+      `https://query.ampre.ca/odata/Media?$select=MediaKey&$filter=ResourceRecordKey eq '${ResourceRecordKey}' and ImageSizeDescription eq 'Large' and MediaStatus eq 'Active'`,
+      options,
+    );
+    const countData = response?.value?.length;
 
-  // 3. Build the array of image URLs
-  // If thumbnailOnly, just return the first image
-  if (thumbnailOnly) {
-    return [`${apiBase}/images/${ResourceRecordKey}-0.jpg`];
-  }
+    // 2. If there are no photos, return an empty array
+    if (!countData || countData === 0) {
+      return [];
+    }
 
-  // Otherwise, return all images
-  const urls = [];
-  for (let i = 0; i <= countData; i++) {
-    urls.push(`${apiBase}/images/${ResourceRecordKey}-${i}.jpg`);
+    // 3. Build the array of image URLs
+    if (thumbnailOnly) {
+      return [`${apiBase}/images/${ResourceRecordKey}-0.jpg`];
+    }
+
+    const urls = [];
+    for (let i = 0; i <= countData; i++) {
+      urls.push(`${apiBase}/images/${ResourceRecordKey}-${i}.jpg`);
+    }
+    return urls;
+  } catch (err) {
+    console.warn(
+      `getImageUrls fallback for ${ResourceRecordKey}: ${getErrorCode(err)}`,
+    );
+    return [MEDIA_FALLBACK_URL];
   }
-  return urls;
 };
 
 const mediaTypeToExtension = (mediaType) => {
@@ -75,7 +120,7 @@ export async function fetchMedia(listingKey, mediaCount = 20) {
     params.push(`$orderby=${encodeURIComponent("Order asc")}`);
     const url = `https://query.ampre.ca/odata/Media?${params.join("&")}`;
 
-    const res = await fetch(url, {
+    const data = await fetchJsonWithRetry(url, {
       headers: {
         Authorization: `Bearer ${process.env.BEARER_TOKEN_FOR_API}`,
         Accept: "application/json",
@@ -83,20 +128,21 @@ export async function fetchMedia(listingKey, mediaCount = 20) {
       next: { revalidate: 60 },
     });
 
-    if (!res.ok) {
-      console.error(`Failed to fetch media for ${listingKey}: ${res.status}`);
-      return [];
-    }
-
-    const data = await res.json();
-
     const media = data.value || [];
     return media.map((item) => ({
       ...item,
       MediaURL: buildMediaUrl(listingKey, item.MediaKey, item.MediaType),
     }));
   } catch (err) {
-    console.error(`fetchMedia error for listing ${listingKey}`, err);
-    return [];
+    console.warn(
+      `fetchMedia fallback for listing ${listingKey}: ${getErrorCode(err)}`,
+    );
+    return [
+      {
+        MediaKey: "fallback",
+        MediaType: "image/png",
+        MediaURL: MEDIA_FALLBACK_URL,
+      },
+    ];
   }
 }
