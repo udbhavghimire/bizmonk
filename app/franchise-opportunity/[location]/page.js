@@ -12,8 +12,8 @@ const cities = Object.keys(franchiseLocations).map((key) => {
     .join(" ");
 });
 
-export default function FranchiseOpportunityPage({ params }) {
-  const { location } = params;
+export default async function FranchiseOpportunityPage({ params }) {
+  const { location } = await params;
 
   try {
     const locationData = getLocationContent(location);
@@ -39,6 +39,7 @@ export default function FranchiseOpportunityPage({ params }) {
             <div className="grid grid-cols-1 md:grid-cols-3 md:gap-3 gap-2 max-w-6xl mx-auto">
               {locationData?.franchises.map((franchise) => (
                 <Link
+                  key={franchise.name}
                   href={`/franchise-opportunity/${location}/${franchise.name
                     .toLowerCase()
                     .replace(/\s+/g, "-")
