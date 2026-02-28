@@ -4,33 +4,33 @@ import PropertyDisplaySection from "@/components/PropertyDisplaySection";
 import Slider from "@/components/Slider";
 import HomepageListing from "@/components/HomepageListing.jsx";
 import FeaturedFranchises from "@/components/FeaturedFranchises";
-import {
-  getConvenienceStoreListings,
-  getOfficeListings,
-  getRestaurantListings,
-  getBramptonRestaurantsUnder300k,
-  getBramptonStoresUnder500k,
-  getTorontoCommercialSpace,
-} from "@/api/getBusinessListings";
+// import {
+//   getConvenienceStoreListings,
+//   getOfficeListings,
+//   getRestaurantListings,
+//   getBramptonRestaurantsUnder300k,
+//   getBramptonStoresUnder500k,
+//   getTorontoCommercialSpace,
+// } from "@/api/getBusinessListings";
 import { cities } from "@/constant/cities";
 import FranchisesList from "@/components/FranchisesList";
 
 export default async function Home() {
-  const [
-    convenienceStoreListings,
-    restaurantListings,
-    officeListings,
-    bramptonRestaurants,
-    bramptonStores,
-    torontoCommercial,
-  ] = await Promise.all([
-    getConvenienceStoreListings({ numberOfListings: 4 }),
-    getRestaurantListings({ numberOfListings: 4 }),
-    getOfficeListings({ numberOfListings: 4 }),
-    getBramptonRestaurantsUnder300k(),
-    getBramptonStoresUnder500k(),
-    getTorontoCommercialSpace(),
-  ]);
+  // const [
+  //   convenienceStoreListings,
+  //   restaurantListings,
+  //   officeListings,
+  //   bramptonRestaurants,
+  //   bramptonStores,
+  //   torontoCommercial,
+  // ] = await Promise.all([
+  //   getConvenienceStoreListings({ numberOfListings: 4 }),
+  //   getRestaurantListings({ numberOfListings: 4 }),
+  //   getOfficeListings({ numberOfListings: 4 }),
+  //   getBramptonRestaurantsUnder300k(),
+  //   getBramptonStoresUnder500k(),
+  //   getTorontoCommercialSpace(),
+  // ]);
 
   return (
     <>
@@ -204,14 +204,14 @@ export default async function Home() {
           {/* Featured Franchises */}
           <FeaturedFranchises />
 
-            <div className="text-center mt-6 sm:mt-8 w-full flex justify-center">
-              <Link
-                href="/franchise-opportunity/ontario"
-                className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg inline-flex items-center gap-2 text-sm sm:text-base font-bold"
-              >
-                View All Franchises in Ontario
-              </Link>
-            </div>
+          <div className="text-center mt-6 sm:mt-8 w-full flex justify-center">
+            <Link
+              href="/franchise-opportunity/ontario"
+              className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg inline-flex items-center gap-2 text-sm sm:text-base font-bold"
+            >
+              View All Franchises in Ontario
+            </Link>
+          </div>
           {/* FranchisesList component here */}
           <FranchisesList />
 
@@ -467,11 +467,11 @@ export default async function Home() {
           </div> */}
         </div>
 
-        <HomepageListing
+        {/* <HomepageListing
           bramptonRestaurants={bramptonRestaurants}
           bramptonStores={bramptonStores}
           torontoCommercial={torontoCommercial}
-        />
+        /> */}
 
         {/* <TextWithContactButton
         title="Are you looking to start a business?"
@@ -512,22 +512,22 @@ export default async function Home() {
           </div>
         </div>
 
-        <PropertyDisplaySection
+        {/* <PropertyDisplaySection
           title="Latest Convenience Store Listings"
           subtitle="Discover turnkey convenience store opportunities in prime locations"
           exploreAllLink="/convenience-store-for-sale"
         >
           <Slider data={convenienceStoreListings} />
-        </PropertyDisplaySection>
+        </PropertyDisplaySection> */}
         {/* Category Section */}
 
-        <PropertyDisplaySection
+        {/* <PropertyDisplaySection
           title="Featured Restaurant Listings"
           subtitle="Explore profitable restaurant businesses ready for new ownership"
           exploreAllLink="/restaurant-for-sale"
         >
           <Slider data={restaurantListings} />
-        </PropertyDisplaySection>
+        </PropertyDisplaySection> */}
 
         <div
           id="categories"
@@ -614,13 +614,13 @@ export default async function Home() {
           </div>
         </div>
 
-        <PropertyDisplaySection
+        {/* <PropertyDisplaySection
           title="Premium Retail Leases"
           subtitle="Find the perfect Retail Lease for your business growth"
           exploreAllLink="/retail-lease"
         >
           <Slider data={officeListings} />
-        </PropertyDisplaySection>
+        </PropertyDisplaySection> */}
 
         <Newsletter />
       </div>

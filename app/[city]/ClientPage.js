@@ -1,19 +1,28 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import Filter from "@/components/Filter";
 import ResaleCard from "@/components/ResaleCard";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function ClientPage({ listings, cityName, pagination }) {
-  console.log(cityName);
   const { currentPage, totalPages, totalCount } = pagination;
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
+  const [isFilterPending, setIsFilterPending] = useState(false);
+  const [isPagePending, setIsPagePending] = useState(false);
+  const showContentSkeleton = isFilterPending || isPagePending;
   const navigate = (url, options) =>
     startTransition(() => router.push(url, options));
 
+  useEffect(() => {
+    setIsFilterPending(false);
+    setIsPagePending(false);
+  }, [listings, currentPage, totalPages, totalCount]);
+
   const goToPage = (page) => {
+    if (page < 1 || page > totalPages || page === currentPage) return;
+    setIsPagePending(true);
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     }
@@ -33,21 +42,51 @@ export default function ClientPage({ listings, cityName, pagination }) {
           stations, restaurants, motels, convenience stores and lands. Prices
           from $1 to $5,000,000. Open houses available.
         </p>
-        <Filter />
+        <Filter onPendingChange={setIsFilterPending} />
 
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2">
-          {listings.map((data) => (
-            <ResaleCard key={data.ListingKey} curElem={data} />
-          ))}
-        </div>
+        {showContentSkeleton ? (
+          <>
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 animate-pulse">
+              {Array.from({ length: 8 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="rounded-xl border border-gray-200 bg-white overflow-hidden"
+                >
+                  <div className="h-36 sm:h-40 bg-gray-200" />
+                  <div className="p-3 space-y-2">
+                    <div className="h-4 w-4/5 bg-gray-200 rounded" />
+                    <div className="h-4 w-3/5 bg-gray-200 rounded" />
+                    <div className="h-3 w-1/2 bg-gray-200 rounded" />
+                    <div className="h-8 w-full bg-gray-200 rounded mt-2" />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex justify-center items-center gap-2 mt-12 mb-20 animate-pulse">
+              <div className="h-9 w-16 bg-gray-200 rounded" />
+              <div className="h-9 w-9 bg-gray-200 rounded" />
+              <div className="h-9 w-9 bg-gray-200 rounded" />
+              <div className="h-9 w-9 bg-gray-200 rounded" />
+              <div className="h-9 w-16 bg-gray-200 rounded" />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2">
+              {listings.map((property) => (
+                <ResaleCard key={property.ListingKey} curElem={property} />
+              ))}
+            </div>
 
-        {listings.length === 0 && (
-          <div className="text-center py-8 text-gray-500">
-            No listings found matching your criteria
-          </div>
+            {listings.length === 0 && (
+              <div className="text-center py-8 text-gray-500">
+                No listings found matching your criteria
+              </div>
+            )}
+          </>
         )}
 
-        {totalPages > 1 && (
+        {!showContentSkeleton && totalPages > 1 && (
           <div className="flex justify-center items-center gap-1 sm:gap-2 mt-12 mb-20 w-full px-2">
             <button
               onClick={() => goToPage(currentPage - 1)}

@@ -227,11 +227,18 @@ export async function fetchProperties({
   minPrice,
   maxPrice,
   businessType,
+  sort = "newest",
 }) {
+  const SORT_ORDER_MAP = {
+    newest: "OriginalEntryTimestamp desc",
+    oldest: "OriginalEntryTimestamp asc",
+    price_desc: "ListPrice desc",
+    price_asc: "ListPrice asc",
+  };
+  const orderBy = SORT_ORDER_MAP[sort] || SORT_ORDER_MAP.newest;
+
   const params = [`$top=${top}`, `$skip=${skip}`, `$count=true`];
-  params.push(
-    `$orderby=${encodeURIComponent("OriginalEntryTimestamp desc")}`,
-  );
+  params.push(`$orderby=${encodeURIComponent(orderBy)}`);
 
   const filters = [`PropertySubType eq 'Sale Of Business'`];
 
@@ -243,7 +250,7 @@ export async function fetchProperties({
   if (businessType) {
     const apiBusinessType = BUSINESS_TYPE_API_MAP[businessType];
     if (apiBusinessType) {
-      filters.push(`BusinessType/any(bt:bt eq '${apiBusinessType}')`);
+      filters.push(`BusinessType in ('${apiBusinessType}')`);
     }
   }
 
