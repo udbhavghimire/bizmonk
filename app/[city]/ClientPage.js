@@ -4,7 +4,7 @@ import Filter from "@/components/Filter";
 import ResaleCard from "@/components/ResaleCard";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function ClientPage({ listings, cityName, pagination }) {
+export default function ClientPage({ listings, cityName, pagination, categorySlug }) {
   const { currentPage, totalPages, totalCount } = pagination;
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -31,14 +31,23 @@ export default function ClientPage({ listings, cityName, pagination }) {
     navigate(`/${cityName}?${params.toString()}`, { scroll: true });
   };
 
+  let displayCategory = "Business Opportunities";
+  let displayCategoryLower = "businesses";
+  
+  if (categorySlug) {
+    const formattedCategory = categorySlug.replace(/-for-sale$/i, '').replace(/-lease$/i, '').replace(/-/g, ' ');
+    displayCategory = formattedCategory.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') + " Businesses";
+    displayCategoryLower = formattedCategory.toLowerCase() + " businesses";
+  }
+
   return (
     <>
       <div className="sm:mx-20">
         <h1 className="md:text-4xl text-3xl font-bold text-gray-900">
-          {totalCount}+ Business Opportunities in {cityName}
+          {totalCount}+ {displayCategory} in {cityName}
         </h1>
-        <p className="md:text-sm text-[13px] mb-4">
-          {totalCount}+ {cityName} businesses for sale. Book a showing for gas
+        <p className="md:text-sm text-[13px] mb-4 text-gray-600">
+          {totalCount}+ {cityName} {displayCategoryLower} for sale. Book a showing for gas
           stations, restaurants, motels, convenience stores and lands. Prices
           from $1 to $5,000,000. Open houses available.
         </p>

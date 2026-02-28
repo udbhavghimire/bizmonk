@@ -55,58 +55,42 @@ export default function SearchBar({ variant = "default" }) {
 
   if (variant === "hero") {
     return (
-      <div className="relative  mx-auto">
-        <div className="relative">
-          <div className="relative flex items-center">
+      <div className="relative w-full">
+        <div className="flex items-center bg-gray-50 border border-gray-200 rounded-full p-1.5 focus-within:shadow-sm focus-within:border-gray-300 transition-all duration-200">
+          <div className="flex-1 flex items-center px-6">
+            <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 mr-3" />
             <input
               type="text"
               value={query}
               onChange={(e) => handleSearch(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
-              placeholder="Search business opportunities"
-              className="w-full px-3 py-5 text-base border border-gray-300 rounded-full
-                         focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary
-                         transition-all duration-200 bg-white shadow-sm
-                         text-gray-900 placeholder-gray-400"
+              placeholder="Search businesses or cities..."
+              className="w-full bg-transparent border-none outline-none text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-0 text-base px-0"
+              style={{ boxShadow: "none" }}
             />
           </div>
-          <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center space-x-3">
-            <div className="h-6 w-[1px] bg-gray-200"></div>
-          </div>
-        </div>
-
-        {/* Quick city links */}
-        <div className="mt-8 flex flex-wrap md:gap-4 gap-1 justify-center">
-          {popularCities.map((city) => (
-            <Link
-              key={city}
-              href={`/${toUrlFormat(city)}`}
-              onClick={startNavigationLoading}
-              className="px-4 py-1.5 text-sm bg-white/80 backdrop-blur-sm rounded-full
-                         text-gray-600 hover:text-primary border border-gray-200
-                         transition-all duration-200 hover:shadow-md hover:-translate-y-0.5
-                         hover:border-primary/20"
-            >
-              {city}
-            </Link>
-          ))}
+          <button 
+             onClick={handleSearchSubmit}
+             className="bg-primary text-white md:px-8 px-6 py-3 rounded-full font-semibold text-sm md:text-base hover:bg-blue-700 transition-colors">
+            Search
+          </button>
         </div>
 
         {suggestions.length > 0 && (
           <div
-            className="absolute top-16 z-10 w-full  bg-white rounded-lg shadow-lg 
+            className="absolute top-16 z-20 w-full bg-white rounded-2xl shadow-xl 
                        border border-gray-100 overflow-hidden backdrop-blur-sm"
           >
-            <ul className="max-h-72 overflow-auto">
+            <ul className="max-h-72 overflow-auto py-2">
               {suggestions.map((city) => (
                 <li
                   key={city}
                   onClick={() => handleSelect(city)}
-                  className="px-4 py-2.5 hover:bg-gray-50 cursor-pointer flex items-center space-x-3
-                             transition-colors duration-200 border-b border-gray-50 last:border-none"
+                  className="px-6 py-3 hover:bg-gray-50 cursor-pointer flex items-center space-x-3
+                             transition-colors duration-200"
                 >
-                  <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />
-                  <span className="text-gray-700 text-sm">{city}</span>
+                  <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+                  <span className="text-gray-900 font-medium text-base">{city}</span>
                 </li>
               ))}
             </ul>
@@ -126,8 +110,8 @@ export default function SearchBar({ variant = "default" }) {
           value={query}
           onChange={(e) => handleSearch(e.target.value)}
           placeholder="Search by city..."
-          className="w-full pl-9 py-2 text-sm border border-gray-200 rounded-md
-                     focus:outline-none focus:ring-1 focus:ring-primary/20 focus:border-primary
+          className="w-full pl-9 py-2 text-sm border border-gray-200 rounded-full
+                     focus:outline-none focus:ring-0 focus:border-black
                      transition-all duration-200 bg-white/90 text-gray-900"
         />
       </div>

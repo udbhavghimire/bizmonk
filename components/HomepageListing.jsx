@@ -5,7 +5,6 @@ import Link from "next/link";
 
 const HomepageListing = ({
   bramptonRestaurants,
-  bramptonStores,
   torontoCommercial,
 }) => {
   return (
@@ -32,33 +31,6 @@ const HomepageListing = ({
               className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
             >
               View All Brampton Restaurants
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Brampton Convenience Stores Section */}
-      <div className="mb-6">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            Affordable Convenience Stores in Brampton under 500k
-          </h2>
-          <p className="text-gray-600 text-lg">
-            Convenience stores under $500,000 in Brampton
-          </p>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {bramptonStores?.slice(0, 8).map((listing) => (
-            <ResaleCard key={listing.ListingKey} curElem={listing} />
-          ))}
-        </div>
-        <div className="text-center mt-8 flex w-full justify-center">
-          <div className="text-center mt-8 flex w-full justify-center">
-            <Link
-              href="/brampton?businessType=convenience-store"
-              className="block text-center px-6 py-3 bg-black text-white rounded-full hover:bg-primary/90 transition-colors font-medium text-nowrap max-w-lg"
-            >
-              View All Brampton Convenience Stores
             </Link>
           </div>
         </div>

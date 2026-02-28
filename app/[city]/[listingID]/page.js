@@ -14,6 +14,9 @@ import TimeAgo from "@/helpers/TimeAgo";
 import cities from "@/data/gta-cities.json";
 import StickyContactForm from "@/components/StickyContactForm";
 import { fetchMedia } from "@/api/getImageUrls";
+import ClientPage from "../ClientPage";
+import { getCategoryFromSlug } from "@/constant/categories";
+import { fetchProperties } from "@/api/getBusinessListings";
 const INITIAL_OFFSET = 0;
 const INITIAL_LIMIT = 3;
 
@@ -57,12 +60,76 @@ const fetchData = async (listingID) => {
   }
 };
 
-const page = async ({ params }) => {
+async function getCategoryData(city, categoryName, searchParams) {
+  try {
+    const currentPage = Number(searchParams?.page) || 1;
+    const limit = 20;
+    const skip = (currentPage - 1) * limit;
+    const minPrice = searchParams?.minPrice ? Number(searchParams.minPrice) : undefined;
+    const maxPrice = searchParams?.maxPrice ? Number(searchParams.maxPrice) 
+      : searchParams?.priceMax ? Number(searchParams.priceMax) : undefined;
+    const sort = searchParams?.sort || "newest";
+
+    const data = await fetchProperties({
+      city,
+      top: limit,
+      skip,
+      minPrice,
+      maxPrice,
+      businessType: categoryName,
+      sort,
+    });
+
+    const listings = await Promise.all(
+      (data.items || []).map(async (property) => {
+        const media = await fetchMedia(property.ListingKey, 1);
+        return { ...property, Media: media };
+      })
+    );
+
+    return {
+      cityName: city,
+      listings,
+      pagination: {
+        currentPage: data.currentPage,
+        totalPages: data.totalPages,
+        totalCount: data.totalCount,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching category listings:", error);
+    return {
+      cityName: city,
+      listings: [],
+      pagination: { currentPage: 1, totalPages: 0, totalCount: 0 },
+    };
+  }
+}
+
+const page = async ({ params, searchParams }) => {
   try {
     const { city, listingID } = await Promise.resolve(params);
+    const resolvedSearchParams = await searchParams;
+
+    const categoryName = getCategoryFromSlug(listingID);
+    
+    if (categoryName) {
+      // This is a city + category route, e.g., /brampton/restaurant-for-sale
+      const categoryData = await getCategoryData(city, categoryName, resolvedSearchParams);
+      const displayCity = city.charAt(0).toUpperCase() + city.slice(1);
+      return (
+        <ClientPage
+          listings={categoryData.listings}
+          cityName={displayCity}
+          pagination={categoryData.pagination}
+          categorySlug={listingID}
+        />
+      );
+    }
+
     const cityName = await Promise.resolve(city.split("-")[0]);
     const properCityName = await Promise.resolve(
-      cities.cities.find((c) => c.toLowerCase() === cityName.toLowerCase()) ||
+      cities.cities?.find((c) => c.toLowerCase() === cityName.toLowerCase()) ||
         cityName,
     );
 
@@ -264,9 +331,26 @@ const page = async ({ params }) => {
   }
 };
 
-export async function generateMetadata({ params }, parent) {
+export async function generateMetadata({ params, searchParams }, parent) {
   try {
     const { city, listingID } = await Promise.resolve(params);
+
+    const categoryName = getCategoryFromSlug(listingID);
+    
+    if (categoryName) {
+      const formattedCategory = listingID.replace(/-for-sale$/i, '').replace(/-lease$/i, '').replace(/-/g, ' ');
+      const displayCategory = formattedCategory.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+      const displayCity = city.charAt(0).toUpperCase() + city.slice(1);
+      return {
+        title: `${displayCategory} Businesses for Sale in ${displayCity} - Bizmonk`,
+        description: `Browse ${displayCategory.toLowerCase()} business opportunities for sale in ${displayCity}.`,
+        openGraph: {
+          title: `${displayCategory} Businesses for Sale in ${displayCity} - Bizmonk`,
+          description: `Browse ${displayCategory.toLowerCase()} business opportunities for sale in ${displayCity}.`,
+        },
+      };
+    }
+
     const listingKey = await Promise.resolve(listingID.split("-").pop());
     const main_data = await fetchData(listingKey);
 

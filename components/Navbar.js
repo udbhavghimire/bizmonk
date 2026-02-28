@@ -102,13 +102,7 @@ export default function Navbar() {
           <div className="flex min-w-0 items-center gap-x-3">
             <div className="flex-shrink-0 flex items-center">
               <Link href="/" className="flex items-center">
-                <img
-                  src="/bizmonk-logo.png"
-                  alt="Bizmonk"
-                  width="100"
-                  height="100"
-                  className="w-24 sm:w-[100px]"
-                />
+                <span className="text-2xl font-bold text-black">bizmonk<span className="text-blue-600">.</span></span>
               </Link>
             </div>
 
@@ -215,8 +209,8 @@ export default function Navbar() {
                 className="flex items-center"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <span className="text-2xl font-bold bg-gradient-to-r from-teal-500 to-blue-600 text-transparent bg-clip-text">
-                  Bizmonk
+                <span className="text-2xl font-bold text-blue-600">
+                  bizmonk.
                 </span>
               </Link>
               <button

@@ -10,6 +10,7 @@ import ClientPage from "./ClientPage";
 import Link from "next/link";
 import { cities } from "@/constant/cities";
 import CityContent from "@/data/CityContent";
+import { getCategoryFromSlug } from "@/constant/categories";
 
 // Helper function to convert city names to URL-friendly format
 const toUrlFormat = (cityName) => cityName.toLowerCase().replace(/\s+/g, "-");
@@ -24,12 +25,26 @@ const findCityByUrlFormat = (urlFormat) => {
 // Add metadata export
 export async function generateMetadata({ params }) {
   const { city } = await params;
+  const categoryName = getCategoryFromSlug(city);
   const cityName = findCityByUrlFormat(city);
 
-  if (!cityName) {
+  if (!cityName && !categoryName) {
     return {
       title: "Business Opportunities - Bizmonk",
       description: "Find business opportunities across Ontario",
+    };
+  }
+
+  if (categoryName) {
+    const formattedCategory = city.replace(/-for-sale$/i, '').replace(/-lease$/i, '').replace(/-/g, ' ');
+    const displayCategory = formattedCategory.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    return {
+      title: `${displayCategory} Businesses for Sale in Ontario - Bizmonk`,
+      description: `Browse ${displayCategory.toLowerCase()} business opportunities for sale across Ontario.`,
+      openGraph: {
+        title: `${displayCategory} Businesses for Sale in Ontario - Bizmonk`,
+        description: `Browse ${displayCategory.toLowerCase()} business opportunities for sale across Ontario.`,
+      },
     };
   }
 
@@ -44,8 +59,9 @@ export async function generateMetadata({ params }) {
 }
 
 async function getCityData(city, searchParams) {
+  const categoryName = getCategoryFromSlug(city);
   const cityExists = findCityByUrlFormat(city);
-  if (!cityExists) return null;
+  if (!cityExists && !categoryName) return null;
 
   try {
     const currentPage = Number(searchParams?.page) || 1;
@@ -62,13 +78,16 @@ async function getCityData(city, searchParams) {
         ? Number(searchParams.priceMax)
         : undefined;
 
+    const queryCity = cityExists ? cityExists : null;
+    const queryBusinessType = categoryName ? categoryName : businessType;
+
     const data = await fetchProperties({
-      city: cityExists,
+      city: queryCity,
       top: limit,
       skip,
       minPrice,
       maxPrice,
-      businessType,
+      businessType: queryBusinessType,
       sort,
     });
 
@@ -80,7 +99,8 @@ async function getCityData(city, searchParams) {
     );
 
     return {
-      cityName: cityExists,
+      cityName: cityExists || "Ontario",
+      isCategoryRoute: !!categoryName,
       listings,
       pagination: {
         currentPage: data.currentPage,
@@ -91,7 +111,8 @@ async function getCityData(city, searchParams) {
   } catch (error) {
     console.error("Error fetching listings:", error);
     return {
-      cityName: cityExists,
+      cityName: cityExists || "Ontario",
+      isCategoryRoute: !!categoryName,
       listings: [],
       pagination: {
         currentPage: 1,
@@ -117,14 +138,16 @@ export default async function Page({ params, searchParams }) {
         listings={data.listings}
         cityName={data.cityName}
         pagination={data.pagination}
+        categorySlug={data.isCategoryRoute ? city : undefined}
       />
 
       {/* Cities Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Business Properties for sale in your city
-          </h2>
+      {!data.isCategoryRoute && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Business Properties for sale in your city
+            </h2>
           <p className="text-lg text-gray-600">
             Explore top cities across Canada
           </p>
@@ -147,12 +170,13 @@ export default async function Page({ params, searchParams }) {
                 {city.name}
               </h3>
             </Link>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* New SEO Content Section */}
-      <CityContent cityName={data.cityName} />
+      {!data.isCategoryRoute && <CityContent cityName={data.cityName} />}
     </Suspense>
   );
 }
