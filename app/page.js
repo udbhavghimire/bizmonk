@@ -111,8 +111,8 @@ export default function Home() {
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">
-            The Future of Investment
+          <h1 className="text-4xl font-extrabold text-gray-900 mb-6">
+            Find Business Oppourtunities in Canada
           </h1>
           
           <p className="text-base md:text-xl text-gray-500 mb-12 max-w-2xl mx-auto leading-relaxed">
